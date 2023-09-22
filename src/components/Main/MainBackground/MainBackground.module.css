@@ -1,0 +1,17 @@
+.bg{
+    background-color: var(--main-color);
+    border-radius: 1em;
+    font-weight: bold;
+}
+.bigModule{
+    width:90vw;
+}
+.midModule{
+    width:65vw;
+}
+
+@media (max-width: calc(999.8px)){
+    .midModule{
+        width: 90vw;
+    }
+}

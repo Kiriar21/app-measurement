@@ -1,0 +1,7 @@
+.bg{
+    max-width: 100vw;
+    width: 100vw;
+    background-color: var(--main-color);
+    color: var(--Text-color);
+}
+

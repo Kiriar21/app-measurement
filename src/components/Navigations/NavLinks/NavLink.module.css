@@ -1,0 +1,21 @@
+.linkM, .activeLink {
+    font-weight: bold;
+    text-decoration: none !important;
+}
+.linkM, .linkM:active, .linkM:hover, .linkM:focus, .linkM::after{
+    color: var(--Text-color) !important;
+}
+.activeLink, .activeLink:active, .activeLink:hover, .activeLink:focus, .activeLink::after{
+    font-size: calc(130%);
+    color: var(--Text-color);
+    text-shadow: #000 4px 5px 3px;
+}
+.a{
+    color:blue  !important;
+}
+.b{
+    color:yellow !important;
+}
+.active{
+    color:pink;
+}

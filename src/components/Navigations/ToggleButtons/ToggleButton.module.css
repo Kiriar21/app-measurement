@@ -1,0 +1,5 @@
+.label{
+    color:var(--Text-color);
+    border: 0.1em solid var(--main-color);
+    text-decoration: none !important;
+}

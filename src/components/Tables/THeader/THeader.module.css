@@ -1,0 +1,5 @@
+.table{
+    color: var(--Text-color) !important;
+    border: 1px var(--Table-color) solid;
+    vertical-align: middle;
+}

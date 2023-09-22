@@ -1,0 +1,20 @@
+.bgGreen, .bgGreen:focus, .bgGreen:active, .bgGreen:hover{
+    background-color: var(--Btn-color) !important;
+}
+.bgRed, .bgRed:focus, .bgRed:active, .bgRed:hover{
+    background-color: var(--Btn-reset-del-color) !important;
+}
+.button:active, .button:hover{
+    font-weight: bold;
+}
+
+.bgLoginButton{
+    float:right; 
+}
+@media (max-width: calc(991.8px)) {
+    .bgLoginButton {
+        float:left;
+        margin:0px;
+        padding: auto;
+    }
+}

@@ -1,0 +1,9 @@
+.widthP{
+    width:50vw;
+}
+
+@media (max-width: calc(999.8px)) {
+    .widthP{
+        width: auto;
+    }
+}
