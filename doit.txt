@@ -2,4 +2,12 @@ Później:
 1. Na później zalogowana osoba, powinna nie móc przejść na logowanie - jedynie może się wylogować
 2. Zamienić id w linkach w nawigacji na id ktore jest w globalnym state
 3. Menu musi sie zamykać jeżeli coś wybierzemy.... + na small device trzeba zmienić logike działania list i x
-4. Caly wyglad strony zalezy od tego czy MongoDB istnieje - powinieniem zmienc Homepage na dwie rozne 
+
+
+Po zrobieniu całego FRONT-ENDU:
+1. Caly wyglad strony zalezy od tego czy MongoDB istnieje - powinieniem zmienc Homepage na dwie rozne 
+
+
+
+Do zrobienia:
+1. Naprawić key w selectach przy tworzeniu opcji
