@@ -10,7 +10,6 @@ export default function Login(props){
     const [searchValue, setSearchValue] = useState('')
     const searching = () => {
         console.log(searchValue)
-        alert('a')
     }
 
     const theader = ['Data','Nazwa','Miejscowość','Wyniki Oficjalne','Edytuj','Usuń']
@@ -20,8 +19,8 @@ export default function Login(props){
     
     return(
         <MainBackground titlePage="Wyniki Lokalne">
-            <Form action='/' className={`m-3`} >
-                <SearchModule controlId='plainTextSearchbarHp'  onChange={e => {setSearchValue(e.target.value)}}/>
+            <Form className={`m-3`} >
+                <SearchModule controlId='plainTextSearchbarHp' onClick={ e=> searching()}  onChange={e => {setSearchValue(e.target.value)}}/>
                 <TableBody theader={theader} tbody={tbody} />
                 <div className='m-3'>
                 <ButtonForm onClick={ e => {}} className='mx-2'><ChevronLeft /></ButtonForm>
