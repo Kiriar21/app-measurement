@@ -20,7 +20,7 @@ export default function Login(props){
     return(
         <MainBackground titlePage="Wyniki Lokalne">
             <Form className={`m-3`} >
-                <SearchModule controlId='plainTextSearchbarHp' onClick={ e=> searching()}  onChange={e => {setSearchValue(e.target.value)}}/>
+                <SearchModule controlId='plainTextSearchbarHp' labelText="Wyszukaj po nazwie lub miejscowości" onClick={ e=> searching()}  onChange={e => {setSearchValue(e.target.value)}}/>
                 <TableBody theader={theader} tbody={tbody} />
                 <div className='m-3'>
                 <ButtonForm onClick={ e => {}} className='mx-2'><ChevronLeft /></ButtonForm>

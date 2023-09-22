@@ -6,8 +6,8 @@ import React from 'react'
 export default function SearchModule(props) {
     return(
         <React.Fragment>
-            <Form.Label htmlFor='searchValue' className='d-flex justify-content-start'>
-                Wyszukaj po nazwie lub miejscowości
+            <Form.Label htmlFor={props.controlId} className='d-flex justify-content-start'>
+                {props.labelText}
             </Form.Label>
             <Row className='mb-3'>
                 <Col md={4}>
@@ -16,7 +16,7 @@ export default function SearchModule(props) {
                                 className={`${style.bg} ${style.width} my-3`}
                                 placeholder='Wyszukaj...'
                                 autoComplete='false'
-                                id='searchValue'
+                                id={props.controlId}
                                 />
                 </Col>
                 <Col md={2}>
