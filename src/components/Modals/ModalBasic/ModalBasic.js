@@ -35,7 +35,7 @@ export default function ModalBasic(props){
                     aria-labelledby="contained-modal-title-vcenter" 
                     centered animation={false}>
                 
-                    <Form action={props.formAction} onSubmit={check}>
+                    <Form action={props.formAction}>
                         <Modal.Header className={`${style.modalContent} d-flex justify-content-center`}>
                             <Modal.Title>{props.modalTitle}</Modal.Title>
                         </Modal.Header>
@@ -43,7 +43,7 @@ export default function ModalBasic(props){
                             {props.modalBody}
                         </Modal.Body>
                         <Modal.Footer className={`${style.modalContent}`}>
-                            <ButtonForm buttonTitle={props.modalBtnGreen} className='w-100'/>
+                            <ButtonForm buttonTitle={props.modalBtnGreen} className='w-100' onClick={check}/>
                             <ButtonModal buttonTitle={props.modalBtnRed} bgColor='red' className='w-100' onClick={handleClose} />
                         </Modal.Footer>
                     </Form>
