@@ -24,7 +24,7 @@ export default function FormNewMeasurement(props){
         }
     }
     return (
-        <Form onSubmit={check}>
+        <Form>
             <FormInput controlId='formDateEvent'
                         labelText='Data'
                         typeInput='date'
@@ -42,7 +42,7 @@ export default function FormNewMeasurement(props){
                         typeInput='text'
                         // onChange={}
                         placeholder='Miejscowość' />
-            <Button buttonTitle="Utwórz" />
+            <Button onClick={check} buttonTitle="Utwórz" />
             {showAlert  && <Alert variant='success' dismissible={false} alertContent='Udało się utworzyć nowy pomiar. Za chwile nastąpi przekierowanie na strone ze statystykami'/>}
         </Form>
     )
