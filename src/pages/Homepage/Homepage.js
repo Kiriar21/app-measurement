@@ -19,7 +19,7 @@ export default function Login(props){
     const theader = ['Data','Nazwa','Miejscowość','Wyniki Oficjalne','Edytuj','Usuń']
     const tbody = [{date:'01.01.2024', name:'Pierwszy Event', city:'Czestochowa',id:'1'}, 
                     {date:'02.02.2024', name:'Drugi Event', city:'Paryż',id:'2'},
-                    {date:'31.03.2024', name:'Trzeci Event', city:'Los Angeles',id:'3'}, ]
+                    {date:'31.03.2024', name:'Trzeci Event', city:'Los Angeles',id:'3'} ]
     
     return(
             <MainBackground titlePage="Wyniki Lokalne">

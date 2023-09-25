@@ -15,7 +15,8 @@ export default function FormInput(props){
                             >
                         {props.opt.map( (element) => {
                             return (
-                                <Option value={element.value} 
+                                <Option key={element.name} 
+                                        value={element.name} 
                                         title={element.title} />
                             )
                         })}

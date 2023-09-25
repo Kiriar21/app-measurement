@@ -10,4 +10,3 @@ Po zrobieniu całego FRONT-ENDU:
 
 
 Do zrobienia:
-1. Naprawić key w selectach przy tworzeniu opcji
