@@ -1,8 +1,8 @@
-import Table from '../../../Tables/Table/Table'
-import Thead from '../../../Tables/Thead/Thead'
-import THeader from '../../../Tables/THeader/THeader'
-import Tbody from '../../../Tables/Tbody/Tbody'
-import Tdate from '../../../Tables/TDate/TDate'
+import Table from '../../../../Tables/Table/Table'
+import Thead from '../../../../Tables/Thead/Thead'
+import THeader from '../../../../Tables/THeader/THeader'
+import Tbody from '../../../../Tables/Tbody/Tbody'
+import Tdate from '../../../../Tables/TDate/TDate'
 
 export default function TableBodyStatistic(props){
     return (

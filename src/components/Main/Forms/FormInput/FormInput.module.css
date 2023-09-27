@@ -4,6 +4,9 @@
     color: var(--Text-color);
     font-weight: bold;
 }
+.bgRed, .bgRed:focus, .bgRed:active, .bgRed:hover{
+    background-color: var(--Btn-reset-del-color) !important;
+}
 .bg::placeholder{
     font-weight: normal;
     color: var(--Placeholder-text-color);

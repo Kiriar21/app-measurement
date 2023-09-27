@@ -1,6 +1,5 @@
 import ModalBasic from "../ModalBasic/ModalBasic"
-export default function ModalExport(props){
-    
+export default function ModalExport(props){  
     return(
         <ModalBasic 
                 btnModalTitle='Spój Wyniki' formAction='/' 

@@ -2,11 +2,13 @@ Później:
 1. Na później zalogowana osoba, powinna nie móc przejść na logowanie - jedynie może się wylogować
 2. Zamienić id w linkach w nawigacji na id ktore jest w globalnym state
 3. Menu musi sie zamykać jeżeli coś wybierzemy.... + na small device trzeba zmienić logike działania list i x
-
+4. Dodac opcje usuniecia danych ludzi - zeby dodac na Nowego
+5. Dodac opcje usuniecia danych pomiarow - zeby dodac nowe 
+6. Reset sort i filtr wskazuje na ostatnie wartosci przy klikenicu - zmiana
 
 Po zrobieniu całego FRONT-ENDU:
 1. Caly wyglad strony zalezy od tego czy MongoDB istnieje - powinieniem zmienc Homepage na dwie rozne 
-
+2. ustawienia zawodow - dodac selecta z wyborem klasyfikacji i pobieranie danych z pliku
 
 
 Do zrobienia:

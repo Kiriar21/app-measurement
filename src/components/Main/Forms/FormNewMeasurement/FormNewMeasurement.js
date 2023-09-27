@@ -15,9 +15,6 @@ export default function FormNewMeasurement(props){
     const options = [{
         name:'run',
         title:'Bieg na czas'
-    }, {
-        name:'loop',
-        title:'Bieg w pętli'
     }]      
     
     const check = async (e) => {

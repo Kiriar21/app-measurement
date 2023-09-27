@@ -28,7 +28,7 @@ export default function ModalBasic(props){
 
     return(
         <React.Fragment>
-            <ButtonModal bgColor={props.bgColor !== undefined && props.bgColor === 'red' ? 'red' : ''} buttonTitle={props.btnModalTitle} onClick={handleShow} />
+            <ButtonModal bgColor={props.bgColor !== undefined && props.bgColor === 'red' ? 'red' : ''} className={props.className} buttonTitle={props.btnModalTitle} onClick={handleShow} />
             <Modal className={`${style.modal}`} 
                     show={showModal} onHide={handleClose}
                     backdrop="static" keyboard={false} 

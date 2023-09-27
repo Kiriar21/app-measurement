@@ -3,7 +3,6 @@ import Thead from '../../../../Tables/Thead/Thead'
 import THeader from '../../../../Tables/THeader/THeader'
 import Tbody from '../../../../Tables/Tbody/Tbody'
 import TDate from '../../../../Tables/TDate/TDate'
-import ButtonLink from '../../../../Buttons/ButtonLink/ButtonLink'
 import ModalBasic from '../../../../Modals/ModalBasic/ModalBasic'
 
 export default function TableBody(props){
@@ -20,24 +19,27 @@ export default function TableBody(props){
                     {props.tbody.map( (e) => {
                       return (
                         <tr key={e.id}>
-                            <TDate>{e.date}</TDate>
-                            <TDate>{e.name}</TDate>
+                            <TDate>{e.counter}</TDate>
+                            <TDate>{e.id}</TDate>
+                            <TDate>{e.names}</TDate>
+                            <TDate>{e.sex}</TDate>
+                            <TDate>{e.age}</TDate>
+                            <TDate>{e.datebirth}</TDate>
+                            <TDate>{e.class}</TDate>
+                            <TDate>{e.cat}</TDate>
+                            <TDate>{e.country}</TDate>
+                            <TDate>{e.club}</TDate>
+                            <TDate>{e.participant}</TDate>
                             <TDate>{e.city}</TDate>
                             <TDate>
-                                <ButtonLink pathLink={`/${e.id}/scores`} typeTarget='_blank' buttonTitle='Wyniki' ikon={true}/>
-                            </TDate>
-                            <TDate>
-                                <ButtonLink pathLink={`/${e.id}/statistic`} buttonTitle='Edytuj'/>
-                            </TDate>
-                            <TDate>
                             <ModalBasic 
-                                btnModalTitle='Usuń' formAction='/' 
+                                btnModalTitle='Usuń' formAction='/:id/del' 
                                 bgColor='red'
-                                modalTitle='Usuwanie Imprezy' 
-                                modalBody='Czy na pewno chcesz usunąć wybraną impreze? Pamiętaj, że usunięcie imprezy w tej aplikacji usunie tylko dane z lokalnej bazy danych i stracisz kopie. Żeby usunąć całkowicie impreze, musisz wejść na aplikacje panelu administratora. '
+                                modalTitle='Usuwanie Zawodnika' 
+                                modalBody='Czy na pewno chcesz usunąć wybranego zawodnika?'
                                 modalBtnGreen='Usuń' 
                                 modalBtnRed='Anuluj'
-                                alertSuccessContent='Zawody zostały usunięte.'
+                                alertSuccessContent='Zawodnika został usunięty.'
                             />
                             </TDate>
                         </tr>

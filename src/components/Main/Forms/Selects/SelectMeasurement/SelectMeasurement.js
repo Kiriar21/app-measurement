@@ -5,8 +5,8 @@ import style from '../../FormInput/FormInput.module.css'
 export default function FormInput(props){
     return(
         <Form.Group as={Row} controlId={props.controlId} className='d-flex justify-content-center my-3'>
-            <Col md={6}>
-                <Form.Label className='d-flex justify-content-start'>
+            <Col lg={props.lg ? props.lg : 6}>
+                <Form.Label className={`d-flex ${props.jcc ? 'justify-content-center' : 'justify-content-start'} `}>
                     {props.labelText}
                 </Form.Label>
                 <Form.Select
