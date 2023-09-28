@@ -4,7 +4,7 @@ import SearchModule from "../../../../components/Main/Forms/SearchModule/SearchM
 import MainBackground from "../../../../components/Main/MainBackground/MainBackground"
 import SortsModule from "../../../../components/Main/Forms/SortsModule/SortsModule"
 import TableBody from "../../../../components/Main/Forms/ActuallyMeasurement/ListCompetitors/TableBody"
-import H3Module from '../../../../components/Main/Texts/H3Module/H3Module'
+// import H3Module from '../../../../components/Main/Texts/H3Module/H3Module'
 import ModalBasic from "../../../../components/Modals/ModalBasic/ModalBasic"
 import FormInput from '../../../../components/Main/Forms/FormInput/FormInput'
 
@@ -32,7 +32,7 @@ export default function Login(props){
     const check = async () => {
         console.log(searchBar,' ',sortSel,' ', filtrSex, ' ', filtrStatus)
     }
-    const test = (
+    const bodyModal = (
         <React.Fragment>
             <FormInput controlId='fileDataCompetitors'
                         labelText='Wybierz plik z danymi'
@@ -53,7 +53,7 @@ export default function Login(props){
             <ModalBasic 
                 btnModalTitle='Wgraj Dane' formAction='/:id/addCompetitors' 
                 modalTitle='Wgrywanie Danych' 
-                modalBody={test}
+                modalBody={bodyModal}
                 modalBtnGreen='Wgraj' 
                 modalBtnRed='Anuluj'
                 alertSuccessContent='Dane zawodników zostały dodane.'

@@ -5,7 +5,10 @@ Później:
 4. Dodac opcje usuniecia danych ludzi - zeby dodac na Nowego
 5. Dodac opcje usuniecia danych pomiarow - zeby dodac nowe 
 6. Reset sort i filtr wskazuje na ostatnie wartosci przy klikenicu - zmiana
+7. Przycisk drukuj - moze zastapic i exportowac pdf? Drukowanie moze bardzo obciazyc apke
 
+
+ 
 Po zrobieniu całego FRONT-ENDU:
 1. Caly wyglad strony zalezy od tego czy MongoDB istnieje - powinieniem zmienc Homepage na dwie rozne 
 2. ustawienia zawodow - dodac selecta z wyborem klasyfikacji i pobieranie danych z pliku
