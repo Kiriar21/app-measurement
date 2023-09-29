@@ -9,6 +9,8 @@
     font-size: calc(130%);
     color: var(--Text-color);
     text-shadow: #000 4px 5px 3px;
+}
+.infoLink, .infoLink:active, .infoLink:hover, .infoLink:focus, .infoLink::after{
     background: var(--Nav-color);
 }
 .a{

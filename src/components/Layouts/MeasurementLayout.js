@@ -1,12 +1,17 @@
 import React from "react"
 import Header from "../Headers/Header/Header"
+import MainNavigation from "../Navigations/MainNavigation/MainNavigation"
+import Container from '../Container/Container'
 import Footer from "../Footers/Footer/Footer"
 
 export default function Layout(props) {
     return (
         <React.Fragment>
             <header>
-                <Header />
+                <Container >
+                    <Header />
+                    <MainNavigation />
+                </Container>
             </header>
             <main>
                 {props.main}

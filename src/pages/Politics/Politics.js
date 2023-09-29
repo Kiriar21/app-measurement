@@ -15,15 +15,15 @@ export default function Politics(props){
                             <Nav.Item >
                                 <Nav.Link eventKey="politics"
                                     onClick={ e => setActive('politics')}
-                                    className={ active === 'politics' ? `${style.activeLink} shadow-none border-0` : `${style.linkM}`} style={{transition:'none'}}>Polityka Prywatności</Nav.Link>
+                                    className={ active === 'politics' ? `${style.infoLink} ${style.activeLink} shadow-none border-0` : `${style.linkM}`} style={{transition:'none'}}>Polityka Prywatności</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
                                 <Nav.Link eventKey="information" onClick={ e => setActive('information')}
-                                    className={ active === 'information' ? `${style.activeLink} shadow-none border-0` : `${style.linkM}`} style={{transition:'none'}}>Informacje Prawne</Nav.Link>
+                                    className={ active === 'information' ? `${style.infoLink} ${style.activeLink} shadow-none border-0` : `${style.linkM}`} style={{transition:'none'}}>Informacje Prawne</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
                                 <Nav.Link eventKey="politicsCompany" onClick={ e => setActive('politicsCompany')}
-                                    className={ active === 'politicsCompany' ? `${style.activeLink} shadow-none border-0` : `${style.linkM}` } style={{transition:'none'}}>Polityka Firmy</Nav.Link>
+                                    className={ active === 'politicsCompany' ? `${style.infoLink} ${style.activeLink} shadow-none border-0` : `${style.linkM}` } style={{transition:'none'}}>Polityka Firmy</Nav.Link>
                             </Nav.Item>
                         </Nav>
                     </Col>

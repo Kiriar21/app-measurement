@@ -12,12 +12,9 @@ Później:
 Po zrobieniu całego FRONT-ENDU:
 1. Caly wyglad strony zalezy od tego czy MongoDB istnieje - powinieniem zmienc Homepage na dwie rozne 
 2. ustawienia zawodow - dodac selecta z wyborem klasyfikacji i pobieranie danych z pliku
-
+3. Wszystkie dane w tabelach maja sie pojawiac jako stała lista rozwijana - biblioteka react 
 
 Do zrobienia:
-1. Usunac ustawienia wynikow
 2. Zmienic wyniki zeby dodac opcje edycji pol ????
-3. Usunac oficjalne wyniki z glownej strony
 4. Zmienic menu - Strona glowna znika (link w logo), nowy pomiar u gory strony głównej, menu edycji pojawia sie dopiero po przejsciu na bieg
 5. Zmiana layoutow 
-6. Zmiana paginacji na stale rozwijana liste????
