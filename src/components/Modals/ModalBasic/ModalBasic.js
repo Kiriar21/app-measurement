@@ -44,6 +44,7 @@ export default function ModalBasic(props){
                         </Modal.Body>
                         <Modal.Footer className={`${style.modalContent}`}>
                             <ButtonForm buttonTitle={props.modalBtnGreen} className='w-100' onClick={check}/>
+                            {props.secondButton && <ButtonForm buttonTitle={props.secondButtonTitle} className='w-100' onClick={check}/> } 
                             <ButtonModal buttonTitle={props.modalBtnRed} bgColor='red' className='w-100' onClick={handleClose} />
                         </Modal.Footer>
                     </Form>

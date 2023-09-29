@@ -4,7 +4,6 @@ import SearchModule from "../../../../components/Main/Forms/SearchModule/SearchM
 import MainBackground from "../../../../components/Main/MainBackground/MainBackground"
 import SortsModule from "../../../../components/Main/Forms/SortsModule/SortsModule"
 import TableBody from "../../../../components/Main/Forms/ActuallyMeasurement/ListCompetitors/TableBody"
-// import H3Module from '../../../../components/Main/Texts/H3Module/H3Module'
 import ModalBasic from "../../../../components/Modals/ModalBasic/ModalBasic"
 import FormInput from '../../../../components/Main/Forms/FormInput/FormInput'
 
@@ -15,7 +14,8 @@ export default function Login(props){
     const [filtrSex,setfiltrSex] = useState('') 
     const [filtrStatus,setfiltrStatus] = useState('')
     const theader =['Lp', 'Nr', 'Zawodnik', 'Płeć', 'Wiek','Data Urodzenia', 'Klasyfikacja', 'Kategoria', 'Kraj', 'Klub', 'Udział', 'Miejscowość', 'Zarządzanie']
-    const tbody = [{
+    const tbody = [
+        {
         counter:1,
         id:1,
         names:'Anna Nowak',
@@ -28,7 +28,8 @@ export default function Login(props){
         club:'',
         participant:'Udział',
         city:'Czestochowa'
-    }]
+        }
+    ]
     const check = async () => {
         console.log(searchBar,' ',sortSel,' ', filtrSex, ' ', filtrStatus)
     }
@@ -55,15 +56,16 @@ export default function Login(props){
                 modalTitle='Wgrywanie Danych' 
                 modalBody={bodyModal}
                 modalBtnGreen='Wgraj' 
+                secondButton={true}
+                secondButtonTitle='Usuń poprzednie dane i zastąp nowymi'
                 modalBtnRed='Anuluj'
-                alertSuccessContent='Dane zawodników zostały dodane.'
+                alertSuccessContent='Dane zawodników zostały zaktualizowane.'
                 />
             <Form className={`m-3`}>
                 <SortsModule sortComp={e=>{setsortSel(e)}} filtrSex={e=>{setfiltrSex(e)}} filtrStatus={e=>{setfiltrStatus(e)}}/>
                 <SearchModule controlId='sbcompetitors' labelText='Szukaj zawodnika (Zawonika / Numer)' onClick={check} onChange={e=>{setSearchBar(e.target.value)}} />
                 <TableBody theader={theader} tbody={tbody}/>
             </Form>
-            {/* <H3Module title='Brak zawodników. Wgraj najpierw dane.'/> */}
         </MainBackground>
     )
 }

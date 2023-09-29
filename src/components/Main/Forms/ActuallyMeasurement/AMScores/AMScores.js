@@ -53,10 +53,11 @@ export default function FormScores(props){
     return (
         <Container fluid>
         <Row>
-            <Form className={`m-3`}>
-                <Col lg={4} className="d-flex">
-                    <ButtonForm buttonTitle='Exportuj Wyniki' onClick={e=>{}}/>
+                <Col lg={6} className="d-flex">
+                    <ButtonForm className='mx-2' buttonTitle='Exportuj Wyniki' onClick={e=>{}}/>
+                    <ButtonForm className='mx-2' buttonTitle='Pobieraj Wyniki' onClick={e=>{}}/>
                 </Col>
+            <Form className={`m-3`}>
                 <Col lg={4}>
                     <Select controlId='selectClass'
                             labelText='Wybierz Klasyfikacje'
@@ -76,10 +77,8 @@ export default function FormScores(props){
         <Form className={`m-3`}>
                 <SortsModule sortComp={e=>{setsortSel(e)}} filtrSex={e=>{setfiltrSex(e)}} filtrStatus={e=>{setfiltrStatus(e)}}/>
                 <SearchModule controlId='sbcompetitors' labelText='Szukaj zawodnika (Zawonika / Numer)' onClick={check} onChange={e=>{setSearchBar(e.target.value)}} />
-                {/* <H3Module title='Na ten moment brak wyników'/> */}
-                {/* <H3Module title='Nie znaleziono żadnych zawodników ani klasyfikacji. Najpierw dodan dane, żeby móć zarządzać wynikami.'/> */}
-
                 <TableBody theader={theader} tbody={tbody}/>
+                {/* Będzie wiele tabel po kilka zawodników - zależność od danej imprezy */}
         </Form>
         </Container>
     )

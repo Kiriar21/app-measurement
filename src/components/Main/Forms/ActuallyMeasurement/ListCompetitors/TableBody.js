@@ -16,35 +16,41 @@ export default function TableBody(props){
                 </tr>
             </Thead>
             <Tbody>
-                    {props.tbody.map( (e) => {
-                      return (
-                        <tr key={e.id}>
-                            <TDate>{e.counter}</TDate>
-                            <TDate>{e.id}</TDate>
-                            <TDate>{e.names}</TDate>
-                            <TDate>{e.sex}</TDate>
-                            <TDate>{e.age}</TDate>
-                            <TDate>{e.datebirth}</TDate>
-                            <TDate>{e.class}</TDate>
-                            <TDate>{e.cat}</TDate>
-                            <TDate>{e.country}</TDate>
-                            <TDate>{e.club}</TDate>
-                            <TDate>{e.participant}</TDate>
-                            <TDate>{e.city}</TDate>
-                            <TDate>
-                            <ModalBasic 
-                                btnModalTitle='Usuń' formAction='/:id/del' 
-                                bgColor='red'
-                                modalTitle='Usuwanie Zawodnika' 
-                                modalBody='Czy na pewno chcesz usunąć wybranego zawodnika?'
-                                modalBtnGreen='Usuń' 
-                                modalBtnRed='Anuluj'
-                                alertSuccessContent='Zawodnika został usunięty.'
-                            />
-                            </TDate>
+                    { props.tbody.length > 0 ?
+                        props.tbody.map( (e, index) => {
+                        return (
+                            <tr key={index}>
+                                <TDate>{e.counter}</TDate>
+                                <TDate>{e.id}</TDate>
+                                <TDate>{e.names}</TDate>
+                                <TDate>{e.sex}</TDate>
+                                <TDate>{e.age}</TDate>
+                                <TDate>{e.datebirth}</TDate>
+                                <TDate>{e.class}</TDate>
+                                <TDate>{e.cat}</TDate>
+                                <TDate>{e.country}</TDate>
+                                <TDate>{e.club}</TDate>
+                                <TDate>{e.participant}</TDate>
+                                <TDate>{e.city}</TDate>
+                                <TDate>
+                                <ModalBasic 
+                                    btnModalTitle='Usuń' formAction='/:id/del' 
+                                    bgColor='red'
+                                    modalTitle='Usuwanie Zawodnika' 
+                                    modalBody='Czy na pewno chcesz usunąć wybranego zawodnika?'
+                                    modalBtnGreen='Usuń' 
+                                    modalBtnRed='Anuluj'
+                                    alertSuccessContent='Zawodnika został usunięty.'
+                                />
+                                </TDate>
+                            </tr>
+                        )
+                        })
+                        :
+                        <tr >
+                        <TDate colSpan={props.theader.length}>Nie znaleziono żadnych zawodników.</TDate>
                         </tr>
-                      )
-                    })}
+                         }
             </Tbody>
         </Table>
     )

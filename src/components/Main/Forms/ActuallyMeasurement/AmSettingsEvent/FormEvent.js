@@ -1,15 +1,12 @@
-import {useState} from 'react'
 import { Col, Row, Form } from 'react-bootstrap'
 import {Container} from 'react-bootstrap'
 import H3Module from '../../../Texts/H3Module/H3Module'
 import LineStep from './LineStep'
 import Input from '../../FormInput/FormInput'
 import Select from '../../Selects/SelectMeasurement/SelectMeasurement'
-import Button from '../../../../Buttons/ButtonForm/ButtonForm'
-import Alert from '../../../../Alerts/Alert/Alert'
+import ModalBasic from '../../../../Modals/ModalBasic/ModalBasic'
 
 export default function FormEvent(props) {
-    const [showAlert, setShowAlert] = useState(false);
     const typesEvent = [{
         name:'run',
         title:'Bieg na czas'
@@ -25,13 +22,6 @@ export default function FormEvent(props) {
         name:'krotknazwa',
         title:'Krótka Nazwa'
     }]
-    const check = async (e) => {
-        e.preventDefault()
-        try{
-            setShowAlert(true)
-        } catch(err){
-        }
-    }
     return (
         <Container fluid>
             <Select controlId='nameClassChoose'
@@ -182,8 +172,16 @@ export default function FormEvent(props) {
                     </Row>
                 </LineStep>
                 <hr />
-                <Button onClick={check} buttonTitle='Zapisz'/>
-                {showAlert  && <Alert onClick={e=>{setShowAlert(false)}} variant='success' alertContent='Pomyślnie zapisano dane.'/>}
+                <ModalBasic
+                    btnModalTitle='Zapisz' formAction='/' 
+                    modalTitle='Pliki Wynikowe' 
+                    modalBody='Czy na pewno chcesz zapisać pliki z pomiarem?'
+                    modalBtnGreen='Zapisz' 
+                    secondButton={true}
+                    secondButtonTitle='Usuń poprzednie pliki i zastąp nowymi'
+                    modalBtnRed='Anuluj'
+                    alertSuccessContent='Dane zawodników zostały zaktualizowane.'
+                    />
             </Form>
         </Container>
     )

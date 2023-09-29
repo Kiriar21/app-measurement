@@ -60,13 +60,6 @@ function App() {
       </Routes>
     </Router>
 );
-  // return (         
-  //     <Router> 
-  //       <MainLayout
-  //         main={main}
-  //       />
-  //     </Router>
-  // );
 }
 
 export default App;

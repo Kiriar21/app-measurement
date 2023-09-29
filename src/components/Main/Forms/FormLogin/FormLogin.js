@@ -18,7 +18,7 @@ export default function FormLogin(props){
         }
     }
     return (
-        <Form method='POST' action='/' onSubmit={check}>
+        <Form method='POST'>
             <FormInput controlId='formPlanTextEmail' 
                         labelText='Adres e-mail' 
                         typeInput='email' 
@@ -30,7 +30,7 @@ export default function FormLogin(props){
                         // onChange={ e => setPassword(e.target.value)}
                         placeholder='Hasło'
                         />
-            <Button type='submit' buttonTitle="Zaloguj się"/>
+            <Button type='submit' onClick={check} buttonTitle="Zaloguj się"/>
         </Form>
     )
 }
