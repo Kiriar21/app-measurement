@@ -9,6 +9,7 @@
     font-size: calc(130%);
     color: var(--Text-color);
     text-shadow: #000 4px 5px 3px;
+    background: var(--Nav-color);
 }
 .a{
     color:blue  !important;

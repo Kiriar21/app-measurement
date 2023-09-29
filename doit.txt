@@ -5,8 +5,8 @@ Później:
 4. Dodac opcje usuniecia danych ludzi - zeby dodac na Nowego
 5. Dodac opcje usuniecia danych pomiarow - zeby dodac nowe 
 6. Reset sort i filtr wskazuje na ostatnie wartosci przy klikenicu - zmiana
-7. Przycisk drukuj - moze zastapic i exportowac pdf? Drukowanie moze bardzo obciazyc apke
-
+7. Przycisk drukuj -> zamiana na exportuj wyniki i ma zapisywac pdfa z wynikami 
+8. Zmienic navbar - strona główna to klikniecie w logo, na stronie glownej zrobic przycisk nowy pomiar a menu edycji tylko po kliknieciu w edytuj bieg lub po stworzeniu nowego biegu
 
  
 Po zrobieniu całego FRONT-ENDU:
@@ -15,3 +15,9 @@ Po zrobieniu całego FRONT-ENDU:
 
 
 Do zrobienia:
+1. Usunac ustawienia wynikow
+2. Zmienic wyniki zeby dodac opcje edycji pol ????
+3. Usunac oficjalne wyniki z glownej strony
+4. Zmienic menu - Strona glowna znika (link w logo), nowy pomiar u gory strony głównej, menu edycji pojawia sie dopiero po przejsciu na bieg
+5. Zmiana layoutow 
+6. Zmiana paginacji na stale rozwijana liste????
