@@ -1,7 +1,6 @@
 import MainBackground from "../../../../components/Main/MainBackground/MainBackground"
 import TableBody from "../../../../components/Main/Forms/ActuallyMeasurement/AmStatistics/TableBodyStatistic"
 import H3Module from '../../../../components/Main/Texts/H3Module/H3Module'
-import { useParams } from "react-router-dom"
 
 export default function Statistic(props){
     const theader = ['Nazwa klasyfikacji', 'Dystans(KM)', 'Liczba osób startujących', 'Liczba osób na mecie', 'Pozostało', 'Liczba kobiet startujących', 'Liczba kobiet na mecie', 'Pozostało kobiet', 'Liczba mężczyzn startujących', 'Liczba mężczyzn na mecie', 'Pozostało mężczyzn'       ]
@@ -30,11 +29,9 @@ export default function Statistic(props){
         menMeta:0,
         menLeft:50
     }]
-    const {id} = useParams()
     return(
         <MainBackground titlePage="Statystyki">
             <H3Module title='Bieg na czas'/>
-            {console.log(id)}
             <TableBody theader={theader} tbody={tbody} />
             {/* <H3Module title='Brak informacji o statystkach. 
             Dodaj plik z danymi zawodników, żeby pojawiły się statystyki.' /> */}

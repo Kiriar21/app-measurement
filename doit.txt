@@ -22,6 +22,5 @@ Teraz:
 
 1. Zrobić autentykacja użytkownika.
 2. Z autentykacji wyciągać informacje i zakodować zaloguj / wyloguj.
-3. Zrobić przekierowanie do danego identyfikatora. 
-4. Zmiania alertu po usunięciu biegu w homepage (może modul ze usunieto?)
-5. 
+3. Zmiania alertu po usunięciu biegu w homepage (może modul ze usunieto?)
+4. Posprawdzać zakomentowane fragmenty kodu.

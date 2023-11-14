@@ -1,5 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
+/doit.txt
+doit.txt
 # dependencies
 /node_modules
 /.pnp
@@ -23,6 +24,3 @@ yarn-debug.log*
 yarn-error.log*
 
 
-# another
-
-doit.txt
