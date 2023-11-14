@@ -43,12 +43,12 @@ function App() {
     <Router> 
       <Routes>
         <Route path="/*" element={<MeasurementLayout main={main2} />} >
-          {/* <Route path=':id/statistic' element={<Statistic />} />
+          <Route path=':id/statistic' element={<Statistic />} />
           <Route path=':id/edit' element={<Edit />} />
           <Route path=':id/list-competitors' element={<ListCompetitors />} />
           <Route path=':id/settings-event' element={<SettingsEvent />} />
           <Route path=':id/scores' element={<Scores />} />
-          <Route path=':id/export-scores' element={<ExportScores />} /> */}
+          <Route path=':id/export-scores' element={<ExportScores />} />
         </Route>
         <Route path="/*" element={<MainLayout main={main} />}>
           <Route path='new-measurement' element={<NewMeasurement />} />
