@@ -19,15 +19,18 @@ export default function Login(props){
             {
                 date:'01.01.2024', 
                 name:'Pierwszy Event',
-                city:'Czestochowa',id:'1'
+                city:'Czestochowa',
+                id:'1'
             },{
                 date:'02.02.2024',
                 name:'Drugi Event', 
-                city:'Paryż',id:'2'
+                city:'Paryż',
+                id:'2'
             },{
                 date:'31.03.2024',
                 name:'Trzeci Event', 
-                city:'Los Angeles',id:'3'
+                city:'Los Angeles',
+                id:'3'
             } 
         ]
     

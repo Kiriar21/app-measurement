@@ -25,7 +25,6 @@ export default function SearchModule(props) {
                 <Col md={2}>
                     <Form.Control type='reset'
                                 className={`${style.width} ${style.bg} ${style.bgRed} my-3`}
-                                onClick={props.onClick}
                                 value='Wyczyść'/>
                 </Col>
             </Row>
