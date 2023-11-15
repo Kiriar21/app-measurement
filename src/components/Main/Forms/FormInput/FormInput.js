@@ -13,6 +13,7 @@ export default function FormInput(props){
                                 onChange={props.onChange} 
                                 className={`${style.bg} my-3 ${props.className}`}
                                 multiple={false}
+                                disabled={props.disabled}
                                 accept={props.acceptFile || '.001, .002, .003'}
                                 />
                     : <Form.Control type={props.typeInput} 
@@ -20,6 +21,7 @@ export default function FormInput(props){
                                 className={`${style.bg} my-3`}
                                 placeholder={props.placeholder}
                                 autoComplete='false'
+                                disabled={props.disabled}
                                 defaultValue={ props.defaultValue ?? ''}
                                 min={ props.min ?? '' }
                                 />

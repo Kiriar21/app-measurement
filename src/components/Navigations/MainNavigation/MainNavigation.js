@@ -3,9 +3,15 @@ import NavLinkModule from '../NavLinks/NavLink'
 import ButtonLogin from "../../Buttons/ButtonLogin/ButtonLogin"
 import { useParams } from "react-router-dom"
 import {Offline, Online} from 'react-detect-offline'
+import { useAuthDispatch, logout, useAuthState } from "../../../context/index"
 
 export default function MainNavigation(props) {
     const {id} = useParams();
+    const dispatch = useAuthDispatch()
+    const userDetails = useAuthState()
+    const handleLogout = () => {
+        logout(dispatch);
+    }
     return (
         <NavbarMain title="Menu Główne" bgColor="var(--Nav-color)">
                     <NavLinkModule eventKey='1' path={`${id}/statistic`} nameLink='Statystyki' />
@@ -18,7 +24,7 @@ export default function MainNavigation(props) {
                     <ButtonLogin eventKey='7' isDisabled={true} />
                 </Offline>
                 <Online>
-                    <ButtonLogin eventKey='8' isDisabled={false} />
+                    <ButtonLogin eventKey='8' isDisabled={false} user={userDetails.user} onClick={handleLogout}/>                   
                 </Online>
         </NavbarMain>
     )

@@ -1,4 +1,3 @@
-// import { useReducer } from 'react'
 import './App.css'
 import {BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Main from './components/Main/Main/Main'
@@ -15,8 +14,7 @@ import ListCompetitors from './pages/Measurements/ActuallyMeasurements/AmListCom
 import Scores from './pages/Measurements/ActuallyMeasurements/AmScores/AmScores'
 import SettingsEvent from './pages/Measurements/ActuallyMeasurements/AmSettingsEvent/AmSettingsEvent'
 import Statistic from './pages/Measurements/ActuallyMeasurements/AmStatistic/AmStatistic'
-// import { Reducer, initialState } from './Reducer'
-// import AuthContext from './context/AuthContext'
+import { AuthProvider} from './context/index'
 
 function App() {
   const main = (
@@ -43,8 +41,8 @@ function App() {
     </Main>
   ) 
   return (         
-   
-      <Router> 
+    <Router> 
+          <AuthProvider>
         <Routes>
           <Route path="/*" element={<MeasurementLayout main={main2} />} >
             <Route path=':id/statistic' element={<Statistic />} />
@@ -62,7 +60,8 @@ function App() {
             <Route path='*' element={<NotFound />} />
           </Route>
         </Routes>
-      </Router>
+          </AuthProvider>
+    </Router>
 );
 }
 

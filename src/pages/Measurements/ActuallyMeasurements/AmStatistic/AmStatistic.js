@@ -1,8 +1,6 @@
 import MainBackground from "../../../../components/Main/MainBackground/MainBackground"
 import TableBody from "../../../../components/Main/Forms/ActuallyMeasurement/AmStatistics/TableBodyStatistic"
 import H3Module from '../../../../components/Main/Texts/H3Module/H3Module'
-import AuthContext from "../../../../context/AuthContext"
-import { useContext } from "react"
 export default function Statistic(props){
     const theader = ['Nazwa klasyfikacji', 'Dystans(KM)', 'Liczba osób startujących', 'Liczba osób na mecie', 'Pozostało', 'Liczba kobiet startujących', 'Liczba kobiet na mecie', 'Pozostało kobiet', 'Liczba mężczyzn startujących', 'Liczba mężczyzn na mecie', 'Pozostało mężczyzn'       ]
     const tbody = [{
@@ -30,8 +28,6 @@ export default function Statistic(props){
         menMeta:0,
         menLeft:50
     }]
-    const authContext = useContext(AuthContext)
-    console.log(authContext)
     return(
         <MainBackground titlePage="Statystyki">
             <H3Module title='Bieg na czas'/>

@@ -6,7 +6,7 @@ export default function ButtonForm(props){
                 className={`${ props.colorBtn === 'red' ? style.bgRed : style.bgGreen}
                 ${props.className} 
                 shadow-none border-0 ${style.button} my-2`}
-                onClick={props.onClick}>
+                onClick={props.onClick} disabled={props.disabled}>
             {props.buttonTitle}
             {props.children}
         </Button>
