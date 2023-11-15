@@ -23,7 +23,7 @@ export default function MainNavigation(props) {
                 <Offline>
                     <ButtonLogin eventKey='7' isDisabled={true} />
                 </Offline>
-                <Online>
+                <Online>                    
                     <ButtonLogin eventKey='8' isDisabled={false} user={userDetails.user} onClick={handleLogout}/>                   
                 </Online>
         </NavbarMain>
