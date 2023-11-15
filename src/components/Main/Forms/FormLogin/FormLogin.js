@@ -2,12 +2,10 @@ import {Form} from 'react-bootstrap'
 import Button from '../../../Buttons/ButtonForm/ButtonForm'
 import FormInput from '../FormInput/FormInput'
 import { useNavigate } from 'react-router-dom'
-import {useState, useEffect} from 'react'
-import useAuth from '../../../../hooks/useAuth'
-
+import { useState } from 'react'
 
 export default function FormLogin(props){
-    const [auth, setAuth] = useAuth()
+    // const [auth, setAuth] = useAuth()
     const [email, setEmail] = useState('')
     // const [password, setPassword] = useState('')
 
@@ -16,20 +14,12 @@ export default function FormLogin(props){
     const check = async (e) => {
         e.preventDefault()
         try{
-            setAuth({
-                email: email,
-            })
+            e = email
             navigate(-1);
         } catch(err){
             console.log(err)
         }
     }
-
-    useEffect(() => {
-        if(auth){
-            navigate(-1);
-        }
-    })
 
     return (
         <Form method='POST'>

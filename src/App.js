@@ -1,4 +1,4 @@
-import { useReducer } from 'react'
+// import { useReducer } from 'react'
 import './App.css'
 import {BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Main from './components/Main/Main/Main'
@@ -15,11 +15,10 @@ import ListCompetitors from './pages/Measurements/ActuallyMeasurements/AmListCom
 import Scores from './pages/Measurements/ActuallyMeasurements/AmScores/AmScores'
 import SettingsEvent from './pages/Measurements/ActuallyMeasurements/AmSettingsEvent/AmSettingsEvent'
 import Statistic from './pages/Measurements/ActuallyMeasurements/AmStatistic/AmStatistic'
-import { Reducer, initialState } from './Reducer'
-import AuthContext from './context/AuthContext'
+// import { Reducer, initialState } from './Reducer'
+// import AuthContext from './context/AuthContext'
 
 function App() {
-  const [state, dispatch] = useReducer(Reducer, initialState)
   const main = (
     <Main>
         <Routes>
@@ -44,11 +43,7 @@ function App() {
     </Main>
   ) 
   return (         
-    <AuthContext.Provider value={{
-        user: state.user,
-        login: (user) => dispatch({ type: 'set-login', user}),
-        logout: () => dispatch({ type: 'set-logout' })
-    }}>
+   
       <Router> 
         <Routes>
           <Route path="/*" element={<MeasurementLayout main={main2} />} >
@@ -68,7 +63,6 @@ function App() {
           </Route>
         </Routes>
       </Router>
-    </AuthContext.Provider>
 );
 }
 
