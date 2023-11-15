@@ -2,7 +2,7 @@ import {Form} from 'react-bootstrap'
 import Button from '../../../Buttons/ButtonForm/ButtonForm'
 import FormInput from '../FormInput/FormInput'
 import { useNavigate } from 'react-router-dom'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import useAuth from '../../../../hooks/useAuth'
 
 
@@ -19,16 +19,18 @@ export default function FormLogin(props){
             setAuth({
                 email: email,
             })
-            navigate(0);
+            navigate(-1);
         } catch(err){
             console.log(err)
         }
     }
 
-    if(auth){
-        console.log(auth)
-        navigate(0);
-    }
+    useEffect(() => {
+        if(auth){
+            navigate(-1);
+        }
+    })
+
     return (
         <Form method='POST'>
             <FormInput controlId='formPlanTextEmail' 

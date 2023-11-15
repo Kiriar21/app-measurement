@@ -44,31 +44,31 @@ function App() {
     </Main>
   ) 
   return (         
-    <Router> 
-      <AuthContext.Provider value={{
-          user: state.user,
-          login: (user) => dispatch({ type: 'set-login', user}),
-          logout: () => dispatch({ type: 'set-logout' })
-      }}>
-      <Routes>
-        <Route path="/*" element={<MeasurementLayout main={main2} />} >
-          <Route path=':id/statistic' element={<Statistic />} />
-          <Route path=':id/edit' element={<Edit />} />
-          <Route path=':id/list-competitors' element={<ListCompetitors />} />
-          <Route path=':id/settings-event' element={<SettingsEvent />} />
-          <Route path=':id/scores' element={<Scores />} />
-          <Route path=':id/export-scores' element={<ExportScores />} />
-        </Route>
-        <Route path="/*" element={<MainLayout main={main} />}>
-          <Route path='new-measurement' element={<NewMeasurement />} />
-          <Route path='politics' element={<Politics />} />
-          <Route path='login' element={<Login />} />
-          <Route path='' element={<Homepage />} />
-          <Route path='*' element={<NotFound />} />
-        </Route>
-      </Routes>
-      </AuthContext.Provider>
-    </Router>
+    <AuthContext.Provider value={{
+        user: state.user,
+        login: (user) => dispatch({ type: 'set-login', user}),
+        logout: () => dispatch({ type: 'set-logout' })
+    }}>
+      <Router> 
+        <Routes>
+          <Route path="/*" element={<MeasurementLayout main={main2} />} >
+            <Route path=':id/statistic' element={<Statistic />} />
+            <Route path=':id/edit' element={<Edit />} />
+            <Route path=':id/list-competitors' element={<ListCompetitors />} />
+            <Route path=':id/settings-event' element={<SettingsEvent />} />
+            <Route path=':id/scores' element={<Scores />} />
+            <Route path=':id/export-scores' element={<ExportScores />} />
+          </Route>
+          <Route path="/*" element={<MainLayout main={main} />}>
+            <Route path='new-measurement' element={<NewMeasurement />} />
+            <Route path='politics' element={<Politics />} />
+            <Route path='login' element={<Login />} />
+            <Route path='' element={<Homepage />} />
+            <Route path='*' element={<NotFound />} />
+          </Route>
+        </Routes>
+      </Router>
+    </AuthContext.Provider>
 );
 }
 

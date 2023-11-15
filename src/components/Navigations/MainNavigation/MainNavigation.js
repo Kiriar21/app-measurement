@@ -4,7 +4,6 @@ import ButtonLogin from "../../Buttons/ButtonLogin/ButtonLogin"
 import { useParams } from "react-router-dom"
 import {Offline, Online} from 'react-detect-offline'
 
-
 export default function MainNavigation(props) {
     const {id} = useParams();
     return (
