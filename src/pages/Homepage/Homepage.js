@@ -46,6 +46,7 @@ export default function Login(props){
                     <SearchModule controlId='plainTextSearchbarHp' labelText="Wyszukaj po nazwie lub miejscowości" onClick={ e=> searching()}  onChange={e => {setSearchValue(e.target.value)}}/>
                     <TableBody theader={theader} tbody={tbody} />
                 </Form>
+                {/* Logika dla braku wyników itp */}
             </MainBackground>
     )
 }

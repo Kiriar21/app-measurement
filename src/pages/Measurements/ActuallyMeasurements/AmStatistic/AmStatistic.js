@@ -30,7 +30,6 @@ export default function Statistic(props){
     }]
     return(
         <MainBackground titlePage="Statystyki">
-           
             {
                 tbody 
                 ? (
@@ -42,9 +41,7 @@ export default function Statistic(props){
                     <H3Module title='Brak informacji o statystkach. 
                     Dodaj plik z danymi zawodników, żeby pojawiły się statystyki.' />
                 )
-
             }
-            
         </MainBackground>
     )
 }
