@@ -30,11 +30,21 @@ export default function Statistic(props){
     }]
     return(
         <MainBackground titlePage="Statystyki">
-            <H3Module title='Bieg na czas'/>
-            <TableBody theader={theader} tbody={tbody} />
+           
+            {
+                tbody 
+                ? (
+                    <>
+                    <H3Module title='Bieg na czas'/>
+                    <TableBody theader={theader} tbody={tbody} />
+                    </>
+                ) : (
+                    <H3Module title='Brak informacji o statystkach. 
+                    Dodaj plik z danymi zawodników, żeby pojawiły się statystyki.' />
+                )
+
+            }
             
-            {/* <H3Module title='Brak informacji o statystkach. 
-            Dodaj plik z danymi zawodników, żeby pojawiły się statystyki.' /> */}
         </MainBackground>
     )
 }
