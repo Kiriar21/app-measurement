@@ -6,7 +6,6 @@ import SearchModule from "../../components/Main/Forms/SearchModule/SearchModule"
 import TableBody from '../../components/Main/Forms/Homepage/TableBody/TableBody'
 import ButtonForm from '../../components/Buttons/ButtonForm/ButtonForm'
 import H3Module from '../../components/Main/Texts/H3Module/H3Module'
-import { useEffect } from 'react'
 
 export default function Login(props){
     const [searchValue, setSearchValue] = useState('')
@@ -14,12 +13,6 @@ export default function Login(props){
     const searching = () => {
         console.log(searchValue)
     }
-
-
-    useEffect(() => {
-        console.log('hehe')
-    },[])
-
     const theader = ['Data','Nazwa','Miejscowość','Edytuj','Usuń']
     const tbody = [
             {
@@ -39,7 +32,7 @@ export default function Login(props){
                 id:'3'
             } 
         ]
-    
+    // Dodać już pobieranie tbody z serwera na przyszłośc 
     return(
             <MainBackground titlePage="Wyniki Lokalne">
                 <Form>

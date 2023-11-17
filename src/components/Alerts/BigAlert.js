@@ -2,7 +2,9 @@ import {Alert} from 'react-bootstrap'
 import style from './BigAlert.module.css'
 export default function AlertSuccess(props){
     
-    
+    setTimeout(() =>{
+        window.location.reload()
+    },3000)
     return(
         <Alert 
             onClose={null}
@@ -11,7 +13,7 @@ export default function AlertSuccess(props){
             className={` ${style.alert} mt-5`} 
             key='success' 
             dismissible={props.dismissible === false ? false : true} 
-            onClick={setTimeout(() =>{window.location.reload()},3000)}> 
+            onClick={props.dspbaclick}> 
                 {props.alertContent}
         </Alert>
     )

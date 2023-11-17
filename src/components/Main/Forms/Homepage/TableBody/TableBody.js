@@ -38,7 +38,7 @@ export default function TableBody(props){
                                 alertSuccessContent='Zawody zostały usunięte.'
                                 alertDisplay="false"
                                 displayBigAlert="Pomyślnie usunięto bieg. Za chwile zostanie odświeżona strona."
-                                dspbaclick=""
+                                dspbaclick={setTimeout(() => {window.location.reload()},3000)}
                             />
                             </TDate>
                         </tr>
