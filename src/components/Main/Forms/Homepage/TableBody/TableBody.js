@@ -37,6 +37,8 @@ export default function TableBody(props){
                                 modalBtnRed='Anuluj'
                                 alertSuccessContent='Zawody zostały usunięte.'
                                 alertDisplay="false"
+                                displayBigAlert="Pomyślnie usunięto bieg. Za chwile zostanie odświeżona strona."
+                                dspbaclick=""
                             />
                             </TDate>
                         </tr>

@@ -3,8 +3,8 @@ import {Form, Modal} from 'react-bootstrap'
 import ButtonForm from '../../Buttons/ButtonForm/ButtonForm'
 import ButtonModal from '../../Buttons/ButtonModal/ButtonModal'
 import AlertSuccess from '../../Alerts/Alert/Alert'
+import BigAlert from '../../Alerts/BigAlert'
 import style from './ModalBasic.module.css'
-import ModalConfirm from '../ModalConfirm/ModalConfirm'
 
 export default function ModalBasic(props){
 
@@ -54,7 +54,7 @@ export default function ModalBasic(props){
                 props.alertDisplay !== "false" ? (
                     showAlert && <AlertSuccess onClick={ e => setShowAlert(false)}  variant='success' alertContent={props.alertSuccessContent}/>
                 ) : (
-                    showAlert && <ModalConfirm modalTitle="Usunięto" modalBody="Usuwanie przebiegło poprawnie."/> && alert("dzialam")
+                    showAlert && <BigAlert alertContent={props.displayBigAlert} onClick={props.dspbaclick}/>
                 )
             }
             
