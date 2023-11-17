@@ -13,7 +13,7 @@ export default function AlertSuccess(props){
             className={` ${style.alert} mt-5`} 
             key='success' 
             dismissible={props.dismissible === false ? false : true} 
-            onClick={props.dspbaclick}> 
+            onClick={setTimeout(() => {window.location.reload()},3000)}> 
                 {props.alertContent}
         </Alert>
     )
