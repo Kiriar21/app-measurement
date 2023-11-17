@@ -10,6 +10,7 @@ export default function Login(props){
             <H3Module title='Zarządzanie Wynikami'/>
                 <H4Module text="Pobieranie wszystkich wyników. Dla każdej klasyfikacji zostanie pobrany nowy plik.">
                     <ExportFiles />
+                    {/* Przerobienie export files na modul ktory bedzie pobieral z eindpointa pliki z wynikami */}
                 </H4Module>
                 <H4Module text="Chwilowy brak internetu? Dopiero teraz udało się zalogować? Zrób spójność wyników lokalnych z wynikami online.">
                     <ModalExport />

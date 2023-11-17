@@ -4,6 +4,7 @@ import ButtonForm from '../../Buttons/ButtonForm/ButtonForm'
 import ButtonModal from '../../Buttons/ButtonModal/ButtonModal'
 import AlertSuccess from '../../Alerts/Alert/Alert'
 import style from './ModalBasic.module.css'
+import ModalConfirm from '../ModalConfirm/ModalConfirm'
 
 export default function ModalBasic(props){
 
@@ -34,7 +35,6 @@ export default function ModalBasic(props){
                     backdrop="static" keyboard={false} 
                     aria-labelledby="contained-modal-title-vcenter" 
                     centered animation={false}>
-                
                     <Form action={props.formAction}>
                         <Modal.Header className={`${style.modalContent} d-flex justify-content-center`}>
                             <Modal.Title>{props.modalTitle}</Modal.Title>
@@ -50,7 +50,14 @@ export default function ModalBasic(props){
                     </Form>
             
             </Modal>
-            {showAlert && <AlertSuccess onClick={ e => setShowAlert(false)}  variant='success' alertContent={props.alertSuccessContent}/>}
+            {
+                props.alertDisplay !== "false" ? (
+                    showAlert && <AlertSuccess onClick={ e => setShowAlert(false)}  variant='success' alertContent={props.alertSuccessContent}/>
+                ) : (
+                    showAlert && <ModalConfirm modalTitle="Usunięto" modalBody="Usuwanie przebiegło poprawnie."/> && alert("dzialam")
+                )
+            }
+            
         </React.Fragment>
     )
 }

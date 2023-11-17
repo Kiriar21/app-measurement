@@ -29,13 +29,14 @@ export default function TableBody(props){
                             </TDate>
                             <TDate>
                             <ModalBasic 
-                                btnModalTitle='Usuń' formAction='/' 
+                                btnModalTitle='Usuń' formAction={`/${e.id}/del`} 
                                 bgColor='red'
                                 modalTitle='Usuwanie Imprezy' 
                                 modalBody='Czy na pewno chcesz usunąć wybraną impreze? Pamiętaj, że usunięcie imprezy w tej aplikacji usunie tylko dane z lokalnej bazy danych i stracisz kopie. Żeby usunąć całkowicie impreze, musisz wejść na aplikacje panelu administratora. '
                                 modalBtnGreen='Usuń' 
                                 modalBtnRed='Anuluj'
                                 alertSuccessContent='Zawody zostały usunięte.'
+                                alertDisplay="false"
                             />
                             </TDate>
                         </tr>
