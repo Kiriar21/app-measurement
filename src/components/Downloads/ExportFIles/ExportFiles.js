@@ -15,7 +15,6 @@ export default function ExportFiles(props){
             
         }
     }
-   
     return (
         <React.Fragment> 
             <ButtonForm buttonTitle="Pobierz Wyniki" onClick={checkValidate}/>

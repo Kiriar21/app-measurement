@@ -12,6 +12,11 @@ export default function Login(props){
     const navigate = useNavigate()
     const searching = () => {
         console.log(searchValue)
+        try{
+                // Dodać pobieranie biegów po searchvalue
+        } catch (e) {
+
+        }
     }
     const theader = ['Data','Nazwa','Miejscowość','Edytuj','Usuń']
     const tbody = [

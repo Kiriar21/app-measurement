@@ -3,6 +3,7 @@ import TableBody from "../../../../components/Main/Forms/ActuallyMeasurement/AmS
 import H3Module from '../../../../components/Main/Texts/H3Module/H3Module'
 export default function Statistic(props){
     const theader = ['Nazwa klasyfikacji', 'Dystans(KM)', 'Liczba osób startujących', 'Liczba osób na mecie', 'Pozostało', 'Liczba kobiet startujących', 'Liczba kobiet na mecie', 'Pozostało kobiet', 'Liczba mężczyzn startujących', 'Liczba mężczyzn na mecie', 'Pozostało mężczyzn'       ]
+    //Dodać pobieranie z bazy danych informacji o zawodach ( zawody powinny mieć dodatkową informacje o typie biegu)
     const tbody = [{
         name:'Krótka nazwa',
         distance:'5KM',
@@ -34,7 +35,7 @@ export default function Statistic(props){
                 tbody 
                 ? (
                     <>
-                    <H3Module title='Bieg na czas'/>
+                    <H3Module title='Lista klasyfikacji'/>
                     <TableBody theader={theader} tbody={tbody} />
                     </>
                 ) : (
