@@ -4,7 +4,10 @@ import H4Module from "../../../../components/Main/Texts/H4Module/H4Module"
 import ModalExport from '../../../../components/Modals/ModalExport/ModalExport'
 import ExportFiles from "../../../../components/Downloads/ExportFIles/ExportFiles"
 
+import { useAuthState } from "../../../../context/index"
+
 export default function Login(props){
+    const userDetails = useAuthState()
     return(
         <MainBackground titlePage="Exportowanie Wyników">
             <H3Module title='Zarządzanie Wynikami'/>
@@ -12,9 +15,12 @@ export default function Login(props){
                     <ExportFiles />
                     {/* Przerobienie export files na modul ktory bedzie pobieral z eindpointa pliki z wynikami */}
                 </H4Module>
-                <H4Module text="Chwilowy brak internetu? Dopiero teraz udało się zalogować? Zrób spójność wyników lokalnych z wynikami online.">
-                    <ModalExport />
-                </H4Module>
+                {
+                    userDetails.user && (                    
+                    <H4Module text="Chwilowy brak internetu? Dopiero teraz udało się zalogować? Zrób spójność wyników lokalnych z wynikami online.">
+                        <ModalExport />
+                    </H4Module>)
+                }
         </MainBackground>
     )
 }    
