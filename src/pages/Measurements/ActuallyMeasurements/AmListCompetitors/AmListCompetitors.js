@@ -14,6 +14,7 @@ export default function Login(props){
     const [filtrSex,setfiltrSex] = useState('') 
     const [filtrStatus,setfiltrStatus] = useState('')
     const theader =['Lp', 'Nr', 'Zawodnik', 'Płeć', 'Wiek','Data Urodzenia', 'Klasyfikacja', 'Kategoria', 'Kraj', 'Klub', 'Udział', 'Miejscowość', 'Zarządzanie']
+    //dodać pobieranie danych z serwera
     const tbody = [
         {
         counter:1,
@@ -46,13 +47,17 @@ export default function Login(props){
             <p>Jeżeli dane już są wgrane, z nowego pliku zostaną dodane tylko te osóby, których nie ma w bazie.</p>
         </React.Fragment>
     )
+
+        // DODAĆ DO RESETU USUNIECIE STATE'U - wyczyszczenie - kazdy przycisk reset musi to mieć
+
+
     useEffect(() => {
         console.log(file)
     }, [file])
     return(
         <MainBackground titlePage="Lista Zawodników">
             <ModalBasic 
-                btnModalTitle='Wgraj Dane' formAction='/:id/addCompetitors' 
+                btnModalTitle='Wgraj Dane'
                 modalTitle='Wgrywanie Danych' 
                 modalBody={bodyModal}
                 modalBtnGreen='Wgraj' 

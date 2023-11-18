@@ -22,6 +22,10 @@ export default function FormEvent(props) {
         name:'krotknazwa',
         title:'Krótka Nazwa'
     }]
+
+    //Dodać funkcje która zmienia dane w onchange selecta
+
+    //Dodać state, ktory bedzie sie uzueplnial danymi a po tym bedzie uzupelnial dane w inputach 
     return (
         <Container fluid>
             <Select controlId='nameClassChoose'

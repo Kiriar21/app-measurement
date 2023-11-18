@@ -17,6 +17,7 @@ export default function FormNewMeasurement(props){
     const check = async (e) => {
         e.preventDefault()
         try{
+            // Dodać pobieranie danych i wysyłanie na serwer 
             setShowAlert(true)
             setTimeout(() => {
                 navigate(`/${id}/statistic`)

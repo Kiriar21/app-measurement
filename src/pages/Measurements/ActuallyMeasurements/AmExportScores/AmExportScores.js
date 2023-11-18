@@ -12,7 +12,6 @@ export default function Login(props){
             <H3Module title='Zarządzanie Wynikami'/>
                 <H4Module text="Pobieranie wszystkich wyników. Dla każdej klasyfikacji zostanie pobrany nowy plik.">
                     <ExportFiles />
-                    {/* Przerobienie export files na modul ktory bedzie pobieral z eindpointa pliki z wynikami */}
                 </H4Module>
                 {
                     userDetails.user && (                    

@@ -33,6 +33,10 @@ export default function FormScores(props){
         title:'Kategoria M16-99'
     },]
     const theader=['Msc Open', 'Msc Kat', 'Msc Płeć', 'Nr', 'Zawodnik', 'Płeć', 'Klasyfikacja', 'Kategoria', 'Klub','Miejscowość','Czas','Czas Start','Czas Meta','Dystans (KM)','Średnie tempo']
+    // funkcja pobierania danych z serwera
+    // funkcja ktora obsluguje zmiane klasyfikacji i kategorii
+    // wysrodkowac wybory klas i kat
+    
     const tbody=[{
         placeOpen:1,
         placeCat:1,

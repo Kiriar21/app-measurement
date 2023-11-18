@@ -20,6 +20,7 @@
 *{
   margin:0px 0;
   padding: 0;
+  scroll-behavior:smooth;
 }
 body{
   color: var(--Text-color);
