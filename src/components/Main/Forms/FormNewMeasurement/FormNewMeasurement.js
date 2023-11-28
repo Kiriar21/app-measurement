@@ -9,8 +9,11 @@ export default function FormNewMeasurement(props){
     const [showAlert, setShowAlert] = useState(false);
     const [onLoading, setOnLoading] = useState(false);
     const [disabled, setDisabled] = useState(false);
-    const dateToday = new Date();
-    const dateNow = dateToday.toISOString().slice(0, 10)
+    let dateToday = new Date();
+    const offset = dateToday.getTimezoneOffset()
+    dateToday = new Date(dateToday.getTime() - offset*60*1000);
+    let dateNow = dateToday.toISOString().slice(0, 10) 
+    console.log(dateNow)
     const [, setDate] = useState(dateNow)
     const navigate = useNavigate()    
     const check = async (e) => {
@@ -21,7 +24,7 @@ export default function FormNewMeasurement(props){
                 setShowAlert(true)
             },1000)
             
-        } catch(err){
+        } catch(err) {
         } finally {
             setTimeout(() => {
                 setOnLoading(false) 
