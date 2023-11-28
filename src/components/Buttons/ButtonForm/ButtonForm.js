@@ -1,5 +1,6 @@
 import {Button} from 'react-bootstrap'
 import style from '../ButtonCss/Button.module.css'
+import LoadingIcon from '../../UI/loadingIcon'
 export default function ButtonForm(props){
     return (
         <Button
@@ -7,7 +8,7 @@ export default function ButtonForm(props){
                 ${props.className} 
                 shadow-none border-0 ${style.button} my-2`}
                 onClick={props.onClick} disabled={props.disabled}>
-            {props.buttonTitle}
+                {props.onLoading ? <LoadingIcon /> : props.buttonTitle }
             {props.children}
         </Button>
     )

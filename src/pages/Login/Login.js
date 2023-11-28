@@ -12,7 +12,7 @@ export default function Login(props){
         if(userDetails.user){
             navigate(-1)
         }
-    }, [])
+    }, [navigate, userDetails.user])
     
     return(
         <MainBackground titlePage="Logowanie" widthSize='mid'>

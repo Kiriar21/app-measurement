@@ -7,19 +7,29 @@ import Alert from '../../../Alerts/Alert/Alert'
 
 export default function FormNewMeasurement(props){
     const [showAlert, setShowAlert] = useState(false);
+    const [onLoading, setOnLoading] = useState(false);
+    const [disabled, setDisabled] = useState(false);
     const dateToday = new Date();
     const dateNow = dateToday.toISOString().slice(0, 10)
     const [, setDate] = useState(dateNow)
     const navigate = useNavigate()    
     const check = async (e) => {
         e.preventDefault()
+        setOnLoading(true)
         try{
-            setShowAlert(true)
             setTimeout(() => {
-                
-                navigate('/')
+                setShowAlert(true)
             },3000)
+            
         } catch(err){
+        } finally {
+            setTimeout(() => {
+                setOnLoading(false) 
+                setDisabled(true)
+            }, 3000);
+            setTimeout(() => {
+                navigate('/')
+            },5000)
         }
     }
     return (
@@ -41,7 +51,8 @@ export default function FormNewMeasurement(props){
                         typeInput='text'
                         // onChange={}
                         placeholder='Miejscowość' />
-            <Button onClick={check} buttonTitle="Utwórz" />
+            <Button onClick={check} onLoading={onLoading} disabled={disabled} buttonTitle="Utwórz" />
+            
             {showAlert  && <Alert variant='success' dismissible={false} alertContent='Udało się utworzyć nowy pomiar. Za chwile nastąpi przekierowanie na strone główną...'/>}
         </Form>
     )
