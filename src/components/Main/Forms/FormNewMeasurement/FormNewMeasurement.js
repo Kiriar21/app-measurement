@@ -19,17 +19,17 @@ export default function FormNewMeasurement(props){
         try{
             setTimeout(() => {
                 setShowAlert(true)
-            },3000)
+            },1000)
             
         } catch(err){
         } finally {
             setTimeout(() => {
                 setOnLoading(false) 
                 setDisabled(true)
-            }, 3000);
+            }, 1000);
             setTimeout(() => {
                 navigate('/')
-            },5000)
+            },2000)
         }
     }
     return (
