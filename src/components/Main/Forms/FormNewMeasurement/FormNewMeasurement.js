@@ -5,15 +5,18 @@ import Button from '../../../Buttons/ButtonForm/ButtonForm'
 import FormInput from '../FormInput/FormInput'
 import Alert from '../../../Alerts/Alert/Alert'
 
+function timeToForm() {
+    let dateToday = new Date();
+    dateToday = new Date(dateToday.getTime() - (dateToday.getTimezoneOffset()*60*1000));
+    let dateNow = dateToday.toISOString().slice(0, 10) 
+    return dateNow;
+}
+
 export default function FormNewMeasurement(props){
     const [showAlert, setShowAlert] = useState(false);
     const [onLoading, setOnLoading] = useState(false);
     const [disabled, setDisabled] = useState(false);
-    let dateToday = new Date();
-    const offset = dateToday.getTimezoneOffset()
-    dateToday = new Date(dateToday.getTime() - offset*60*1000);
-    let dateNow = dateToday.toISOString().slice(0, 10) 
-    console.log(dateNow)
+    const dateNow = timeToForm()
     const [, setDate] = useState(dateNow)
     const navigate = useNavigate()    
     const check = async (e) => {
