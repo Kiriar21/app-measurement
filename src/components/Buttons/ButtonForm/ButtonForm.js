@@ -8,7 +8,7 @@ export default function ButtonForm(props){
                 ${props.className} 
                 shadow-none border-0 ${style.button} my-2`}
                 onClick={props.onClick} disabled={props.disabled}>
-                {props.onLoading ? <LoadingIcon /> : props.buttonTitle }
+                {props.onLoading ? <LoadingIcon/> : props.buttonTitle }
             {props.children}
         </Button>
     )

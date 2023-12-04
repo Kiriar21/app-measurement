@@ -51,7 +51,7 @@ export default function ModalBasic(props){
             
             </Modal>
             {
-                props.alertDisplay !== "false" ? (
+                props.alertDisplay !== false ? (
                     showAlert && <AlertSuccess onClick={ e => setShowAlert(false)}  variant='success' alertContent={props.alertSuccessContent}/>
                 ) : (
                     showAlert && <BigAlert alertContent={props.displayBigAlert}/>

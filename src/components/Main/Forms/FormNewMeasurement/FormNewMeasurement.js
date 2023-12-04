@@ -25,17 +25,14 @@ export default function FormNewMeasurement(props){
         try{
             setTimeout(() => {
                 setShowAlert(true)
-            },1000)
-            
-        } catch(err) {
-        } finally {
-            setTimeout(() => {
                 setOnLoading(false) 
                 setDisabled(true)
-            }, 1000);
+            },1000)  
             setTimeout(() => {
                 navigate('/')
             },2000)
+        } catch(err) {
+            
         }
     }
     return (
@@ -58,7 +55,6 @@ export default function FormNewMeasurement(props){
                         // onChange={}
                         placeholder='Miejscowość' />
             <Button onClick={check} onLoading={onLoading} disabled={disabled} buttonTitle="Utwórz" />
-            
             {showAlert  && <Alert variant='success' dismissible={false} alertContent='Udało się utworzyć nowy pomiar. Za chwile nastąpi przekierowanie na strone główną...'/>}
         </Form>
     )

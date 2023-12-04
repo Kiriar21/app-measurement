@@ -9,11 +9,16 @@ import H3Module from '../../components/Main/Texts/H3Module/H3Module'
 
 export default function Login(props){
     const [searchValue, setSearchValue] = useState('')
+    const [onLoading, setOnLoading] = useState(false);
     const navigate = useNavigate()
     const searching = () => {
         console.log(searchValue)
+        setOnLoading(true)
         try{
                 // Dodać pobieranie biegów po searchvalue
+                setTimeout(() => {
+                    setOnLoading(false)
+                }, 3000);
         } catch (e) {
 
         }
@@ -47,7 +52,7 @@ export default function Login(props){
                     </H3Module>
                 </Form>
                 <Form className={`m-3`} >
-                    <SearchModule controlId='plainTextSearchbarHp' labelText="Wyszukaj po nazwie lub miejscowości" onClick={ e=> searching()}  onChange={e => {setSearchValue(e.target.value)}}/>
+                    <SearchModule controlId='plainTextSearchbarHp' onLoading={onLoading} labelText="Wyszukaj po nazwie lub miejscowości" onClick={ e=> searching()}  onChange={e => {setSearchValue(e.target.value)}}/>
                     <TableBody theader={theader} tbody={tbody} />
                 </Form>
                 {/* Logika dla braku wyników itp */}

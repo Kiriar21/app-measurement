@@ -20,11 +20,12 @@ export default function SearchModule(props) {
                                 />
                 </Col>
                 <Col md={2}>
-                    <Button onClick={props.onClick} className={`${style.width} my-3`} buttonTitle='Wyszukaj' />
+                    <Button onClick={props.onClick} className={`${style.width} my-3`} onLoading={props.onLoading} buttonTitle='Wyszukaj' />
                 </Col>
                 <Col md={2}>
                     <Form.Control type='reset'
                                 className={`${style.width} ${style.bg} ${style.bgRed} my-3`}
+                                onClick={props.onClick}
                                 value='Wyczyść'/>
                 </Col>
             </Row>
