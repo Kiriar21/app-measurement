@@ -6,8 +6,8 @@ const {sessionKeySecret} = require('./config');
 const helmet = require('helmet'); 
 const rareLimiter = require('../app/middleware/rare-limiter-middleware');
 
-require('../db/mongoose_local')
-require('../db/mongoose_online')
+const localDB = require('../db/mongoose_local')
+const onlineDB = require('../db/mongoose_online')
 
 app.use(helmet({
     contentSecurityPolicy: {
