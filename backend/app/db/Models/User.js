@@ -50,8 +50,23 @@ const UserSchema = new Schema({
         type: Boolean,
         default: false,
     },
-    // time_start: {}, 
-    // time_end: {},
+    time_start: {
+        type: Array,
+        default: [],
+    }, 
+    time_end: {
+        type: Array,
+        default: [],
+    },
+    place: {
+        type: Number,
+    },
+    place_gender: {
+        type: Number,
+    },
+    place_age: {
+        type: Number,
+    }
 });
 
 const User = mongoose.model('User', UserSchema);
