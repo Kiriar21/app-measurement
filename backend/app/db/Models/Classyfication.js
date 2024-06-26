@@ -1,4 +1,5 @@
 const {mongoose, Schema} = require('mongoose');
+const Statistic = require('./Statistic');
 
 const ClassyficationSchema = new Schema({
     name: {
@@ -7,7 +8,7 @@ const ClassyficationSchema = new Schema({
         unique: true,
     },
     distance: {
-        type: String,
+        type: Number,
         trim: true,
     },
     type_of_event: {
@@ -18,6 +19,14 @@ const ClassyficationSchema = new Schema({
     date_and_time: {
         type: Date,
         default: Date.now(),
+    },
+    impuls_number_start: {
+        type: Number,
+        default: 1,
+    },
+    impuls_number_finish: {
+        type: Number,
+        default: 1,
     },
     category_open: [
         { exist: Boolean, default: true }, 
@@ -33,7 +42,7 @@ const ClassyficationSchema = new Schema({
     },
     statistics: [{
         type: Schema.Types.ObjectId,
-        ref: 'Statistic',
+        ref: Statistic,
     }]
 });
 

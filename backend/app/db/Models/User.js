@@ -5,6 +5,18 @@ const UserSchema = new Schema({
         type: Number,
         required: true,
     },
+    chip_number: {
+        type: Number,
+        required: true,
+    },
+    classyfication: {
+        type: String,
+        required: true,
+    },
+    category: {
+        type: String,
+        required: true,
+    },
     competitor: {
         type: String,
         required: true,
@@ -23,28 +35,25 @@ const UserSchema = new Schema({
     },
     country: {
         type: String,
+        required: true,
+    },
+    location: {
+        type: String,
+        default: '',
     },
     club: {
         type: String,
         default: '',
     },
-    status: {
-        type: String,
-        default: 'Udział',
-    },
-    location: {
-        type: String,
-    },
-    classyfication: {
-        type: String,
-        required: true,
-    },
-    category: {
-        type: String,
-        required: true,
-    },
     tel: {
         type: String,
+        default: '',
+    },
+    //REST 
+    status: {
+        type: String,
+        enum: ['DNF', 'DNS', 'DNQ', 'START'],
+        default: 'START',
     },
     finished: {
         type: Boolean,
@@ -57,6 +66,18 @@ const UserSchema = new Schema({
     time_end: {
         type: Array,
         default: [],
+    },
+    time_netto: {
+        type: Date,
+    },
+    time_brutto: {
+        type: Date,
+    },
+    time_avg: {
+        type: Date,
+    },
+    diff_time: {
+        type: Date,
     },
     place: {
         type: Number,
