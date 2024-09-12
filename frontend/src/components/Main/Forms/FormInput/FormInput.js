@@ -22,7 +22,7 @@ export default function FormInput(props){
                                 placeholder={props.placeholder}
                                 autoComplete='false'
                                 disabled={props.disabled}
-                                defaultValue={ props.defaultValue ?? ''}
+                                value={ props.value ?? ''}
                                 min={ props.min ?? '' }
                                 />
                 }

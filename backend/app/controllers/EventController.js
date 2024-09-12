@@ -11,7 +11,6 @@ const createEvent = async (req, res) => {
     }
 }
 
-
 const formatDate = (date) => {
     const d = new Date(date);
     const day = String(d.getDate()).padStart(2, '0');
@@ -44,10 +43,6 @@ const getEvents = async (req, res) => {
 
         const sortOptions = { [sortField]: sortOrder === 'asc' ? 1 : -1 };
 
-        // Logowanie filtrów i opcji sortowania
-        console.log("Query filter:", filter);
-        console.log("Sort options:", sortOptions);
-
         const skip = (page - 1) * limit;
         const events = await Event.find(filter)
                                   .sort(sortOptions)
@@ -75,8 +70,53 @@ const getEvents = async (req, res) => {
     }
 };
 
+const getEventByIdEdit = async (req, res) => {
+    try {
+        const event = await Event.findOne({ eventId: req.params.id });
+        
+        if (!event) {
+            return res.status(404).send({ error: 'Nie znaleziono wydarzenia o podanym ID.' });
+        }
 
+        // Konwersja daty do formatu YYYY-MM-DD dla input typu date w HTML
+        const isoDate = new Date(event.date).toISOString().slice(0, 10);
 
+        const formattedEvent = {
+            date: isoDate,  // Data w formacie YYYY-MM-DD
+            name: event.name,
+            localization: event.localization,
+            id: event.eventId
+        };
+
+        res.status(200).send(formattedEvent);
+    } catch (e) {
+        console.error("Error fetching event: ", e);
+        res.status(500).send({ error: 'Wystąpił błąd podczas pobierania wydarzenia.' });
+    }
+};
+
+const updateEventByIdEdit = async (req, res) => {
+    try {
+        const eventId = req.params.id;
+        const updates = req.body;
+
+        console.log("Updates: ", updates);
+
+        const updatedEvent = await Event.findOneAndUpdate({ eventId }, updates, { new: true });
+
+        if (!updatedEvent) {
+            return res.status(404).send({ error: 'Nie znaleziono wydarzenia o podanym ID.' });
+        }
+
+        res.status(200).send({
+            message: 'Wydarzenie zostało pomyślnie zaktualizowane.',
+            updatedEvent
+        });
+    } catch (e) {
+        console.error("Error updating event: ", e);
+        res.status(500).send({ error: 'Wystąpił błąd podczas aktualizacji wydarzenia.' });
+    }
+};
 
 const deleteEvent = async (req, res) => {
     try {
@@ -93,4 +133,4 @@ const deleteEvent = async (req, res) => {
     }
 };
 
-module.exports = { createEvent, getEvents, deleteEvent};
+module.exports = { createEvent, getEvents, deleteEvent, getEventByIdEdit, updateEventByIdEdit};

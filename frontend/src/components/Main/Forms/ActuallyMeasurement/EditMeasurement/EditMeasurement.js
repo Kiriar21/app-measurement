@@ -1,9 +1,10 @@
 import {Form} from 'react-bootstrap'
-import {useState} from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import {useState, useEffect} from 'react'
+import { useParams } from 'react-router-dom'
 import Button from '../../../../Buttons/ButtonForm/ButtonForm'
 import FormInput from '../../FormInput/FormInput'
 import Alert from '../../../../Alerts/Alert/Alert'
+import axios from 'axios';
 
 export default function FormNewMeasurement(props){
     const { id } = useParams()
@@ -12,42 +13,55 @@ export default function FormNewMeasurement(props){
     const dateNow = dateToday.toISOString().slice(0, 10)
     const [date, setDate] = useState(dateNow)
     const [name, setName] = useState('')
-    const [city, setCity] = useState('')
-    const navigate = useNavigate()
+    const [localization, setlocalization] = useState('')
+
+    useEffect(() => {
+        const fetchEventData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5001/api/event/${id}/edit`);  // Wywołanie API
+                const eventData = response.data;
+                setDate(eventData.date);
+                setName(eventData.name);
+                setlocalization(eventData.localization);
+            } catch (err) {
+                console.log("Błąd przy pobieraniu danych wydarzenia: ", err);
+            }
+        };
+        fetchEventData();
+    }, [id]);
+
     const check = async (e) => {
-        e.preventDefault()
-        try{
-            // Dodać pobieranie danych i wysyłanie na serwer 
-            setShowAlert(true)
-            setTimeout(() => {
-                navigate(`/${id}/statistic`)
-            }, 3000)
-        } catch(err){
-            console.log(err)
+        e.preventDefault();
+        try {
+            const updatedData = { date, name, localization };
+            await axios.put(`http://localhost:5001/api/event/${id}/edit`, updatedData);  // Zapis aktualizacji
+            setShowAlert(true);
+        } catch (err) {
+            console.log("Błąd przy zapisywaniu danych: ", err);
         }
-    }
+    };
+
     return (
         <Form>
             <FormInput controlId='formDateEvent'
                         labelText='Data'
                         typeInput='date'
-                        defaultValue={date}
-                        min={date}
+                        value={date}
                         onChange={ e => setDate(e.target.value)}/>
             <FormInput controlId='formPlaintextName'
                         labelText='Nazwa'
                         typeInput='text'
-                        defaultValue={name}
+                        value={name}
                         onChange={ e => setName(e.target.value)}
                         placeholder='Nazwa' />
-            <FormInput controlId='formPlaintextCity'
+            <FormInput controlId='formPlaintextlocalization'
                         labelText='Miejscowość'
                         typeInput='text'
-                        defaultValue={city}
-                        onChange={ e => setCity(e.target.value)}
+                        value={localization}
+                        onChange={ e => setlocalization(e.target.value)}
                         placeholder='Miejscowość' />
             <Button buttonTitle="Zapisz" onClick={check} />
-            {showAlert  && <Alert variant='success' dismissible={false} alertContent='Zmiany zostały zapisane. Za chwile nastąpi przekierowanie na strone ze statystykami'/>}
+            {showAlert  && <Alert variant='success' dismissible={true} alertContent='Zmiany zostały zapisane.'/>}
         </Form>
     )
 }
