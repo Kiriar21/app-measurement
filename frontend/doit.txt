@@ -1,0 +1,14 @@
+Później:
+1. Na później zalogowana osoba, powinna nie móc przejść na logowanie - jedynie może się wylogować
+
+
+
+Teraz:
+1. LOGIKA CAŁEJ STRONY - podłączyć useReducer i state'y + funkcje, zeby potem tylko wystarczyło wrzucić endpointy
+
+Do it:
+0. Dodać alert error - do wypisywania wszelakich błędów. ERROR BOUNDARY nie sluzy do obslugi wszystkich bledow (throw new Error) tylko do oblslugi bledow na stronie gdy sie cos nie powiedzie
+0.01 - dodać jeden alert, który bedzie na alert success i alert error
+0.1. Pousuwać w każdym formie action = po co mi ...
+1. Posprawdzać zakomentowane fragmenty kodu i dorobić logike do nich.
+2. Dodać loader żeby na przyciskach sie wyswietlalo kółko do póki serwer nie zwróci odpowiedzi.

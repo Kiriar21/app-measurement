@@ -39,11 +39,7 @@ const ClassyficationSchema = new Schema({
     categories: {
         type: Array,
         default: [],  
-    },
-    statistics: [{
-        type: Schema.Types.ObjectId,
-        ref: Statistic,
-    }]
+    }
 });
 
 const Classyfication = mongoose.model('Classyfication', ClassyficationSchema);

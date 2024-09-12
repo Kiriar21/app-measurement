@@ -7,13 +7,23 @@ import ButtonLink from '../../../../Buttons/ButtonLink/ButtonLink'
 import ModalBasic from '../../../../Modals/ModalBasic/ModalBasic'
 
 export default function TableBody(props){
+
+    const renderSortIcon = (field) => {
+        if (props.sortField === field) {
+            return props.sortOrder === 'asc' ? '🔼' : '🔽';
+        }
+        return ''; 
+    };
+
     return (
         <Table>
             <Thead>
-                <tr>
-                    {props.theader.map( (th) => {
-                        return <THeader key={th} title={th} />
-                    })}
+                <tr style={{"cursor":"pointer"}}>
+                    <THeader onClick={() => { props.handleSort('date'); }} title={`Data ${renderSortIcon('date')}`} />
+                    <THeader onClick={() => { props.handleSort('name'); }} title={`Nazwa ${renderSortIcon('name')}`} />
+                    <THeader onClick={() => { props.handleSort('localization'); }} title={`Miejscowość ${renderSortIcon('localization')}`} />
+                    <THeader title="Edytuj" />
+                    <THeader title="Usuń" />
                 </tr>
             </Thead>
             <Tbody>
@@ -29,7 +39,7 @@ export default function TableBody(props){
                             </TDate>
                             <TDate>
                             <ModalBasic 
-                                btnModalTitle='Usuń' formAction={`/${e.id}/del`} 
+                                btnModalTitle='Usuń' formAction="" 
                                 bgColor='red'
                                 modalTitle='Usuwanie Imprezy' 
                                 modalBody='Czy na pewno chcesz usunąć wybraną impreze? Pamiętaj, że usunięcie imprezy w tej aplikacji usunie tylko dane z lokalnej bazy danych i stracisz kopie. Żeby usunąć całkowicie impreze, musisz wejść na aplikacje panelu administratora. '
@@ -37,6 +47,8 @@ export default function TableBody(props){
                                 modalBtnRed='Anuluj'
                                 alertSuccessContent='Zawody zostały usunięte.'
                                 alertDisplay={true}
+                                eventId={e.id}
+                                fetchEvents={props.fetchEvents}
                                 displayBigAlert="Pomyślnie usunięto bieg. Za chwile zostanie odświeżona strona."
                             />
                             </TDate>

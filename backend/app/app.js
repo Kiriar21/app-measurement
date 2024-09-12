@@ -1,32 +1,37 @@
 const express = require('express');
-const app = express()
-
+const cors = require('cors');
+const helmet = require('helmet');
 const session = require('express-session');
-const {sessionKeySecret} = require('./config');
-const helmet = require('helmet'); 
 const rareLimiter = require('../app/middleware/rare-limiter-middleware');
+const { sessionKeySecret } = require('./config');
+const localDB = require('./db/mongoose_connection');
+const eventsRoutes = require('./routes/api'); // Import tras z API
 
-const localDB = require('../db/mongoose_local')
-const onlineDB = require('../db/mongoose_online')
+const app = express();
 
+// Middleware
+app.use(cors());
+app.use(express.json()); // Pozwala na parsowanie JSON w request body
 app.use(helmet({
     contentSecurityPolicy: {
         directives: {
             defaultSrc: ["'self'"],
-            scriptSrc: ["'self'", "'unsafe-inline'" , "cdn.jsdelivr.net"],
-            styleSrc: ["'self'", "'unsafe-inline'" , "cdn.jsdelivr.net"]
+            scriptSrc: ["'self'", "'unsafe-inline'", "cdn.jsdelivr.net"],
+            styleSrc: ["'self'", "'unsafe-inline'", "cdn.jsdelivr.net"]
         }
     }
-}))
+}));
 
 app.use(session({
-    // secret: sessionKeySecret - comment, because in opinion programmers -  more carefully is holding secret key in code not in .env ... 
-    secret: '5n324nfnofn3ir34ni5n345n3i5n3n5i3n54i34ni3nsifneuinferign34i353453fnewvnenviregn4eign4ir4n3i5n3fi3n3ini3vinigvri3rtin35ni345invinvfivfiredngireni345i34n534i53ni543i54ni3n5n324nfnofn3ir34ni5n345n3i45n3n5i3n54i34ni3nvwsdvnih324i234i2n423in4i2n43i2n34i`', 
+    secret: sessionKeySecret,
     saveUninitialized: true,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 },
+    cookie: { maxAge: 1000 * 60 * 60 * 24 }, // 1 dzień
     resave: false,
-}))
+}));
 
-app.use(rareLimiter)
+app.use(rareLimiter);
+
+// Rejestracja tras
+app.use('/api', eventsRoutes); // Użycie tras pod ścieżką /api
 
 module.exports = app;

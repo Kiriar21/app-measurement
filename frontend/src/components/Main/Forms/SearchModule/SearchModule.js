@@ -1,6 +1,5 @@
 import {Row, Form ,Col} from 'react-bootstrap'
 import style from '../FormInput/FormInput.module.css'
-import Button from '../../../Buttons/ButtonForm/ButtonForm'
 import React from 'react'
 
 export default function SearchModule(props) {
@@ -14,18 +13,25 @@ export default function SearchModule(props) {
                     <Form.Control type='search' 
                                 onChange={props.onChange} 
                                 className={`${style.bg} ${style.width} my-3`}
-                                placeholder='Wyszukaj...'
+                                placeholder='Wyszukaj po nazwie lub miejscowości'
                                 autoComplete='false'
                                 id={props.controlId}
+                                value={props.searchValue}
                                 />
                 </Col>
-                <Col md={2}>
-                    <Button onClick={props.onClick} className={`${style.width} my-3`} onLoading={props.onLoading} buttonTitle='Wyszukaj' />
+                <Col md={4}>
+                    <Form.Control
+                        type='date' 
+                        onChange={props.onDateChange} 
+                        className={`${style.bg} ${style.width} my-3`}
+                        placeholder='Wyszukaj po dacie'
+                        value={props.dateValue}
+                    />
                 </Col>
-                <Col md={2}>
+                <Col md={4}>
                     <Form.Control type='reset'
                                 className={`${style.width} ${style.bg} ${style.bgRed} my-3`}
-                                onClick={props.onClick}
+                                onClick={props.onClear}
                                 value='Wyczyść'/>
                 </Col>
             </Row>

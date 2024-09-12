@@ -2,14 +2,11 @@ import React, {useState} from 'react'
 import {Form, Modal} from 'react-bootstrap'
 import ButtonForm from '../../Buttons/ButtonForm/ButtonForm'
 import ButtonModal from '../../Buttons/ButtonModal/ButtonModal'
-import AlertSuccess from '../../Alerts/Alert/Alert'
-import BigAlert from '../../Alerts/BigAlert'
 import style from './ModalBasic.module.css'
 
 export default function ModalBasic(props){
 
     const [showModal, setShowModal] = useState(false)
-    const [showAlert, setShowAlert] = useState(false)
 
     const handleClose = () => {
         setShowModal(false)
@@ -19,11 +16,21 @@ export default function ModalBasic(props){
 
     const check = async (e) => {
         e.preventDefault()
-        try{    
-            setShowModal(false)
-            setShowAlert(true)
-        }catch(e){
 
+        try {
+            const response = await fetch(`http://localhost:5001/api/events/${props.eventId}`, {
+                method: 'DELETE',
+            });
+    
+            if (response.ok) {
+                setShowModal(false);
+                props.fetchEvents();
+            } else {
+                console.error('Błąd podczas usuwania eventu');
+                console.log(response)
+            }
+        } catch (e) {
+            console.error("Error:", e);
         }
     }
 
@@ -48,16 +55,7 @@ export default function ModalBasic(props){
                             <ButtonModal buttonTitle={props.modalBtnRed} bgColor='red' className='w-100' onClick={handleClose} />
                         </Modal.Footer>
                     </Form>
-            
             </Modal>
-            {
-                props.alertDisplay !== false ? (
-                    showAlert && <AlertSuccess onClick={ e => setShowAlert(false)}  variant='success' alertContent={props.alertSuccessContent}/>
-                ) : (
-                    showAlert && <BigAlert alertContent={props.displayBigAlert}/>
-                )
-            }
-            
         </React.Fragment>
     )
 }
