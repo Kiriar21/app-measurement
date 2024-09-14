@@ -25,7 +25,7 @@ export default function Login(props) {
                 query += `&date=${searchDate}`; 
             }
     
-            const response = await fetch(`http://localhost:5001/api/events${query}`);
+            const response = await fetch(`http://localhost:5001/api/getEvents${query}`);
             const data = await response.json();
             setTbody(data.events);
             setOnLoading(false);
@@ -51,7 +51,7 @@ export default function Login(props) {
         setSearchDate('');
         setOnLoading(true);
         try {
-            const response = await fetch(`http://localhost:5001/api/events?sortField=${sortField}&sortOrder=${sortOrder}`);
+            const response = await fetch(`http://localhost:5001/api/getEvents?sortField=${sortField}&sortOrder=${sortOrder}`);
             const data = await response.json();
             setTbody(data.events);
             setOnLoading(false);

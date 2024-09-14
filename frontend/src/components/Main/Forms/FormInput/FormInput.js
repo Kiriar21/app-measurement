@@ -13,8 +13,9 @@ export default function FormInput(props){
                                 onChange={props.onChange} 
                                 className={`${style.bg} my-3 ${props.className}`}
                                 multiple={false}
+                                name={props.name ? props.name : ''}
                                 disabled={props.disabled}
-                                accept={props.acceptFile || '.001, .002, .003'}
+                                accept={props.acceptFile || '.001, .002, .003, .004, .005, .006, .007, .008, .009'}
                                 />
                     : <Form.Control type={props.typeInput} 
                                 onChange={props.onChange} 

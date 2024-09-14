@@ -1,4 +1,5 @@
 import React,{ useState, useEffect } from "react"
+import { useParams } from "react-router-dom"
 import { Form } from "react-bootstrap"
 import SearchModule from "../../../../components/Main/Forms/SearchModule/SearchModule"
 import MainBackground from "../../../../components/Main/MainBackground/MainBackground"
@@ -8,6 +9,7 @@ import ModalBasic from "../../../../components/Modals/ModalBasic/ModalBasic"
 import FormInput from '../../../../components/Main/Forms/FormInput/FormInput'
 
 export default function Login(props){
+    const {id} = useParams()
     const [file, setFile] = useState('')
     const [searchBar,setSearchBar] = useState('') 
     const [sortSel,setsortSel] = useState('') 
@@ -39,6 +41,8 @@ export default function Login(props){
             <FormInput controlId='fileDataCompetitors'
                         labelText='Wybierz plik z danymi'
                         typeInput='file'
+                        name='file'
+                        enctype='multipart/form-data'
                         onChange={e=>{setFile(e.target.files[0])}}
                         acceptFile='.csv'
                         lg={10}
@@ -48,8 +52,37 @@ export default function Login(props){
         </React.Fragment>
     )
 
-        // DODAĆ DO RESETU USUNIECIE STATE'U - wyczyszczenie - kazdy przycisk reset musi to mieć
+    const uploadCSV = async (e) => {
+        e.preventDefault();
 
+        if (!file) {
+            alert('Proszę wybrać plik CSV przed przesłaniem.');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+                const response = await fetch(`http://localhost:5001/api/event/${id}/uploadFile`, {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    alert(data.message);
+                } else {
+                    const errorData = await response.json();
+                    alert(`Błąd: ${errorData.error}`);
+                }
+            } catch (error) {
+                console.error('Błąd przesyłania pliku:', error);
+                alert('Wystąpił błąd podczas przesyłania pliku');
+            }
+    }
+
+        // DODAĆ DO RESETU USUNIECIE STATE'U - wyczyszczenie - kazdy przycisk reset musi to mieć
 
     useEffect(() => {
         console.log(file)
@@ -62,6 +95,10 @@ export default function Login(props){
                 modalBody={bodyModal}
                 modalBtnGreen='Wgraj' 
                 secondButton={true}
+                ownFunctions={true}
+                onClick={uploadCSV}
+                onClick2={uploadCSV} // Na ten moment zamiana i podmiana nowymi to to samo.
+                onClose={()=>{setFile('')}}
                 secondButtonTitle='Usuń poprzednie dane i zastąp nowymi'
                 modalBtnRed='Anuluj'
                 alertSuccessContent='Dane zawodników zostały zaktualizowane.'

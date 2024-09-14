@@ -10,6 +10,9 @@ export default function ModalBasic(props){
 
     const handleClose = () => {
         setShowModal(false)
+        if(props.onClose){
+            props.onClose()
+        }
     }
 
     const handleShow = () => setShowModal(true)
@@ -18,13 +21,14 @@ export default function ModalBasic(props){
         e.preventDefault()
 
         try {
-            const response = await fetch(`http://localhost:5001/api/events/${props.eventId}`, {
+            const response = await fetch(`http://localhost:5001/api/event/${props.eventId}`, {
                 method: 'DELETE',
             });
     
             if (response.ok) {
                 setShowModal(false);
-                props.fetchEvents();
+                await props.fetchEvents();
+                console.log("WYWOLALEM SIE.")
             } else {
                 console.error('Błąd podczas usuwania eventu');
                 console.log(response)
@@ -50,9 +54,18 @@ export default function ModalBasic(props){
                             {props.modalBody}
                         </Modal.Body>
                         <Modal.Footer className={`${style.modalContent}`}>
-                            <ButtonForm buttonTitle={props.modalBtnGreen} className='w-100' onClick={check}/>
-                            {props.secondButton && <ButtonForm buttonTitle={props.secondButtonTitle} className='w-100' onClick={check}/> } 
-                            <ButtonModal buttonTitle={props.modalBtnRed} bgColor='red' className='w-100' onClick={handleClose} />
+                            {props.ownFunctions ? (
+                                <>
+                                <ButtonForm buttonTitle={props.modalBtnGreen} className='w-100' onClick={props.onClick}/>
+                                {props.secondButton && <ButtonForm buttonTitle={props.secondButtonTitle} className='w-100' onClick={props.onClick2}/> } 
+                                <ButtonModal buttonTitle={props.modalBtnRed} bgColor='red' className='w-100' onClick={handleClose} />
+                                </>
+                            ) : (
+                                <>
+                                <ButtonForm buttonTitle={props.modalBtnGreen} className='w-100' onClick={check}/>
+                                <ButtonModal buttonTitle={props.modalBtnRed} bgColor='red' className='w-100' onClick={handleClose} />
+                                </>
+                            )}
                         </Modal.Footer>
                     </Form>
             </Modal>

@@ -1,47 +1,81 @@
-const {mongoose, Schema} = require('mongoose');
-const Statistic = require('./Statistic');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const ClassyficationSchema = new Schema({
+const ClassificationSchema = new Schema({
+    event: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Event',
+        required: [true, 'Pole "event" jest wymagane'],
+    },
     name: {
         type: String,
+        required: [true, 'Nazwa klasyfikacji jest wymagana'],
         trim: true,
-        unique: true,
+        minlength: [3, 'Nazwa klasyfikacji musi mieć co najmniej 3 znaki'],
     },
     distance: {
         type: Number,
-        trim: true,
+        required: [true, 'Dystans jest wymagany'],
+        min: [0, 'Dystans nie może być ujemny'],
     },
     type_of_event: {
         type: String,
-        default: 'Bieg na czas',
+        required: [true, 'Typ wydarzenia jest wymagany'],
         trim: true,
+        default: 'Bieg na czas',
+        minlength: [3, 'Typ wydarzenia musi mieć co najmniej 3 znaki'],
     },
     date_and_time: {
         type: Date,
-        default: Date.now(),
+        required: [true, 'Data i czas wydarzenia są wymagane'],
+        default: Date.now,
     },
     impuls_number_start: {
         type: Number,
+        required: [true, 'Numer impulsu startu jest wymagany'],
+        min: [1, 'Numer impulsu startu musi być większy lub równy 1'],
         default: 1,
     },
     impuls_number_finish: {
         type: Number,
+        required: [true, 'Numer impulsu mety jest wymagany'],
+        min: [1, 'Numer impulsu mety musi być większy lub równy 1'],
         default: 1,
     },
-    category_open: [
-        { exist: Boolean, default: true }, 
-        { number_of_position: Number, default: 3 }
+    category_open: {
+        exist: {
+            type: Boolean,
+            default: true,
+        },
+        number_of_position: {
+            type: Number,
+            default: 3,
+            min: [1, 'Liczba pozycji musi być większa lub równa 1'],
+        },
+    },
+    category_age: {
+        exist: {
+            type: Boolean,
+            default: true,
+        },
+        number_of_position: {
+            type: Number,
+            default: 3,
+            min: [1, 'Liczba pozycji musi być większa lub równa 1'],
+        },
+    },
+    categories: [
+        {
+            type: String,
+            trim: true,
+        },
     ],
-    category_age: [
-        { exist: Boolean, default: true }, 
-        { number_of_position: Number, default: 3 }
-    ],
-    categories: {
-        type: Array,
-        default: [],  
-    }
+}, {
+    timestamps: true,
 });
 
-const Classyfication = mongoose.model('Classyfication', ClassyficationSchema);
+ClassificationSchema.index({ event: 1, name: 1 }, { unique: true });
 
-module.exports = Classyfication;
+const Classification = mongoose.model('Classification', ClassificationSchema);
+
+module.exports = Classification;

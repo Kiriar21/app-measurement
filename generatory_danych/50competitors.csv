@@ -1,0 +1,121 @@
+NrZawodnika,NrChip,Klasyfikacja,Kategoria,Imie,Nazwisko,Plec,Wiek,DataUrodzenia,Panstwo,Miasto,NazwaKlubu,Telefon
+1,1,42KM,K50-69,Natasza,Kleban,K,67,1957-05-20,POL,W¹growiec,Skawina Running Team,694035874
+2,2,10KM,M30-49,Kamil,Szkopek,M,46,1977-12-28,POL,Leszno,Pi³a Running Team,697866709
+3,3,10KM,M70-99,Kazimierz,Mol,M,74,1949-11-15,POL,P³oñsk,Malbork Running Team,693231515
+4,4,8KM,K30-49,Ewelina,Broniarek,K,42,1981-11-03,POL,Jas³o,Myszków Running Team,669858406
+5,5,21KM,K50-69,Apolonia,Rozumek,K,65,1959-02-05,POL,Piastów,Nysa Running Team,608514263
+6,6,21KM,K30-49,Anita,Molak,K,46,1978-08-27,POL,Oœwiêcim,Police Running Team,483200263
+7,7,10KM,M30-49,Jakub,Melcer,M,47,1977-08-02,POL,Malbork,Œwinoujœcie Running Team,500304504
+8,8,10KM,M70-99,Wiktor,Zieja,M,74,1949-11-24,POL,Szczecinek,Jelenia Góra Running Team,486975933
+9,9,21KM,M70-99,Witold,MoŸdzierz,M,71,1953-07-24,POL,Wroc³aw,Polkowice Running Team,487834490
+10,10,8KM,M70-99,Olaf,Solarczyk,M,78,1945-09-26,POL,Piaseczno,Lubliniec Running Team,483243233
+11,11,10KM,M50-69,Jakub,Buœ,M,67,1957-06-06,POL,Radomsko,Mys³owice Running Team,485112905
+12,12,10KM,K30-49,Adrianna,Frycz,K,37,1987-03-16,POL,Bartoszyce,Siemianowice Œl¹skie Running Team,516400818
+13,13,21KM,K30-49,Julita,Gmur,K,41,1982-09-27,POL,Rumia,Che³m Running Team,574278019
+14,14,10KM,K30-49,Marianna,Gemza,K,34,1990-01-30,POL,Sosnowiec,Bêdzin Running Team,322415995
+15,15,10KM,K30-49,Dorota,Dworczak,K,45,1979-01-22,POL,Stalowa Wola,Katowice Running Team,506644556
+16,16,21KM,M50-69,Arkadiusz,Niko³ajuk,M,57,1967-03-01,POL,Wo³omin,G³ogów Running Team,782242654
+17,17,21KM,K16-29,Inga,Gasz,K,25,1999-07-30,POL,Krosno,Otwock Running Team,486672977
+18,18,10KM,K70-99,Malwina,Michalczak,K,76,1948-05-06,POL,Krosno,Przemyœl Running Team,513899097
+19,19,21KM,K30-49,Kaja,Sobków,K,39,1985-05-21,POL,Ciechanów,Krosno Running Team,487936087
+20,20,8KM,K50-69,Sonia,Solarczyk,K,58,1966-09-01,POL,I³awa,Polkowice Running Team,519104022
+21,21,8KM,K50-69,Dorota,Skiepko,K,66,1957-11-24,POL,Bielsko-Bia³a,Konin Running Team,482299258
+22,22,42KM,K50-69,Aurelia,Bacik,K,60,1964-06-10,POL,Dêbica,Turek Running Team,486699600
+23,23,21KM,M70-99,Juliusz,Szczepaniec,M,86,1937-10-14,POL,Jas³o,Ostróda Running Team,485144541
+24,24,42KM,K30-49,Ida,Zmuda,K,42,1982-02-22,POL,Gi¿ycko,Poznañ Running Team,507950424
+25,25,21KM,M50-69,Tymoteusz,Iciek,M,62,1962-09-03,POL,Kêtrzyn,Wroc³aw Running Team,883221549
+26,26,10KM,M70-99,Franciszek,K³osiewicz,M,95,1928-09-15,POL,Toruñ,Œwidnica Running Team,487212038
+27,27,21KM,K30-49,Sara,£yœ,K,39,1984-11-11,POL,Miñsk Mazowiecki,Œwidnik Running Team,794844746
+28,28,21KM,K30-49,Monika,Szyca,K,33,1991-05-30,POL,Jaros³aw,Pi³a Running Team,789263771
+29,29,21KM,M30-49,Witold,Maksimowicz,M,40,1984-02-19,POL,Ko³o,Legnica Running Team,485796974
+30,30,21KM,K30-49,Urszula,Korzeniak,K,39,1985-08-08,POL,Wa³brzych,Koœcian Running Team,576103836
+31,31,21KM,M70-99,Marcel,Zdziech,M,91,1933-05-02,POL,Police,Œwiêtoch³owice Running Team,482263538
+32,32,10KM,K70-99,Roksana,Siwa,K,75,1949-05-31,POL,Toruñ,Malbork Running Team,573502647
+33,33,10KM,M70-99,Natan,Flieger,M,93,1931-06-15,POL,Inowroc³aw,Skawina Running Team,485159053
+34,34,10KM,M30-49,Jakub,Ciuk,M,45,1979-04-18,POL,Bochnia,Nowy S¹cz Running Team,662663233
+35,35,10KM,K30-49,Adrianna,Saczuk,K,44,1979-10-02,POL,Zabrze,Szczecin Running Team,733995753
+36,36,21KM,K70-99,Anna Maria,Buza,K,88,1936-08-16,POL,Ostro³êka,Wejherowo Running Team,485736390
+37,37,21KM,M16-29,Krzysztof,Filusz,M,19,2005-08-26,POL,Starachowice,Stalowa Wola Running Team,329647038
+38,38,42KM,M16-29,Olgierd,Rogal,M,29,1994-12-07,POL,Czerwionka-Leszczyny,Jaros³aw Running Team,737853184
+39,39,10KM,M70-99,Marek,Migoñ,M,89,1935-06-14,POL,Brodnica,Starachowice Running Team,500403902
+40,40,10KM,K30-49,Krystyna,Sieczko,K,47,1977-04-17,POL,Zamoœæ,Jarocin Running Team,530534237
+41,41,10KM,K70-99,Aniela,Warmuz,K,99,1925-07-03,POL,Gi¿ycko,Czechowice-Dziedzice Running Team,513596871
+42,42,42KM,M50-69,Wojciech,Dolega,M,53,1971-01-21,POL,Piastów,Pruszcz Gdañski Running Team,482247322
+43,43,8KM,M50-69,Stanis³aw,Humeniuk,M,65,1959-05-23,POL,Tczew,Czechowice-Dziedzice Running Team,486949572
+44,44,10KM,K16-29,Ada,Sajnóg,K,21,2003-08-01,POL,CzeladŸ,Gorlice Running Team,505152981
+45,45,8KM,M16-29,Konstanty,Jonczyk,M,19,2005-06-29,POL,Bia³ogard,W³oc³awek Running Team,663295853
+46,46,42KM,K16-29,Ada,Matula,K,26,1998-07-16,POL,Piekary Œl¹skie,Przemyœl Running Team,732899970
+47,47,8KM,M50-69,Adam,Danieluk,M,60,1964-09-10,POL,£om¿a,Szczecin Running Team,485788483
+48,48,42KM,M50-69,Dariusz,Fit,M,67,1957-01-17,POL,Brodnica,Zakopane Running Team,572255884
+49,49,42KM,M70-99,Grzegorz,Szeja,M,93,1931-02-26,POL,Ostrów Wielkopolski,Miñsk Mazowiecki Running Team,785744715
+50,50,21KM,M16-29,Maks,Rawa,M,28,1996-03-02,POL,Œroda Wielkopolska,Lêbork Running Team,487356174
+51,51,10KM,K16-29,Liwia,Fio³ka,K,16,2008-05-12,POL,Piaseczno,Sandomierz Running Team,487386808
+52,52,8KM,M50-69,Olaf,Pitura,M,65,1959-01-09,POL,Nowy Targ,Kwidzyn Running Team,601726448
+53,53,10KM,M70-99,Wiktor,Sk³adanek,M,94,1930-01-02,POL,Wodzis³aw Œl¹ski,£uków Running Team,488898162
+54,54,10KM,K16-29,Anita,Baranowicz,K,17,2007-06-02,POL,Swarzêdz,Wrzeœnia Running Team,321610814
+55,55,10KM,K70-99,Nicole,Bubak,K,78,1946-07-20,POL,¯ywiec,Piastów Running Team,485194338
+56,56,21KM,K30-49,Ró¿a,Kunert,K,38,1985-10-20,POL,Siedlce,Œwiebodzice Running Team,883981247
+57,57,8KM,K30-49,Apolonia,Nitek,K,31,1993-02-20,POL,Œroda Wielkopolska,Œroda Wielkopolska Running Team,487258562
+58,58,42KM,M70-99,Igor,Hartman,M,71,1953-02-22,POL,Warszawa,Œwiebodzice Running Team,487883471
+59,59,10KM,M30-49,Olaf,Fo³ta,M,36,1987-09-17,POL,Bochnia,Sandomierz Running Team,519497556
+60,60,21KM,M16-29,Konrad,Tadla,M,18,2006-07-05,POL,Poznañ,Oœwiêcim Running Team,485336019
+61,61,10KM,K16-29,Kornelia,Œleziak,K,19,2005-03-11,POL,Lubartów,Gorlice Running Team,509678598
+62,62,42KM,M30-49,Jan,Mol,M,47,1977-07-14,POL,Kraœnik,Szczytno Running Team,664290620
+63,63,8KM,M16-29,Jakub,Gospodarek,M,17,2006-12-07,POL,CzeladŸ,Zambrów Running Team,609059427
+64,64,8KM,K70-99,Janina,Maciejko,K,79,1944-12-31,POL,¯agañ,Suwa³ki Running Team,538501655
+65,65,10KM,K30-49,Marcelina,Jambor,K,44,1980-02-26,POL,Polkowice,Skawina Running Team,511458666
+66,66,21KM,M30-49,Przemys³aw,Beœka,M,40,1984-05-25,POL,Sandomierz,Kielce Running Team,486969693
+67,67,21KM,M50-69,Fabian,Solis,M,51,1973-03-09,POL,Zielona Góra,Czechowice-Dziedzice Running Team,486047562
+68,68,8KM,K50-69,Kalina,Chromy,K,58,1965-11-11,POL,Jas³o,Starogard Gdañski Running Team,487893822
+69,69,8KM,M30-49,Franciszek,Sadownik,M,31,1993-06-06,POL,Czechowice-Dziedzice,D¹browa Górnicza Running Team,485399978
+70,70,42KM,K30-49,Lidia,Duras,K,49,1975-07-18,POL,Miko³ów,M³awa Running Team,483272225
+71,71,42KM,M50-69,Jan,Nasiadka,M,56,1967-12-07,POL,Kalisz,Zgorzelec Running Team,734087483
+72,72,10KM,K70-99,Rozalia,¯yto,K,73,1951-02-24,POL,Suwa³ki,Legnica Running Team,485347772
+73,73,10KM,M70-99,Mieszko,Piechna,M,71,1953-04-04,POL,Radom,Piotrków Trybunalski Running Team,487800010
+74,74,21KM,K50-69,Aurelia,Maleszka,K,58,1966-06-16,POL,Ciechanów,Œwidnica Running Team,483287714
+75,75,8KM,M30-49,Olgierd,Fura,M,44,1980-04-03,POL,Czêstochowa,Zielona Góra Running Team,485761238
+76,76,42KM,M30-49,Konrad,Sakwa,M,45,1979-04-08,POL,Cieszyn,Czêstochowa Running Team,883516277
+77,77,8KM,M70-99,Piotr,Hada³a,M,89,1934-10-24,POL,Bi³goraj,Legionowo Running Team,485778758
+78,78,21KM,K70-99,Bianka,Handke,K,90,1934-05-01,POL,Opole,Olkusz Running Team,798060744
+79,79,42KM,M70-99,Olgierd,Strzoda,M,70,1954-04-08,POL,Goleniów,Oleœnica Running Team,329660032
+80,80,42KM,K50-69,Ró¿a,Igras,K,55,1968-12-26,POL,Tczew,Police Running Team,485743681
+81,81,42KM,K50-69,Dorota,M¹drzak,K,61,1963-07-24,POL,Œrem,Lubliniec Running Team,488809962
+82,82,10KM,M30-49,Maurycy,Laskus,M,41,1983-03-11,POL,Ostro³êka,Kutno Running Team,227432026
+83,83,42KM,K70-99,Rozalia,Paleñ,K,72,1952-01-15,POL,Opole,Kêtrzyn Running Team,573954134
+84,84,8KM,M50-69,Alan,Kij,M,69,1955-03-29,POL,Zgierz,Wroc³aw Running Team,488856719
+85,85,8KM,K16-29,Roksana,Œwiadek,K,27,1997-06-18,POL,Jarocin,Kraków Running Team,883679377
+86,86,10KM,K30-49,Nela,Z³otek,K,48,1976-08-05,POL,M³awa,Kraków Running Team,722963220
+87,87,10KM,M70-99,Mariusz,Golan,M,88,1935-12-02,POL,G³ogów,Cieszyn Running Team,574113105
+88,88,8KM,K30-49,Rozalia,Samol,K,39,1985-02-14,POL,Brodnica,Krotoszyn Running Team,320799344
+89,89,10KM,M30-49,Maksymilian,Borysiewicz,M,43,1980-12-14,POL,Luboñ,Z¹bki Running Team,785021575
+90,90,42KM,K30-49,Gaja,Dynak,K,40,1983-10-23,POL,Jas³o,Rybnik Running Team,320530723
+91,91,42KM,K30-49,Liwia,¯al,K,44,1980-07-12,POL,Œwiecie,Mys³owice Running Team,483286057
+92,92,42KM,K16-29,Marcelina,Mazek,K,19,2005-01-08,POL,Jaros³aw,Kutno Running Team,513607076
+93,93,21KM,K70-99,Aurelia,Majak,K,85,1938-11-22,POL,Rzeszów,Jaros³aw Running Team,694083852
+94,94,8KM,K30-49,Ada,Rudzik,K,32,1992-07-04,POL,Chrzanów,Pruszków Running Team,487356738
+95,95,8KM,M70-99,Gustaw,Hamerla,M,88,1936-01-20,POL,Pszczyna,Brodnica Running Team,532024641
+96,96,42KM,M30-49,Patryk,Baum,M,36,1988-05-29,POL,Lubin,Tychy Running Team,486669718
+97,97,42KM,K16-29,Monika,Wojtak,K,29,1994-10-02,POL,Skawina,Wyszków Running Team,605634158
+98,98,21KM,K70-99,Ida,Drgas,K,73,1951-08-31,POL,Wroc³aw,M³awa Running Team,485737225
+99,99,21KM,M70-99,Juliusz,Aleksa,M,81,1943-07-04,POL,Kutno,Sanok Running Team,663983310
+100,100,21KM,K16-29,Monika,Stypa,K,17,2006-10-21,POL,Radomsko,Knurów Running Team,486983861
+101,101,21KM,M50-69,Jakub,Brachaczek,M,68,1956-07-11,POL,Katowice,Sanok Running Team,485055311
+102,102,42KM,M16-29,Micha³,Fiedoruk,M,19,2005-04-27,POL,Ostro³êka,W¹growiec Running Team,667936902
+103,103,8KM,K70-99,Janina,Boguœ,K,98,1926-02-16,POL,Augustów,Olsztyn Running Team,485160825
+104,104,21KM,K16-29,Janina,Domian,K,20,2004-04-07,POL,Z¹bki,Rzeszów Running Team,486930495
+105,105,42KM,K30-49,Marika,Bodziony,K,37,1987-02-06,POL,Miko³ów,Pruszcz Gdañski Running Team,482274301
+106,106,42KM,M70-99,Artur,Piotrowiak,M,86,1937-12-13,POL,W³oc³awek,Elbl¹g Running Team,486643358
+107,107,10KM,M16-29,Patryk,Kocaj,M,22,2002-07-28,POL,Wa³brzych,Leszno Running Team,485725691
+108,108,42KM,K16-29,Justyna,Szajda,K,23,2001-04-05,POL,Zielona Góra,Gorzów Wielkopolski Running Team,507393822
+109,109,8KM,M70-99,Gabriel,Arendarczyk,M,99,1925-01-03,POL,K³odzko,Brodnica Running Team,790959606
+110,110,42KM,K70-99,Julianna,RaŸniak,K,71,1953-06-10,POL,Tarnowskie Góry,CzeladŸ Running Team,482255202
+111,111,8KM,M30-49,Wojciech,Kar³owicz,M,48,1976-08-17,POL,G³ogów,Piekary Œl¹skie Running Team,485065328
+112,112,42KM,M70-99,Juliusz,Wicha,M,97,1927-06-11,POL,Wodzis³aw Œl¹ski,Lubartów Running Team,603321274
+113,113,8KM,K16-29,Natasza,Wenda,K,29,1995-01-24,POL,Zabrze,Kutno Running Team,487837373
+114,114,8KM,M70-99,Marcel,Irzyk,M,78,1946-02-26,POL,Chojnice,Œwiêtoch³owice Running Team,886215875
+115,115,8KM,M50-69,Jan,Hornik,M,56,1967-10-22,POL,Racibórz,CzeladŸ Running Team,726442032
+116,116,21KM,K16-29,Ida,Wiêc³awek,K,23,2001-03-20,POL,Sopot,Suwa³ki Running Team,514068568
+117,117,42KM,M70-99,Grzegorz,Fio³ka,M,85,1938-11-27,POL,Piotrków Trybunalski,Rybnik Running Team,486650846
+118,118,10KM,M50-69,Jeremi,Delikat,M,61,1963-03-25,POL,Zgierz,Stargard Szczeciñski Running Team,488875000
+119,119,21KM,K30-49,Agnieszka,Piksa,K,36,1988-02-01,POL,Skawina,Czerwionka-Leszczyny Running Team,486023554
+120,120,21KM,K50-69,Rozalia,Zêbik,K,56,1968-04-10,POL,Boles³awiec,Zielona Góra Running Team,485169987

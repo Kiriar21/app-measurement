@@ -32,12 +32,12 @@ export default function FormNewMeasurement(props) {
         };
 
         try {
-            const response = await fetch('http://localhost:5001/api/events', {
+            const response = await fetch('http://localhost:5001/api/createEvent', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(eventData), // dane z formularza
+                body: JSON.stringify(eventData), 
             });
 
             if (response.ok) {
@@ -46,7 +46,6 @@ export default function FormNewMeasurement(props) {
                 setOnLoading(false);
                 setDisabled(true);
 
-                // Przekierowanie po utworzeniu eventu
                 setTimeout(() => {
                     navigate('/');
                 }, 1000);
@@ -76,7 +75,7 @@ export default function FormNewMeasurement(props) {
                 labelText='Nazwa'
                 typeInput='text'
                 value={name}
-                onChange={e => setName(e.target.value)} // Przechwytywanie wartości inputa
+                onChange={e => setName(e.target.value)} 
                 placeholder='Nazwa'
             />
             <FormInput
@@ -84,7 +83,7 @@ export default function FormNewMeasurement(props) {
                 labelText='Miejscowość'
                 typeInput='text'
                 value={localization}
-                onChange={e => setLocalization(e.target.value)} // Przechwytywanie wartości inputa
+                onChange={e => setLocalization(e.target.value)} 
                 placeholder='Miejscowość'
             />
             <Button onClick={check} onLoading={onLoading} disabled={disabled} buttonTitle="Utwórz" />
