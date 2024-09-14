@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Counter = require('./Counter');
+const ClassificationSchema = require('./Classification');
 
 const EventSchema = new mongoose.Schema({
     eventId: {
@@ -25,6 +26,24 @@ const EventSchema = new mongoose.Schema({
         required: [true, 'Data wydarzenia jest wymagana'],
         default: Date.now,
     },
+    classifications: [ClassificationSchema],
+    statistics: {
+        finish: {
+            total: { type: Number, default: 0 },
+            females: { type: Number, default: 0 },
+            males: { type: Number, default: 0 },
+        },
+        non_finish: {
+            total: { type: Number, default: 0 },
+            females: { type: Number, default: 0 },
+            males: { type: Number, default: 0 },
+        },
+        total: {
+            total: { type: Number, default: 0 },
+            females: { type: Number, default: 0 },
+            males: { type: Number, default: 0 },
+        },
+    },
 }, {
     timestamps: true,
     toJSON: { virtuals: true },
@@ -33,13 +52,6 @@ const EventSchema = new mongoose.Schema({
 
 EventSchema.virtual('participants', {
     ref: 'Participant',
-    localField: '_id',
-    foreignField: 'event',
-    justOne: false,
-});
-
-EventSchema.virtual('classifications', {
-    ref: 'Classification',
     localField: '_id',
     foreignField: 'event',
     justOne: false,

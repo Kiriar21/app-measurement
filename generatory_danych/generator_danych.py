@@ -19,10 +19,18 @@ def generate_phone_number():
         phone_number = phone_number[:9]
     return phone_number
 
-num_players = 120
-classifications = ['8KM','10KM','21KM','42KM']
+# num_players = 50
+num_players = 100
+# num_players = 150
+# num_players = 200
 
-categories = ['K16-29', 'M16-29', 'K30-49', 'M30-49', 'K50-69', 'M50-69', 'K70-99', 'M70-99']
+classifications = ['8KM','10KM','21KM','42KM']
+# classifications = ['5KM','10KM']
+# classifications = ['8KM','10KM','21KM','42KM','5KM','10KM']
+
+# categories = ['K16-29', 'M16-29', 'K30-49', 'M30-49', 'K50-69', 'M50-69', 'K70-99', 'M70-99']
+# categories = ['K16-49', 'M16-49', 'K50-99', 'M50-99']
+categories = ['K16-99', 'M16-99']
 
 data = []
 for i in range(1, num_players + 1):
@@ -52,5 +60,8 @@ for i in range(1, num_players + 1):
 
 df = pd.DataFrame(data)
 
-df.to_csv('50competitors.csv', index=False, sep=',', encoding='1250')
+# df.to_csv('50competitors.csv', index=False, sep=';', encoding='1250')
+df.to_csv('100competitors.csv', index=False, sep=';', encoding='1250')
+# df.to_csv('150competitors.csv', index=False, sep=';', encoding='1250')
+# df.to_csv('200competitors.csv', index=False, sep=';', encoding='1250')
 print("Plik CSV został wygenerowany.")

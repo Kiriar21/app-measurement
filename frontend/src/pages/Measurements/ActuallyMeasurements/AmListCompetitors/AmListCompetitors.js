@@ -52,7 +52,7 @@ export default function Login(props){
         </React.Fragment>
     )
 
-    const uploadCSV = async (e) => {
+    const uploadCSV = async (e, isAdded) => {
         e.preventDefault();
 
         if (!file) {
@@ -64,11 +64,19 @@ export default function Login(props){
         formData.append('file', file);
 
         try {
-                const response = await fetch(`http://localhost:5001/api/event/${id}/uploadFile`, {
+    
+            let response = await fetch(`http://localhost:5001/api/event/${id}/updateDataCSV`, {
+                method: 'POST',
+                body: formData,
+            });
+
+            if(isAdded){
+                response = await fetch(`http://localhost:5001/api/event/${id}/replaceDataCSV`, {
                     method: 'POST',
                     body: formData,
                 });
-
+            }
+                
                 if (response.ok) {
                     const data = await response.json();
                     alert(data.message);
@@ -82,8 +90,6 @@ export default function Login(props){
             }
     }
 
-        // DODAĆ DO RESETU USUNIECIE STATE'U - wyczyszczenie - kazdy przycisk reset musi to mieć
-
     useEffect(() => {
         console.log(file)
     }, [file])
@@ -96,8 +102,8 @@ export default function Login(props){
                 modalBtnGreen='Wgraj' 
                 secondButton={true}
                 ownFunctions={true}
-                onClick={uploadCSV}
-                onClick2={uploadCSV} // Na ten moment zamiana i podmiana nowymi to to samo.
+                onClick={e => uploadCSV(e, false)}
+                onClick2={e => uploadCSV(e, true)}
                 onClose={()=>{setFile('')}}
                 secondButtonTitle='Usuń poprzednie dane i zastąp nowymi'
                 modalBtnRed='Anuluj'

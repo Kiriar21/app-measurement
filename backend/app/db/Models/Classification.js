@@ -2,11 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ClassificationSchema = new Schema({
-    event: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Event',
-        required: [true, 'Pole "event" jest wymagane'],
-    },
     name: {
         type: String,
         required: [true, 'Nazwa klasyfikacji jest wymagana'],
@@ -70,12 +65,25 @@ const ClassificationSchema = new Schema({
             trim: true,
         },
     ],
+    statistics: {
+        finish: {
+            total: { type: Number, default: 0 },
+            females: { type: Number, default: 0 },
+            males: { type: Number, default: 0 },
+        },
+        non_finish: {
+            total: { type: Number, default: 0 },
+            females: { type: Number, default: 0 },
+            males: { type: Number, default: 0 },
+        },
+        total: {
+            total: { type: Number, default: 0 },
+            females: { type: Number, default: 0 },
+            males: { type: Number, default: 0 },
+        },
+    },
 }, {
     timestamps: true,
 });
 
-ClassificationSchema.index({ event: 1, name: 1 }, { unique: true });
-
-const Classification = mongoose.model('Classification', ClassificationSchema);
-
-module.exports = Classification;
+module.exports = ClassificationSchema;
