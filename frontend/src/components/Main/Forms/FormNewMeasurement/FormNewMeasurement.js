@@ -49,7 +49,7 @@ export default function FormNewMeasurement(props) {
                 // Przekierowanie po utworzeniu eventu
                 setTimeout(() => {
                     navigate('/');
-                }, 2000);
+                }, 1000);
             } else {
                 console.error('Failed to create event');
                 setOnLoading(false);
@@ -66,7 +66,7 @@ export default function FormNewMeasurement(props) {
                 controlId='formDateEvent'
                 labelText='Data'
                 typeInput='date'
-                defaultValue={date}
+                value={date}
                 min={date}
                 onChange={e => setDate(e.target.value)}
                 placeholder='01/01/2000'

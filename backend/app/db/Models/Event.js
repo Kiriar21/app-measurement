@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const Counter = require('./Counter'); // Import licznika
+const Counter = require('./Counter');
 
 const EventSchema = new mongoose.Schema({
     eventId: {
         type: Number,
-        unique: true, // Upewnij się, że wartości są unikalne
+        unique: true, 
     },
     name: {
         type: String,
@@ -27,23 +27,36 @@ const EventSchema = new mongoose.Schema({
     },
 }, {
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
 });
 
-// Pre-save middleware for auto-incrementing `eventId`
+EventSchema.virtual('participants', {
+    ref: 'Participant',
+    localField: '_id',
+    foreignField: 'event',
+    justOne: false,
+});
+
+EventSchema.virtual('classifications', {
+    ref: 'Classification',
+    localField: '_id',
+    foreignField: 'event',
+    justOne: false,
+});
+
 EventSchema.pre('save', async function (next) {
     const event = this;
 
-    // Jeśli `eventId` już istnieje, nie inkrementuj
     if (event.isNew) {
         try {
-            // Znajdź licznik dla modelu 'Event'
             const counter = await Counter.findOneAndUpdate(
                 { model: 'Event' },
-                { $inc: { seq: 1 } }, // Inkrementacja licznika
-                { new: true, upsert: true } // Utwórz dokument, jeśli nie istnieje
+                { $inc: { seq: 1 } }, 
+                { new: true, upsert: true }
             );
 
-            event.eventId = counter.seq; // Przypisz nową wartość eventId
+            event.eventId = counter.seq; 
         } catch (error) {
             return next(error);
         }
