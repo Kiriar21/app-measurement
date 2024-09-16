@@ -41,7 +41,7 @@ export default function FormNewMeasurement(props) {
                 setDisabled(true);
 
                 setTimeout(() => {
-                    navigate('/');
+                    navigate(`/${response.data.eventId}/statistic`);
                 }, 1000);
             } else {
                 console.error('Failed to create event');

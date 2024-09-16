@@ -5,6 +5,7 @@ import Button from '../../../../Buttons/ButtonForm/ButtonForm'
 import FormInput from '../../FormInput/FormInput'
 import Alert from '../../../../Alerts/Alert/Alert'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function FormNewMeasurement(props){
     const { id } = useParams()
@@ -14,6 +15,7 @@ export default function FormNewMeasurement(props){
     const [date, setDate] = useState(dateNow)
     const [name, setName] = useState('')
     const [localization, setlocalization] = useState('')
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchEventData = async () => {
@@ -36,6 +38,9 @@ export default function FormNewMeasurement(props){
             const updatedData = { date, name, localization };
             await axios.put(`http://localhost:5001/api/event/${id}/edit`, updatedData); 
             setShowAlert(true);
+            setTimeout(() => {
+                navigate(`/${id}/statistic`);
+            }, 1000);
         } catch (err) {
             console.log("Błąd przy zapisywaniu danych: ", err);
         }
@@ -61,7 +66,7 @@ export default function FormNewMeasurement(props){
                         onChange={ e => setlocalization(e.target.value)}
                         placeholder='Miejscowość' />
             <Button buttonTitle="Zapisz" onClick={check} />
-            {showAlert  && <Alert variant='success' dismissible={true} alertContent='Zmiany zostały zapisane.'/>}
+            {showAlert  && <Alert variant='success' dismissible={true} alertContent='Zmiany zostały zapisane. Za chwile nastąpi przekierowanie.'/>}
         </Form>
     )
 }
