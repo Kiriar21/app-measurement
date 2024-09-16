@@ -18,7 +18,7 @@ const upload = multer({
             cb(new Error('Nieprawidłowy format pliku. Przesyłaj pliki CSV.'), false);
         }
     },
-    limits: { fileSize: 5 * 1024 * 1024 }, // Maksymalny rozmiar pliku 5MB
+    limits: { fileSize: 5 * 1024 * 1024 }, 
 });
 
 
@@ -157,7 +157,7 @@ const uploadCSVEvent = async (req, res) => {
 
         const eventId = req.params.id;
         
-        // Sprawdzenie, czy plik został przesłany
+        
         if (!req.file) {
             return res.status(400).send({ error: 'Nie przesłano pliku CSV.' });
         }
@@ -183,20 +183,20 @@ const replaceCSVEvent = async (req, res) => {
     try {
         const eventId = req.params.id;
         
-        // Sprawdzenie, czy plik został przesłany
+        
         if (!req.file) {
             return res.status(400).send({ error: 'Nie przesłano pliku CSV.' });
         }
 
         const fileBuffer = req.file.buffer;
 
-        // Znajdź wydarzenie
+        
         const event = await Event.findOne({ eventId: eventId });
         if (!event) {
             return res.status(404).send({ error: 'Nie znaleziono wydarzenia o podanym ID.' });
         }
 
-        // Usuń klasyfikacje i resetuj statystyki
+        
         event.classifications = [];
         event.statistics = {
             finish: { total: 0, females: 0, males: 0 },
@@ -205,10 +205,10 @@ const replaceCSVEvent = async (req, res) => {
         };
         await event.save();
 
-        // Usuń wszystkich uczestników powiązanych z tym wydarzeniem
+        
         await Participant.deleteMany({ event: event._id });
 
-        // Przetwórz nowy plik CSV
+        
         try {
             await processCSV(eventId, fileBuffer);
             res.status(200).send({ message: 'Dane zostały pomyślnie zastąpione nowym plikiem CSV.' });
@@ -223,7 +223,7 @@ const replaceCSVEvent = async (req, res) => {
     }
 }
 
-// Funkcja zwracająca wydarzenie wraz z uczestnikami i klasyfikacjami
+
 async function getEventWithDetails(eventId) {
     try {
         const event = await Event.findOne({ eventId: eventId })
@@ -248,6 +248,10 @@ async function processCSV(eventId, fileBuffer) {
         if (!event) {
             throw new Error('Nie znaleziono wydarzenia o podanym ID');
         }
+
+        const existingParticipants = await Participant.find({ event: event._id }).select('number');
+        const existingNumbers = new Set(existingParticipants.map(p => p.number));
+
 
         const classificationsMap = new Map();
         const participantsData = [];
@@ -292,24 +296,28 @@ async function processCSV(eventId, fileBuffer) {
                         participantData.age = parseInt(participantData.age, 10);
                         participantData.date_of_birth = new Date(participantData.date_of_birth);
 
-                        participantData.competitor = `${participantData.competitorFirstName} ${participantData.competitorLastName}`;
-                        delete participantData.competitorFirstName;
-                        delete participantData.competitorLastName;
-
-                        const classificationName = participantData.classification;
-                        const categoryName = participantData.category;
-
-                        if (classificationName && categoryName) {
-
-                            if (!classificationsMap.has(classificationName)) {
-                                classificationsMap.set(classificationName, new Set());
+                        if (!existingNumbers.has(participantData.number))
+                        {
+                            participantData.competitor = `${participantData.competitorFirstName} ${participantData.competitorLastName}`;
+                            delete participantData.competitorFirstName;
+                            delete participantData.competitorLastName;
+    
+                            const classificationName = participantData.classification;
+                            const categoryName = participantData.category;
+    
+                            if (classificationName && categoryName) {
+    
+                                if (!classificationsMap.has(classificationName)) {
+                                    classificationsMap.set(classificationName, new Set());
+                                }
+                                classificationsMap.get(classificationName).add(categoryName);
                             }
-                            classificationsMap.get(classificationName).add(categoryName);
+                            participantData.event = event._id;
+    
+    
+                            participantsData.push(participantData);
                         }
-                        participantData.event = event._id;
-
-
-                        participantsData.push(participantData);
+                        
                     } else {
                         console.warn(`Niekompletny wiersz: ${JSON.stringify(row)}`);
                     }
@@ -320,16 +328,16 @@ async function processCSV(eventId, fileBuffer) {
 
 
 
-       // Aktualizacja klasyfikacji osadzonych w evencie
+       
        for (const [classificationName, categoriesSet] of classificationsMap) {
             const categoriesArray = Array.from(categoriesSet);
 
-            // Sortowanie kategorii: najpierw te zaczynające się od "K", potem od "M", a następnie inne
+            
             categoriesArray.sort((a, b) => {
                 const getPriority = (str) => {
                     if (str.toUpperCase().startsWith('K')) return 1;
                     if (str.toUpperCase().startsWith('M')) return 2;
-                    return 3; // Inne kategorie
+                    return 3; 
                 };
 
                 const priorityA = getPriority(a);
@@ -339,19 +347,19 @@ async function processCSV(eventId, fileBuffer) {
                     return priorityA - priorityB;
                 }
 
-                // Opcjonalnie: sortowanie alfabetyczne w ramach tej samej grupy
+                
                 return a.localeCompare(b);
             });
 
-            // Sprawdzenie, czy klasyfikacja już istnieje
+            
             const existingClassification = event.classifications.find(c => c.name === classificationName);
 
             if (existingClassification) {
-                // Merge kategorii, zapewniając unikalność
+                
                 const existingCategories = new Set(existingClassification.categories);
                 categoriesArray.forEach(cat => existingCategories.add(cat));
                 
-                // Konwersja na posortowaną tablicę
+                
                 existingClassification.categories = Array.from(existingCategories).sort((a, b) => {
                     const getPriority = (str) => {
                         if (str.toUpperCase().startsWith('K')) return 1;
@@ -369,10 +377,10 @@ async function processCSV(eventId, fileBuffer) {
                     return a.localeCompare(b);
                 });
             } else {
-                // Dodanie nowej klasyfikacji z domyślnymi wartościami
+                
                 event.classifications.push({
                     name: classificationName,
-                    distance: 0, // Możesz dostosować wartość
+                    distance: 0, 
                     type_of_event: 'Bieg na czas',
                     date_and_time: new Date(),
                     impuls_number_start: 1,
@@ -385,7 +393,7 @@ async function processCSV(eventId, fileBuffer) {
                         exist: true,
                         number_of_position: 3,
                     },
-                    categories: categoriesArray, // Już posortowana tablica
+                    categories: categoriesArray, 
                     statistics: {
                         finish: { total: 0, females: 0, males: 0 },
                         non_finish: { total: 0, females: 0, males: 0 },
@@ -397,7 +405,7 @@ async function processCSV(eventId, fileBuffer) {
         
         await event.save();
 
-        // Bulk operacje na uczestnikach
+        
         const bulkOps = participantsData.map((participantData) => ({
             updateOne: {
                 filter: {
@@ -432,16 +440,16 @@ const multerErrorHandler = (err, req, res, next) => {
 
 async function updateStatistics(eventId) {
     try {
-        // Znajdź wydarzenie po eventId i pobierz klasyfikacje
+        
         const event = await Event.findOne({ eventId: eventId });
         if (!event) {
             throw new Error('Nie znaleziono wydarzenia o podanym ID');
         }
 
-        // Pobierz wszystkich uczestników dla danego wydarzenia
+        
         const participants = await Participant.find({ event: event._id });
 
-        // Inicjalizacja globalnych statystyk
+        
         const globalStatistics = {
             finish: {
                 total: 0,
@@ -460,17 +468,17 @@ async function updateStatistics(eventId) {
             },
         };
 
-        // Przejdź przez każdą klasyfikację w wydarzeniu
+        
         event.classifications.forEach(classification => {
-            // Filtruj uczestników należących do bieżącej klasyfikacji
+            
             const classificationParticipants = participants.filter(p => p.classification === classification.name);
 
-            // Finishers: uczestnicy z `time_brutto`
+            
             const finishers = classificationParticipants.filter(p => p.time_brutto);
-            // Non-Finishers: uczestnicy bez `time_brutto`
+            
             const nonFinishers = classificationParticipants.filter(p => !p.time_brutto);
 
-            // Oblicz statystyki
+            
             const statistics = {
                 finish: {
                     total: finishers.length,
@@ -489,11 +497,11 @@ async function updateStatistics(eventId) {
                 },
             };
 
-            // Aktualizuj statystyki w klasyfikacji
+            
             classification.statistics = statistics;
 
 
-            // Sumuj statystyki do globalnych statystyk wydarzenia
+            
             globalStatistics.finish.total += statistics.finish.total;
             globalStatistics.finish.females += statistics.finish.females;
             globalStatistics.finish.males += statistics.finish.males;
@@ -509,9 +517,8 @@ async function updateStatistics(eventId) {
 
         event.statistics = globalStatistics;
 
-        // Zapisz zaktualizowane wydarzenie
+        
         await event.save();
-        console.log(`Statystyki dla wydarzenia ID ${eventId} zostały zaktualizowane.`);
     } catch (error) {
         console.error('Błąd podczas aktualizacji statystyk:', error.message);
         throw error;
@@ -527,13 +534,13 @@ const getEventStatistics = async (req, res) => {
             return res.status(404).send({ error: 'Nie znaleziono wydarzenia o podanym ID.' });
         }
 
-        // Get the classifications
+        
         const classifications = event.classifications;
 
-        // Prepare the data for tbody
+        
         const tbody = [];
 
-        // For each classification, extract the data
+        
         for (const classification of classifications) {
             const row = {
                 name: classification.name,
@@ -551,7 +558,7 @@ const getEventStatistics = async (req, res) => {
             tbody.push(row);
         }
 
-        // Now create the summary row from event.statistics
+        
         const summaryRow = {
             name: 'Suma',
             distance: '',
@@ -575,4 +582,171 @@ const getEventStatistics = async (req, res) => {
     }
 };
 
-module.exports = { createEvent, getEvents, deleteEvent, getEventByIdEdit, updateEventByIdEdit, uploadCSVEvent, upload, multerErrorHandler, replaceCSVEvent, getEventStatistics};
+const getUsers = async (req, res) => {
+    try {
+        const eventId = req.params.id;
+        const { search, genderFilter, statusFilter, sortField, sortOrder } = req.query;
+
+        const event = await Event.findOne({ eventId: eventId });
+
+        if (!event) {
+            return res.status(404).json({ error: 'Event not found' });
+        }
+
+        
+        let filter = { event: event._id };
+
+        if (search) {
+            const numberSearch = parseInt(search, 10);
+
+            if (!isNaN(numberSearch)) {
+                filter.$or = [
+                    { number: numberSearch },
+                    { competitor: { $regex: search, $options: 'i' } },
+                    { club: { $regex: search, $options: 'i' } }
+                ];
+            } else {
+                filter.$or = [
+                    { competitor: { $regex: search, $options: 'i' } },
+                    { club: { $regex: search, $options: 'i' } }
+                ];
+            }
+        }
+
+        if (genderFilter && ['K', 'M'].includes(genderFilter)) {
+            filter.gender = genderFilter;
+        }
+
+        if (statusFilter) {
+            if (statusFilter === 'START') {
+                filter.status = 'START';
+            } else if (statusFilter === 'NOT_START') {
+                filter.status = { $ne: 'START' };
+            }
+        }
+
+        
+        const sortOptions = {};
+        if (sortField) {
+            const order = sortOrder === 'desc' ? -1 : 1;
+            sortOptions[sortField] = order;
+        } else {
+            sortOptions.number = 1; 
+        }
+
+        const participants = await Participant.find(filter).sort(sortOptions);
+
+        const tbody = participants.map((participant, index) => ({
+            counter: index + 1,
+            number: participant.number,
+            competitor: participant.competitor,
+            gender: participant.gender,
+            age: participant.age,
+            date_of_birth: participant.date_of_birth.toISOString().split('T')[0],
+            classification: participant.classification,
+            category: participant.category,
+            country: participant.country,
+            club: participant.club,
+            status: participant.status,
+            location: participant.location,
+        }));
+
+        res.status(200).json(tbody);
+    } catch (error) {
+        res.status(500).json({ error: 'Error fetching participants' });
+    }
+};
+
+
+const getUser = async (req, res) => {
+    try {
+        const eventId = req.params.id;
+        const number = req.params.number;
+    
+        const event = await Event.findOne({ eventId: eventId });
+        
+        if (!event) {
+            return res.status(404).json({ error: 'Event not found' });
+        }   
+
+        const participant = await Participant.findOne({ event: event._id, number });
+
+        if (!participant) {
+            return res.status(404).json({ error: 'Participant not found' });
+        }
+    
+        res.status(200).json(participant);
+        } catch (error) {
+        res.status(500).json({ error: 'Error fetching participant' });
+        }
+  }; 
+
+  const calculateAge = (dateOfBirth) => {
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+    return today.getFullYear() - birthDate.getFullYear();
+  };
+  
+
+  const editUser = async (req, res) => {
+    try {
+      const eventId = req.params.id;
+      const number = req.params.number;
+      const updateData = req.body; 
+  
+      const event = await Event.findOne({ eventId: eventId });
+        
+      if (!event) {
+          return res.status(404).json({ error: 'Event not found' });
+      } 
+
+      if (updateData.date_of_birth) {
+        updateData.age = calculateAge(updateData.date_of_birth); 
+      }
+
+      const participant = await Participant.findOneAndUpdate(
+        { event: event._id, number },
+        updateData,
+        { new: true }
+      );
+  
+      if (!participant) {
+        return res.status(404).json({ error: 'Participant not found' });
+      }
+  
+      res.status(200).json({ message: 'Participant updated', participant });
+    } catch (error) {
+      res.status(500).json({ error: 'Error updating participant' });
+    }
+  };
+
+  const deleteUser = async (req, res) => {
+    try {
+        const eventId = req.params.id;
+        const number = req.params.number;
+
+        const event = await Event.findOne({ eventId: eventId });
+
+        if (!event) {
+            return res.status(404).json({ error: 'Event not found' });
+        }
+
+        const participant = await Participant.findOneAndDelete({
+            event: event._id,
+            number: number
+        });
+
+        if (!participant) {
+            return res.status(404).json({ error: 'Participant not found' });
+        } else {
+            updateStatistics(eventId);
+            res.status(200).json({ message: 'Participant deleted successfully' });
+        }
+
+    } catch (error) {
+        res.status(500).json({ error: 'Error deleting participant' });
+    }
+};
+
+
+module.exports = { createEvent, getEvents, deleteEvent, getEventByIdEdit, updateEventByIdEdit, uploadCSVEvent, upload, multerErrorHandler, replaceCSVEvent, getEventStatistics, getUsers, getUser, editUser, deleteUser};

@@ -16,7 +16,7 @@ export default function Social(props) {
                 <LinkSocial link="https://www.instagram.com">
                     <Instagram size={30} />
                 </LinkSocial>
-                <LinkSocial link="https://www.facebook.com">
+                <LinkSocial link="https://www.dostartu.pl">
                     <PeopleFill size={30}/>      
                 </LinkSocial>
             </ParagraphContent>

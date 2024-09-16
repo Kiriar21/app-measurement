@@ -7,7 +7,7 @@ export default function Information(props){
         <Column width='4'>
             <ParagraphTitle title="Nazwa Firmy" />
             <ParagraphContent>
-                Organizujemy imprezy sportowe oraz świadczymy profesjonalny pomiar czasu.
+                Świadczymy usługi profesjonalnego pomiaru czasu na twoich danych. Ty dostarczasz nam listę zawodników, a my zajmujemy się resztą. Doświadczony zespół jest w stanie zmierzyć czas nawet największej ilości zawodników w krótkim czasie na chipach RFID - zarówno jednorazowych jak również wielokrotnego użytku.
             </ParagraphContent>
         </Column>
     )

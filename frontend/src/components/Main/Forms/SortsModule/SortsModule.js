@@ -2,57 +2,19 @@ import { Col, Row } from "react-bootstrap";
 import SelectMeasurement from '../Selects/SelectMeasurement/SelectMeasurement';
 
 export default function SortsModule(props){
-    const sortOpt = [{
-        name:'',
-        title: 'Brak'
-    },{
-        name:'classAZ',
-        title: 'Klasyfikacja A-Z'
-    }, {
-        name:'classZA',
-        title: 'Klasyfikacja Z-A'
-    },{
-        name:'catAZ',
-        title: 'Kategoria A-Z'
-    },{
-        name:'catZA',
-        title: 'Kategoria Z-A'
-    },{
-        name:'ageASC',
-        title: 'Od najmłodszego'
-    },{
-        name:'ageDESC',
-        title: 'Od najstarszego'
-    },{
-        name:'clubAZ',
-        title: 'Klub A-Z'
-    },{
-        name:'clubZA',
-        title: 'Klub Z-A'
-    },{
-        name:'countryAZ',
-        title: 'Kraj A-Z'
-    },{
-        name:'countryZA',
-        title: 'Kraj Z-A'
-    },{
-        name:'cityAZ',
-        title: 'Miejscowość A-Z'
-    },{
-        name:'cityZA',
-        title: 'Miejscowość Z-A'
-    }]
-    const filtrSex = [{
+
+    const optSex = [{
         name:'',
         title:'Wszyscy'
     }, {
-        name:'k',
+        name:'K',
         title:'Kobiety'
     },{
-        name:'m',
+        name:'M',
         title:'Mężczyźni'
     }]
-    const filtrParti = [{
+
+    const optStatus = [{
         name:'',
         title:'Wszyscy'
     }, {
@@ -64,31 +26,22 @@ export default function SortsModule(props){
     }]
     return (
         <Row>
-        <Col md={4}>
-
-                <SelectMeasurement controlId='sortCompFirst' 
-                                    labelText='Sortuj po:'
-                                    onChange={e=>{props.sortComp(e.target.value)}}
-                                    opt={sortOpt}
+            <Col md={6}>
+                <SelectMeasurement controlId='filtrSex' 
+                                    labelText='Filtr Płeć:'
+                                    onChange={props.filtrSex}
+                                    opt={optSex}
                                     lg={12}
-                                    />
-        </Col>
-        <Col md={4}>
-                    <SelectMeasurement controlId='filtrSex' 
-                                            labelText='Filtr Płeć:'
-                                            onChange={e=>{props.filtrSex(e.target.value)}}
-                                            opt={filtrSex}
-                                            lg={12}
-                                            />
-        </Col>
-        <Col md={4}>
-                    <SelectMeasurement controlId='filtrStatus' 
-                                            labelText='Filtr Status:'
-                                            onChange={e=>{props.filtrStatus(e.target.value)}}
-                                            opt={filtrParti}
-                                            lg={12}
-                                            />            
-        </Col>
+                />
+            </Col>
+            <Col md={6}>
+                <SelectMeasurement controlId='filtrStatus' 
+                                    labelText='Filtr Status:'
+                                    onChange={props.filtrStatus}
+                                    opt={optStatus}
+                                    lg={12}
+                />            
+            </Col>
         </Row>
     )
 }

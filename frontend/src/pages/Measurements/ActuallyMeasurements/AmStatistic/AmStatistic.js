@@ -1,10 +1,11 @@
-import React,{ useState, useEffect } from "react"
+import React,{ useState, useEffect, useRef } from "react"
 import { useParams } from "react-router-dom"
 import MainBackground from "../../../../components/Main/MainBackground/MainBackground"
 import TableBody from "../../../../components/Main/Forms/ActuallyMeasurement/AmStatistics/TableBodyStatistic"
 import H3Module from '../../../../components/Main/Texts/H3Module/H3Module'
 import ModalBasic from '../../../../components/Modals/ModalBasic/ModalBasic'
 import FormInput from "../../../../components/Main/Forms/FormInput/FormInput"
+import axios from 'axios'
 
 export default function Statistic(props){
     const theader = ['Nazwa klasyfikacji', 'Dystans(KM)', 'Liczba osób startujących', 'Liczba osób na mecie', 'Pozostało', 'Liczba kobiet startujących', 'Liczba kobiet na mecie', 'Pozostało kobiet', 'Liczba mężczyzn startujących', 'Liczba mężczyzn na mecie', 'Pozostało mężczyzn'       ]
@@ -12,6 +13,7 @@ export default function Statistic(props){
     const {id} = useParams()
     const [file, setFile] = useState('')
     
+    const modalUploadCSVChild = useRef(null);
 
     const bodyModal = (
         <React.Fragment>
@@ -41,38 +43,30 @@ export default function Statistic(props){
         formData.append('file', file);
 
         try {
-    
-            let response = await fetch(`http://localhost:5001/api/event/${id}/updateDataCSV`, {
-                method: 'POST',
-                body: formData,
-            });
-
+            let response = null;
             if(isAdded){
-                response = await fetch(`http://localhost:5001/api/event/${id}/replaceDataCSV`, {
-                    method: 'POST',
-                    body: formData,
-                });
+                response = await axios.post(`http://localhost:5001/api/event/${id}/replaceDataCSV`, formData)
+            } else {
+                response = await axios.post(`http://localhost:5001/api/event/${id}/updateDataCSV`, formData) 
             }
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    alert(data.message);
-                } else {
-                    const errorData = await response.json();
-                    alert(`Błąd: ${errorData.error}`);
-                }
-            } catch (error) {
-                console.error('Błąd przesyłania pliku:', error);
-                alert('Wystąpił błąd podczas przesyłania pliku');
+
+            if(response.status >= 200 && response.status < 300){
+                if(modalUploadCSVChild.current) modalUploadCSVChild.current.handleClose();
             }
+            
+            // LOGIKA DO KOMUNIKATU po dodaniu lub aktualizacji?
+
+        } catch (error) {
+            console.error('Błąd przesyłania pliku:', error);
+            alert('Wystąpił błąd podczas przesyłania pliku');
+        }
     }
 
 
     const fetchEventStatistics = async (id) => {
         try {
-            const response = await fetch(`http://localhost:5001/api/event/${id}/statistics`, {method: 'GET'});
-            const data = await response.json();
-            return data.tbody;
+            const response = await axios.get(`http://localhost:5001/api/event/${id}/statistics`);
+            return response.data.tbody;
         } catch (error) {
             console.error('Error fetching event statistics:', error);
             return null;
@@ -102,6 +96,7 @@ export default function Statistic(props){
                     <H3Module title='Brak informacji o statystkach. 
                     Dodaj plik z danymi zawodników, żeby pojawiły się statystyki.' />
                                 <ModalBasic 
+                                ref={modalUploadCSVChild}
                                 btnModalTitle='Wgraj Dane'
                                 modalTitle='Wgrywanie Danych' 
                                 modalBody={bodyModal}

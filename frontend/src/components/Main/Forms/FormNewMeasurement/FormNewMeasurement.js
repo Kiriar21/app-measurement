@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../../Buttons/ButtonForm/ButtonForm';
 import FormInput from '../FormInput/FormInput';
 import Alert from '../../../Alerts/Alert/Alert';
+import axios from 'axios';
 
 function timeToForm() {
     let dateToday = new Date();
@@ -32,16 +33,9 @@ export default function FormNewMeasurement(props) {
         };
 
         try {
-            const response = await fetch('http://localhost:5001/api/createEvent', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(eventData), 
-            });
+            const response = await axios.post('http://localhost:5001/api/createEvent', eventData)
 
-            if (response.ok) {
-                await response.json();
+            if (response.status >= 200 && response.status < 300) {                
                 setShowAlert(true);
                 setOnLoading(false);
                 setDisabled(true);

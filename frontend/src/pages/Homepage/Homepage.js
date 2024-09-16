@@ -6,6 +6,7 @@ import SearchModule from "../../components/Main/Forms/SearchModule/SearchModule"
 import TableBody from '../../components/Main/Forms/Homepage/TableBody/TableBody';
 import ButtonForm from '../../components/Buttons/ButtonForm/ButtonForm';
 import H3Module from '../../components/Main/Texts/H3Module/H3Module';
+import axios from 'axios';
 
 export default function Login(props) {
     const [searchValue, setSearchValue] = useState('');
@@ -25,9 +26,8 @@ export default function Login(props) {
                 query += `&date=${searchDate}`; 
             }
     
-            const response = await fetch(`http://localhost:5001/api/getEvents${query}`);
-            const data = await response.json();
-            setTbody(data.events);
+            const response = await axios.get(`http://localhost:5001/api/getEvents${query}`);
+            setTbody(response.data.events);
             setOnLoading(false);
         } catch (error) {
             console.error('Error during search and sort:', error);
@@ -51,9 +51,8 @@ export default function Login(props) {
         setSearchDate('');
         setOnLoading(true);
         try {
-            const response = await fetch(`http://localhost:5001/api/getEvents?sortField=${sortField}&sortOrder=${sortOrder}`);
-            const data = await response.json();
-            setTbody(data.events);
+            const response = await axios.get(`http://localhost:5001/api/getEvents?sortField=${sortField}&sortOrder=${sortOrder}`);
+            setTbody(response.data.events);
             setOnLoading(false);
         } catch (error) {
             console.error('Error fetching events:', error);
@@ -64,6 +63,25 @@ export default function Login(props) {
     useEffect(() => {
         searching();
     }, [searching]);
+
+
+
+    const deleteEvent = async (eventId, modalRef) => {
+        try {
+            const response = await axios.delete(`http://localhost:5001/api/event/${eventId}`);
+
+            if (response.status >= 200 && response.status < 300) {
+                await fetchEvents();
+                if (modalRef.current) {
+                    modalRef.current.handleClose();
+                }
+            } else {
+                console.error('Błąd podczas usuwania eventu');
+            }
+        } catch (e) {
+            console.error("Error:", e);
+        }
+    };
 
     return (
         <MainBackground titlePage="Wyniki Lokalne">
@@ -79,18 +97,19 @@ export default function Login(props) {
                 onLoading={onLoading}
                 onClick={searching}
                 onClear={fetchEvents}
-                onChange={e => setSearchValue(e.target.value)}  // Obsługa wyszukiwania po nazwie/miejscowości
+                onChange={e => setSearchValue(e.target.value)}  
                 searchValue={searchValue}
-                dateValue={searchDate}  // Dodajemy stan dla daty
-                onDateChange={e => setSearchDate(e.target.value)}  // Zmiana wartości daty
+                dateValue={searchDate}  
+                onDateChange={e => setSearchDate(e.target.value)}  
             />
                 <TableBody 
                     theader={theader}
                     tbody={tbody} 
-                    handleSort={handleSort}  // Przekazanie funkcji sortowania
+                    handleSort={handleSort}  
                     sortField={sortField}
                     sortOrder={sortOrder}
-                    fetchEvents={fetchEvents} 
+                    fetchEvents={fetchEvents}
+                    deleteEvent={deleteEvent}
                 />
             </Form>
         </MainBackground>

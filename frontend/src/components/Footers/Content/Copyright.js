@@ -6,7 +6,7 @@ export default function Social(props) {
         <Column width='12'>
             <hr/>
             <div>
-                Wszelkie Prawe Zastrzeżone &copy; 2023 Copyright
+                Wszelkie Prawe Zastrzeżone &copy; 2023 - 2025 Copyright
                 <LinkSocial link="https://www.linkedin.com/in/artur-matuszczyk/">   
                     <cite title="LinkedIn Artur Matuszczyk">
                         Artur Matuszczyk

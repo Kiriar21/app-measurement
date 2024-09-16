@@ -23,9 +23,8 @@ export default function FormEvent(props) {
         title:'Krótka Nazwa'
     }]
 
-    //Dodać funkcje która zmienia dane w onchange selecta
 
-    //Dodać state, ktory bedzie sie uzueplnial danymi a po tym bedzie uzupelnial dane w inputach 
+
     return (
         <Container fluid>
             <Select controlId='nameClassChoose'
@@ -112,26 +111,10 @@ export default function FormEvent(props) {
                                     lg={12}
                                     />
                         </Col>
-                        <Col lg={3}>
+                        <Col lg={9}>
                             <Input typeInput='file' 
                                     controlId='fileStart1' 
                                     labelText='Plik 1'
-                                    onChange={e=>{}}
-                                    lg={12}
-                                    />
-                        </Col>
-                        <Col lg={3}>
-                            <Input typeInput='file' 
-                                    controlId='fileStart2' 
-                                    onChange={e=>{}}
-                                    labelText='Plik 3'
-                                    lg={12}
-                                    />
-                        </Col>
-                        <Col lg={3}>
-                            <Input typeInput='file' 
-                                    controlId='fileStart3' 
-                                    labelText='Plik 3'
                                     onChange={e=>{}}
                                     lg={12}
                                     />
@@ -149,26 +132,10 @@ export default function FormEvent(props) {
                                     lg={12}
                                     />
                         </Col>
-                        <Col lg={3}>
+                        <Col lg={9}>
                             <Input typeInput='file' 
                                     controlId='fileMeta1' 
                                     labelText='Plik 1'
-                                    onChange={e=>{}}
-                                    lg={12}
-                                    />
-                        </Col>
-                        <Col lg={3}>
-                            <Input typeInput='file' 
-                                    controlId='fileMeta2' 
-                                    labelText='Plik 3'
-                                    onChange={e=>{}}
-                                    lg={12}
-                                    />
-                        </Col>
-                        <Col lg={3}>
-                            <Input typeInput='file' 
-                                    controlId='fileMeta3' 
-                                    labelText='Plik 3'
                                     onChange={e=>{}}
                                     lg={12}
                                     />

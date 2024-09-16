@@ -86,27 +86,27 @@ const ParticipantSchema = new Schema({
         default: false,
     },
     time_start: {
-        type: [Number],
-        default: [],
+        type: String,
+        default: '',
     },
     time_end: {
-        type: [Number],
-        default: [],
+        type: String,
+        default: '',
     },
     time_netto: {
-        type: Number,
+        type: String,
     },
     time_brutto: {
-        type: Number,
+        type: String,
     },
     avg_speed: {
-        type: Number,
+        type: String,
     },
     avg_rate: {
         type: Number,
     },
     diff_time: {
-        type: Number,
+        type: String,
     },
     place: {
         type: Number,

@@ -25,6 +25,7 @@ export default function FormInput(props){
                                 disabled={props.disabled}
                                 value={ props.value ?? ''}
                                 min={ props.min ?? '' }
+                                pattern = {props.pattern ? props.pattern : ''}
                                 />
                 }
             </Col>

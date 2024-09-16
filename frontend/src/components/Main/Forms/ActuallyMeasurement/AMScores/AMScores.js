@@ -80,7 +80,7 @@ export default function FormScores(props){
         </Row>
         <Form className={`m-3`}>
                 <SortsModule sortComp={e=>{setsortSel(e)}} filtrSex={e=>{setfiltrSex(e)}} filtrStatus={e=>{setfiltrStatus(e)}}/>
-                <SearchModule controlId='sbcompetitors' labelText='Szukaj zawodnika (Zawonika / Numer)' onClick={check} onChange={e=>{setSearchBar(e.target.value)}} />
+                <SearchModule controlId='sbcompetitors' labelText='Szukaj zawodnika (Imie / Nazwisko / Numer)' onClick={check} onChange={e=>{setSearchBar(e.target.value)}} placeholder="Szuka zawodnika po imieniu, nazwisku lub numerze" turnOffDate={true} />
                 <TableBody theader={theader} tbody={tbody}/>
                 {/* Będzie wiele tabel po kilka zawodników - zależność od danej imprezy */}
         </Form>

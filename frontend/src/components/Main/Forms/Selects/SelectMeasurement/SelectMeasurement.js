@@ -2,7 +2,7 @@ import {Col, Row, Form} from 'react-bootstrap'
 import Option from './Option'
 import style from '../../FormInput/FormInput.module.css'
 
-export default function FormInput(props){
+export default function SelectMeasurement(props){
     return(
         <Form.Group as={Row} controlId={props.controlId} className='d-flex justify-content-center my-3'>
             <Col lg={props.lg ? props.lg : 6}>
@@ -12,6 +12,7 @@ export default function FormInput(props){
                 <Form.Select
                             onChange={props.onChange} 
                             className={`${style.bg} my-3`}
+                            value={props.value}
                             >
                         {props.opt.map( (element) => {
                             return (

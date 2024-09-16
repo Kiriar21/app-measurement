@@ -18,7 +18,7 @@ export default function FormNewMeasurement(props){
     useEffect(() => {
         const fetchEventData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5001/api/event/${id}/edit`);  // Wywołanie API
+                const response = await axios.get(`http://localhost:5001/api/event/${id}/edit`); 
                 const eventData = response.data;
                 setDate(eventData.date);
                 setName(eventData.name);
@@ -34,7 +34,7 @@ export default function FormNewMeasurement(props){
         e.preventDefault();
         try {
             const updatedData = { date, name, localization };
-            await axios.put(`http://localhost:5001/api/event/${id}/edit`, updatedData);  // Zapis aktualizacji
+            await axios.put(`http://localhost:5001/api/event/${id}/edit`, updatedData); 
             setShowAlert(true);
         } catch (err) {
             console.log("Błąd przy zapisywaniu danych: ", err);
