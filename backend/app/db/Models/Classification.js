@@ -21,9 +21,7 @@ const ClassificationSchema = new Schema({
         minlength: [3, 'Typ wydarzenia musi mieć co najmniej 3 znaki'],
     },
     date_and_time: {
-        type: Date,
-        required: [true, 'Data i czas wydarzenia są wymagane'],
-        default: Date.now,
+        type: String,
     },
     impuls_number_start: {
         type: Number,
@@ -37,6 +35,14 @@ const ClassificationSchema = new Schema({
         min: [1, 'Numer impulsu mety musi być większy lub równy 1'],
         default: 1,
     },
+    input_file_start: {
+        type: String,
+        default: '',
+    },
+    input_file_meta: {
+        type: String,
+        default: '',
+    },
     category_open: {
         exist: {
             type: Boolean,
@@ -45,7 +51,7 @@ const ClassificationSchema = new Schema({
         number_of_position: {
             type: Number,
             default: 3,
-            min: [1, 'Liczba pozycji musi być większa lub równa 1'],
+            min: [0, 'Liczba pozycji musi być większa lub równa 0'],
         },
     },
     category_age: {
@@ -56,7 +62,7 @@ const ClassificationSchema = new Schema({
         number_of_position: {
             type: Number,
             default: 3,
-            min: [1, 'Liczba pozycji musi być większa lub równa 1'],
+            min: [0, 'Liczba pozycji musi być większa lub równa 0'],
         },
     },
     categories: [

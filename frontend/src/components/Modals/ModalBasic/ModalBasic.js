@@ -56,7 +56,7 @@ const ModalBasic = forwardRef((props, ref) => {
                     </Modal.Body>
                     <Modal.Footer className={`${style.modalContent}`}>
                         
-                    <ButtonForm buttonTitle={props.modalBtnGreen} className='w-100' onClick={props.onClick} />
+                    <ButtonForm buttonTitle={props.modalBtnGreen} className='w-100' onClick={() => {props.onClick(); handleClose(); }} />
                     {props.secondButton && <ButtonForm buttonTitle={props.secondButtonTitle} className='w-100' onClick={props.onClick2} />}
                     <ButtonModal buttonTitle={props.modalBtnRed} bgColor='red' className='w-100' onClick={handleClose} />
             

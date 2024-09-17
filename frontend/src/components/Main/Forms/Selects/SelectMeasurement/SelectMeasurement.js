@@ -11,6 +11,7 @@ export default function SelectMeasurement(props){
                 </Form.Label>
                 <Form.Select
                             onChange={props.onChange} 
+                            name={props.name}
                             className={`${style.bg} my-3`}
                             value={props.value}
                             >

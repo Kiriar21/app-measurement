@@ -12,7 +12,8 @@ export default function Statistic(props){
     const [tbody, setTbody] = useState([]);
     const {id} = useParams()
     const [file, setFile] = useState('')
-    
+    const [dataUpdated, setDataUpdated] = useState(false);
+
     const modalUploadCSVChild = useRef(null);
 
     const bodyModal = (
@@ -32,7 +33,6 @@ export default function Statistic(props){
     )
 
     const uploadCSV = async (e, isAdded) => {
-        e.preventDefault();
 
         if (!file) {
             alert('Proszę wybrać plik CSV przed przesłaniem.');
@@ -43,17 +43,14 @@ export default function Statistic(props){
         formData.append('file', file);
 
         try {
-            let response = null;
             if(isAdded){
-                response = await axios.post(`http://localhost:5001/api/event/${id}/replaceDataCSV`, formData)
+                await axios.post(`http://localhost:5001/api/event/${id}/replaceDataCSV`, formData)
             } else {
-                response = await axios.post(`http://localhost:5001/api/event/${id}/updateDataCSV`, formData) 
+                await axios.post(`http://localhost:5001/api/event/${id}/updateDataCSV`, formData) 
             }
 
-            if(response.status >= 200 && response.status < 300){
-                if(modalUploadCSVChild.current) modalUploadCSVChild.current.handleClose();
-            }
-            
+            if(modalUploadCSVChild.current) modalUploadCSVChild.current.handleClose();
+            setDataUpdated(prev => !prev);
             // LOGIKA DO KOMUNIKATU po dodaniu lub aktualizacji?
 
         } catch (error) {
@@ -80,7 +77,7 @@ export default function Statistic(props){
         };
     
         loadStatistics();
-    }, [id, file]);
+    }, [id, dataUpdated]);
 
     return(
         <MainBackground titlePage="Statystyki">

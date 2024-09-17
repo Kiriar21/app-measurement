@@ -6,11 +6,12 @@ const multer = require('multer');
 const csv = require('csv-parser');
 const fs = require('fs');
 const iconv = require('iconv-lite');
+const path = require('path')
 
 
-const storage = multer.memoryStorage();
-const upload = multer({ 
-    storage,
+const storageMemery = multer.memoryStorage();
+const uploadMemory = multer({ 
+    storageMemery,
     fileFilter: (req, file, cb) => {
         if (file.mimetype === 'text/csv' || file.mimetype === 'application/vnd.ms-excel') {
             cb(null, true);
@@ -21,6 +22,110 @@ const upload = multer({
     limits: { fileSize: 5 * 1024 * 1024 }, 
 });
 
+const storageDisk = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/'); 
+    },
+    filename: function (req, file, cb) {
+        const classificationIndex = req.params.index;
+        const eventId = req.params.id;
+        const fileType = file.fieldname === 'startFile' ? 'start' : 'meta';
+        const ext = path.extname(file.originalname);
+        cb(null, `${eventId}-classification-${classificationIndex}-${fileType}${ext}`);
+    },
+});
+
+const uploadDisk = multer({ storage: storageDisk });
+
+
+const getClassificationsNameFromEvent = async (req, res) => {
+    try {
+        const eventId = req.params.id;
+        const event = await Event.findOne({ eventId: eventId });
+
+        if (!event) {
+            return res.status(404).json({ error: 'Event not found' });
+        }
+
+        const classificationsName = event.classifications.map((classification, index) => ({
+            title: classification.name,
+            name: index
+        }));
+        
+        res.status(200).json(classificationsName);
+
+    } catch (error) {
+        res.status(500).json({ error: 'Error fetching classifications' });
+    }
+}
+
+const getClassificationFromEvent = async (req, res) => {
+    try {
+        const eventId = req.params.id;
+        const classificationIndex = parseInt(req.params.index);
+        const event = await Event.findOne({ eventId: eventId });
+
+        if (!event) {
+            return res.status(404).json({ error: 'Event not found' });
+        }
+
+        const classification = event.classifications[classificationIndex];
+
+        if (!classification) {
+            return res.status(404).json({ error: 'Classification not found' });
+        }
+
+        res.status(200).json(classification);
+
+    } catch (error) {
+        res.status(500).json({ error: 'Error fetching classification' });
+    }
+};
+
+
+const updateClassificationFromEvent = async (req, res) => {
+    try {
+        const eventId = req.params.id;
+        const classificationIndex = parseInt(req.params.index);
+
+        let updatedData = {};
+
+        if (req.body.classificationData) {
+            updatedData = JSON.parse(req.body.classificationData);
+        } else {
+            updatedData = req.body;
+        }
+
+        const event = await Event.findOne({ eventId: eventId });
+
+        if (!event) {
+            return res.status(404).json({ error: 'Event not found' });
+        }
+
+        if (!event.classifications[classificationIndex]) {
+            return res.status(404).json({ error: 'Classification not found' });
+        }
+
+        const files = req.files;
+        if (files) {
+            if (files.startFile && files.startFile.length > 0) {
+                updatedData.input_file_start = files.startFile[0].path;
+            }
+            if (files.metaFile && files.metaFile.length > 0) {
+                updatedData.input_file_meta = files.metaFile[0].path;
+            }
+        }
+
+        Object.assign(event.classifications[classificationIndex], updatedData);
+
+        await event.save();
+
+        res.status(200).json({ message: 'Classification updated successfully' });
+
+    } catch (error) {
+        res.status(500).json({ error: 'Error updating classification' });
+    }
+};
 
 const createEvent = async (req, res) => {
     try {
@@ -382,7 +487,7 @@ async function processCSV(eventId, fileBuffer) {
                     name: classificationName,
                     distance: 0, 
                     type_of_event: 'Bieg na czas',
-                    date_and_time: new Date(),
+                    date_and_time: '',
                     impuls_number_start: 1,
                     impuls_number_finish: 1,
                     category_open: {
@@ -749,4 +854,23 @@ const getUser = async (req, res) => {
 };
 
 
-module.exports = { createEvent, getEvents, deleteEvent, getEventByIdEdit, updateEventByIdEdit, uploadCSVEvent, upload, multerErrorHandler, replaceCSVEvent, getEventStatistics, getUsers, getUser, editUser, deleteUser};
+module.exports = {
+    createEvent, 
+    getEvents, 
+    deleteEvent, 
+    getEventByIdEdit, 
+    updateEventByIdEdit, 
+    uploadCSVEvent, 
+    uploadMemory, 
+    uploadDisk,
+    multerErrorHandler, 
+    replaceCSVEvent, 
+    getEventStatistics, 
+    getUsers, 
+    getUser, 
+    editUser, 
+    deleteUser, 
+    getClassificationsNameFromEvent, 
+    getClassificationFromEvent,
+    updateClassificationFromEvent
+};

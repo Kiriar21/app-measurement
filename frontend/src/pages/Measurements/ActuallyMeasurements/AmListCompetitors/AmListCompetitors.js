@@ -297,8 +297,6 @@ export default function Login(props) {
     }
 
     const uploadCSV = async (e, isAdded) => {
-        e.preventDefault();
-
         if (!file) {
             alert('Proszę wybrać plik CSV przed przesłaniem.');
             return;
