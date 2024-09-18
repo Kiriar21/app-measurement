@@ -28,10 +28,21 @@ export default function FormEvent(props) {
     const [status, setStatus] = useState('Ładowanie danych...')
     const [selectedClassificationIndex, setSelectedClassificationIndex] = useState(0);
     const [classificationData, setClassificationData] = useState(null);
-    const [startFile, setStartFile] = useState(null);
-    const [metaFile, setMetaFile] = useState(null);
+    const [availableFiles, setAvailableFiles] = useState([]);
 
 
+    useEffect(() => {
+        const fetchFiles = async () => {
+            try {
+                const res = await axios.get(`http://localhost:5001/api/event/${id}/availableFiles`);
+                setAvailableFiles(res.data.files);
+            } catch (error) {
+                console.error('Error fetching files:', error);
+            }
+        };
+
+        fetchFiles();
+    }, [id]);
 
     const getClassificationsNames = useCallback(async () => {
         try {
@@ -48,20 +59,23 @@ export default function FormEvent(props) {
         }
     }, [id])
 
+    const getFileNameFromPath = (filePath) => {
+        const separator = filePath.includes('/') ? '/' : '\\';
+        const parts = filePath.split(separator);
+        return parts[parts.length - 1];
+    };
+
     useEffect(() => {
         getClassificationsNames()
     }, [getClassificationsNames])
 
     useEffect(() => {
-        setStartFile(null);
-        setMetaFile(null);
         const getClassificationData = async () => {
             try {
                 const res = await axios.get(`http://localhost:5001/api/event/${id}/classifications/${selectedClassificationIndex}`);
 
                 if (res.status >= 200 && res.status < 300) {
                     setClassificationData(res.data);
-                    console.log(res.data);
                     setStatus('');
                 }
             } catch (error) {
@@ -78,54 +92,25 @@ export default function FormEvent(props) {
 
     const handleSave = async () => {
         try {
-            const formData = new FormData();
-            formData.append('classificationData', JSON.stringify(classificationData));
-            if (startFile) {
-                formData.append('startFile', startFile);
-            }
-            if (metaFile) {
-                formData.append('metaFile', metaFile);
-            }
+            const payload = {
+                ...classificationData,
+            };
     
             await axios.put(
                 `http://localhost:5001/api/event/${id}/classifications/${selectedClassificationIndex}`,
-                formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                }
+                payload
             );
+            alert('Dane zapisane pomyślnie.');
         } catch (error) {
             console.log(error);
             alert('Błąd podczas zapisywania danych.');
         }
     };
     
+    
 
     const titleAlert = () => {
         return (`Czy na pewno chcesz zapisać zmiany w klasyfikacji ${classificationData.name}?`).toString();
-    }
-
-    const handleStartFileChange = (e) => {
-        setStartFile(e.target.files[0]);
-    };
-    
-    const handleMetaFileChange = (e) => {
-        setMetaFile(e.target.files[0]);
-    };
-    
-    const labelTextInputFile = (type) => {
-        if(type==='start'){
-            if (classificationData.input_file_start) {
-                return "Plik - dodano wcześniej: " + (classificationData.input_file_start.toString().split('-')[3]).toString();
-            }
-        } else if(type==='meta'){
-            if(classificationData.input_file_meta){
-                return "Plik - dodano wcześniej: " + (classificationData.input_file_meta.toString().split('-')[3]).toString();
-            }
-        }
-        return "Plik"
     }
 
     return (
@@ -141,7 +126,7 @@ export default function FormEvent(props) {
                     />
                     { classificationData ? (
                         <>
-                            <H3Module title={classificationData ? classificationData.name : 'Ładowanie...'} />  
+                            <H3Module title={classificationData ? "Ustawienia dla klasyfikacji: " + classificationData.name : 'Ładowanie...'} />  
                             <Form>
                                 <LineStep className='mt-3 mb-5' title='Krok 1 - Podstawowe Informacje'>
                                     <Row>
@@ -237,12 +222,14 @@ export default function FormEvent(props) {
                                             />
                                         </Col>
                                         <Col lg={9}>
-                                            <Input typeInput='file' 
-                                                    controlId='fileStart1' 
-                                                    labelText={labelTextInputFile('start')}
-                                                    onChange={handleStartFileChange}
-                                                    lg={12}
-                                                    />
+                                            <Select
+                                                controlId='startFileSelect'
+                                                labelText='Wybierz plik START'
+                                                onChange={(e) => setClassificationData({ ...classificationData, input_file_start: e.target.value })}
+                                                value={classificationData.input_file_start ? getFileNameFromPath(classificationData.input_file_start) : ''}
+                                                opt={[{ name: '', title: 'Nie wybrano pliku' }, ...availableFiles.map(file => ({ name: file, title: file }))]}
+                                                lg={12}
+                                            />
                                         </Col>
                                     </Row>
                                 </LineStep>
@@ -260,13 +247,14 @@ export default function FormEvent(props) {
                                             />
                                         </Col>
                                         <Col lg={9}>
-                                            <Input typeInput='file' 
-                                                    controlId='fileMeta1' 
-                                                    labelText={labelTextInputFile('meta')}
-                                                    onChange={handleMetaFileChange}
-                                                    value={classificationData.input_file_meta}
-                                                    lg={12}
-                                                    />
+                                            <Select
+                                                controlId='metaFileSelect'
+                                                labelText='Wybierz plik META'
+                                                onChange={(e) => setClassificationData({ ...classificationData, input_file_meta: e.target.value })}
+                                                value={classificationData.input_file_meta ? getFileNameFromPath(classificationData.input_file_meta) : ''}
+                                                opt={[{ name: '', title: 'Nie wybrano pliku' }, ...availableFiles.map(file => ({ name: file, title: file }))]}
+                                                lg={12}
+                                            />
                                         </Col>
                                     </Row>
                                 </LineStep>

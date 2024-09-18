@@ -1,18 +1,51 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Col, Container, Form, Row } from "react-bootstrap"
+import { useParams } from "react-router-dom"
 import Select from '../../Selects/SelectMeasurement/SelectMeasurement'
 import ButtonForm from "../../../../Buttons/ButtonForm/ButtonForm"
 import SortsModule from "../../SortsModule/SortsModule"
 import SearchModule from "../../SearchModule/SearchModule"
 import TableBody from "./TableBody"
+import axios from 'axios'
 // import H3Module from '../../../Texts/H3Module/H3Module'
 
 export default function FormScores(props){
-    const [searchBar,setSearchBar] = useState('') 
-    const [sortSel,setsortSel] = useState('') 
-    const [filtrSex,setfiltrSex] = useState('') 
-    const [filtrStatus,setfiltrStatus] = useState('')
-    const [downloadingResults, setDownloadingResults] = useState(false)
+    const {id} = useParams();
+    const [searchBar,setSearchBar] = useState('');;
+    const [sortSel,setsortSel] = useState('');
+    const [filtrSex,setfiltrSex] = useState(''); 
+    const [filtrStatus,setfiltrStatus] = useState('');
+    const [downloadingResults, setDownloadingResults] = useState(false);
+
+    useEffect(() => {
+        let isMounted = true;
+
+        const fetchData = async () => {
+            if (!isMounted || !downloadingResults) return;
+
+            try {
+                await axios.get(`http://localhost:5001/api/event/${id}/classifications/updateData`);
+            } catch (error) {
+                console.error(error);
+            }
+
+            if (isMounted && downloadingResults) {
+                fetchData();
+            }
+        };
+
+        if (downloadingResults) {
+            fetchData(); 
+        }
+
+        return () => {
+            isMounted = false; 
+        };
+    }, [downloadingResults, id]);
+
+
+
+
     const check = async () => {
         console.log(searchBar,' ',sortSel,' ', filtrSex, ' ', filtrStatus)
     }
@@ -60,12 +93,12 @@ export default function FormScores(props){
         <Row>
                 <Col lg={6} className="d-flex">
                     <ButtonForm className='mx-2' buttonTitle='Exportuj Wyniki' onClick={e=>{}}/>
-                    {
-                        downloadingResults ? 
-                            <ButtonForm className='mx-2' buttonTitle='Przestań pobierać wyniki' colorBtn='red' onClick={e => setDownloadingResults(false)} /> 
-                            :
-                            <ButtonForm className='mx-2' buttonTitle='Pobieraj Wyniki' onClick={e => setDownloadingResults(true)} /> 
-                    }
+                    <ButtonForm
+                        className='mx-2'
+                        buttonTitle={downloadingResults ? 'Przestań pobierać wyniki' : 'Pobieraj Wyniki'}
+                        colorBtn={downloadingResults ? 'red' : 'green'}
+                        onClick={() => setDownloadingResults(!downloadingResults)}
+                    />
                 </Col>
             <Form className={`m-3`}>
                 <Col lg={4}>

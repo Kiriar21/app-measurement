@@ -1,5 +1,7 @@
+const mongoose = require('mongoose');
 const Event = require('../db/Models/Event');
 const Participant = require('../db/Models/Participant');
+const FileMeasurement = require('../db/Models/FileMeasurement');
 const { Readable } = require('stream');
 const multer = require('multer');
 
@@ -88,13 +90,7 @@ const updateClassificationFromEvent = async (req, res) => {
         const eventId = req.params.id;
         const classificationIndex = parseInt(req.params.index);
 
-        let updatedData = {};
-
-        if (req.body.classificationData) {
-            updatedData = JSON.parse(req.body.classificationData);
-        } else {
-            updatedData = req.body;
-        }
+        const { input_file_start, input_file_meta, ...updatedData } = req.body;
 
         const event = await Event.findOne({ eventId: eventId });
 
@@ -105,16 +101,22 @@ const updateClassificationFromEvent = async (req, res) => {
         if (!event.classifications[classificationIndex]) {
             return res.status(404).json({ error: 'Classification not found' });
         }
+        const uploadsPath = path.join(__dirname, '..', '..', 'uploads');
 
-        const files = req.files;
-        if (files) {
-            if (files.startFile && files.startFile.length > 0) {
-                updatedData.input_file_start = files.startFile[0].path;
+        if (input_file_start) {
+            if (!fs.existsSync(path.join(uploadsPath, input_file_start))) {
+                return res.status(400).json({ error: 'Start file does not exist' });
             }
-            if (files.metaFile && files.metaFile.length > 0) {
-                updatedData.input_file_meta = files.metaFile[0].path;
-            }
+            updatedData.input_file_start = path.join(uploadsPath, input_file_start);
         }
+
+        if (input_file_meta) {
+            if (!fs.existsSync(path.join(uploadsPath, input_file_meta))) {
+                return res.status(400).json({ error: 'Meta file does not exist' });
+            }
+            updatedData.input_file_meta = path.join(uploadsPath, input_file_meta);
+        }
+
 
         Object.assign(event.classifications[classificationIndex], updatedData);
 
@@ -854,6 +856,153 @@ const getUser = async (req, res) => {
 };
 
 
+const getAvailableFiles = async (req, res) => {
+    try {
+        const targetPath = path.join(__dirname, '..', '..', 'uploads');
+        const files = fs.readdirSync(targetPath);
+        res.status(200).json({ files });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error fetching files' });
+    }
+};
+
+
+const processFile = async (filePath, eventId, classificationId, type) => {
+    await fs.promises.access(filePath).catch(() => { 
+        return;
+    } );
+
+
+    const existingFileMeasurement = await FileMeasurement.findOne({ eventId, classificationId, type });
+
+    let maxCounter = existingFileMeasurement?.data?.reduce((max, input) => Math.max(max, input.counter), 0) || 0;
+
+    const newInputs = [];
+    const fileStream = fs.createReadStream(filePath).pipe(iconv.decodeStream('win1250'));
+
+    await new Promise((resolve, reject) => {
+        fileStream
+            .pipe(csv({ separator: ',', headers: false })) 
+            .on('data', (row) => {
+                const counter = parseInt(row[1]);
+                if (counter > maxCounter) {
+                    newInputs.push({
+                        name_gate: row[0], 
+                        counter,
+                        name_file: row[2], 
+                        chip_number: parseInt(row[3]), 
+                        time: row[4], 
+                        impuls: parseInt(row[5]), 
+                        gate: row[6], 
+                        power_of_impuls: parseInt(row[7]), 
+                    });
+                }
+            })
+            .on('end', resolve)
+            .on('error', reject);
+    });
+
+    if (newInputs.length > 0) {
+        await FileMeasurement.updateOne(
+            { eventId, classificationId, type },
+            { $push: { data: { $each: newInputs } } },
+            { upsert: true }
+        );
+    }
+};
+
+
+const updateDataFromFiles = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // Pobierz wydarzenie
+        const event = await Event.findOne({ eventId: id });
+        if (!event) return res.status(404).json({ error: 'Event not found' });
+
+        // Iteruj przez wszystkie klasyfikacje
+        for (const classification of event.classifications) {
+            const classificationId = classification._id;
+            // Sprawdź, czy pliki istnieją
+            if (classification.input_file_start) {
+                const fileMeasurements = await FileMeasurement.find({
+                    eventId: event._id,
+                    classificationId,
+                });
+                const fileMeasurementStart = fileMeasurements.find(measurement => measurement.type === 'Start');
+                
+
+                if (!fileMeasurementStart) {
+                    // Utwórz nowy FileMeasurement jeśli nie istnieje
+                    fileMeasurementStart = new FileMeasurement({
+                        eventId: event._id,
+                        classificationId,
+                        type: 'Start',
+                        data: [], // Początkowo pusta tablica danych
+                    });
+                    await fileMeasurementStart.save();
+                }
+
+            }
+            // Sprawdzenie i utworzenie FileMeasurement dla Meta
+            if (classification.input_file_meta) {
+
+                const fileMeasurements = await FileMeasurement.find({
+                    eventId: event._id,
+                    classificationId,
+                });
+                const fileMeasurementMeta = fileMeasurements.find(measurement => measurement.type === 'Meta');
+                
+
+                if (!fileMeasurementMeta) {
+                    // Utwórz nowy FileMeasurement jeśli nie istnieje
+                    fileMeasurementMeta = new FileMeasurement({
+                        eventId: event._id,
+                        classificationId,
+                        type: 'Meta',
+                        data: [], // Początkowo pusta tablica danych
+                    });
+                    await fileMeasurementMeta.save();
+                }
+
+            }
+
+            const session = await mongoose.startSession();
+            session.startTransaction();
+            try {
+                if (classification.input_file_start && (classification.input_file_meta)){
+                    await Promise.all([
+                        processFile(classification.input_file_start, event._id, classificationId, 'Start'),
+                        processFile(classification.input_file_meta, event._id, classificationId, 'Meta')
+                    ])
+                } else if(classification.input_file_start){
+                    processFile(classification.input_file_start, event._id, classificationId, 'Start')
+                } else if(classification.input_file_meta){
+                    processFile(classification.input_file_meta, event._id, classificationId, 'Meta')
+                }
+
+                await session.commitTransaction();
+            } catch (error) {
+                await session.abortTransaction();
+                throw error;
+            } finally {
+                session.endSession();
+            }
+
+        }
+
+
+        
+
+        res.status(200).json({ message: 'Data updated successfully for all classifications' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error updating data' });
+    }
+};
+
+
 module.exports = {
     createEvent, 
     getEvents, 
@@ -872,5 +1021,8 @@ module.exports = {
     deleteUser, 
     getClassificationsNameFromEvent, 
     getClassificationFromEvent,
-    updateClassificationFromEvent
+    updateClassificationFromEvent,
+
+    getAvailableFiles,
+    updateDataFromFiles,
 };

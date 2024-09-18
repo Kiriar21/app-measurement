@@ -33,8 +33,8 @@ const InputSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+}, {
+    timestamps: true,
 });
 
-const Input = mongoose.model('Input', InputSchema);
-
-module.exports = Input;
+module.exports = InputSchema;
