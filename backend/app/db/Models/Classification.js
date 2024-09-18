@@ -43,6 +43,14 @@ const ClassificationSchema = new Schema({
         type: String,
         default: '',
     },
+    file_start_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'FileMeasurement',
+    },
+    file_meta_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'FileMeasurement',
+    },
     category_open: {
         exist: {
             type: Boolean,

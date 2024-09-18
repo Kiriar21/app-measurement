@@ -12,6 +12,7 @@ export default function FormScores(props){
     const [sortSel,setsortSel] = useState('') 
     const [filtrSex,setfiltrSex] = useState('') 
     const [filtrStatus,setfiltrStatus] = useState('')
+    const [downloadingResults, setDownloadingResults] = useState(false)
     const check = async () => {
         console.log(searchBar,' ',sortSel,' ', filtrSex, ' ', filtrStatus)
     }
@@ -59,7 +60,12 @@ export default function FormScores(props){
         <Row>
                 <Col lg={6} className="d-flex">
                     <ButtonForm className='mx-2' buttonTitle='Exportuj Wyniki' onClick={e=>{}}/>
-                    <ButtonForm className='mx-2' buttonTitle='Pobieraj Wyniki' onClick={e=>{}}/>
+                    {
+                        downloadingResults ? 
+                            <ButtonForm className='mx-2' buttonTitle='Przestań pobierać wyniki' colorBtn='red' onClick={e => setDownloadingResults(false)} /> 
+                            :
+                            <ButtonForm className='mx-2' buttonTitle='Pobieraj Wyniki' onClick={e => setDownloadingResults(true)} /> 
+                    }
                 </Col>
             <Form className={`m-3`}>
                 <Col lg={4}>

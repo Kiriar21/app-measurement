@@ -5,7 +5,7 @@ import Main from './components/Main/Main/Main'
 import MainLayout from './components/Layouts/MainLayout'
 import MeasurementLayout from './components/Layouts/MeasurementLayout'
 import NotFound from './pages/404/404'
-import Login from './pages/Login/Login'
+// import Login from './pages/Login/Login'
 import Homepage from './pages/Homepage/Homepage'
 import Politics from './pages/Politics/Politics'
 import NewMeasurement from './pages/Measurements/NewMeasurements/NewMeasurement/NewMeasurement'
@@ -24,7 +24,7 @@ function App() {
         <Routes>
           <Route path='/new-measurement' element={<NewMeasurement />} />
           <Route path='/politics' element={<Politics />} />
-          <Route path='/login' element={<Login />} />
+          {/* <Route path='/login' element={<Login />} /> */}
           <Route path='/' element={<Homepage />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
@@ -59,7 +59,7 @@ function App() {
               <Route path="/*" element={<MainLayout main={main} />}>
                 <Route path='new-measurement' element={<NewMeasurement/>}/>
                 <Route path='politics' element={<Politics />}/>
-                <Route path='login' element={<Login />} />
+                {/* <Route path='login' element={<Login />} /> */}
                 <Route path='' element={<Homepage />} />
                 <Route path='*' element={<NotFound />} />
               </Route>
