@@ -81,10 +81,6 @@ const ParticipantSchema = new Schema({
         },
         default: 'START',
     },
-    finished: {
-        type: Boolean,
-        default: false,
-    },
     time_start: {
         type: String,
         default: '',
@@ -95,27 +91,35 @@ const ParticipantSchema = new Schema({
     },
     time_netto: {
         type: String,
+        default: '',
     },
     time_brutto: {
         type: String,
+        default: '',
     },
     avg_speed: {
         type: String,
+        default: '',
     },
     avg_rate: {
-        type: Number,
+        type: String,
+        default: '',
     },
     diff_time: {
         type: String,
+        default: '',
     },
     place: {
         type: Number,
+        default: '',
     },
     place_gender: {
         type: Number,
+        default: '',
     },
     place_age: {
         type: Number,
+        default: '',
     },
 }, {
     timestamps: true,

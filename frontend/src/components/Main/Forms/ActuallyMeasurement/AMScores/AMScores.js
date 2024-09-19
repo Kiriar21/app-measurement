@@ -7,7 +7,6 @@ import SortsModule from "../../SortsModule/SortsModule"
 import SearchModule from "../../SearchModule/SearchModule"
 import TableBody from "./TableBody"
 import axios from 'axios'
-// import H3Module from '../../../Texts/H3Module/H3Module'
 
 export default function FormScores(props){
     const {id} = useParams();
@@ -19,33 +18,44 @@ export default function FormScores(props){
 
     useEffect(() => {
         let isMounted = true;
-
+        let timeoutId;
+    
         const fetchData = async () => {
             if (!isMounted || !downloadingResults) return;
-
+    
             try {
-                await axios.get(`http://localhost:5001/api/event/${id}/classifications/updateData`);
+                const result = await axios.get(`http://localhost:5001/api/event/${id}/classifications/updateData`);
+    
+                if (result.status === 200 && result.data.isUpdatedFinished === true) {
+                    if (isMounted && downloadingResults) {
+                        timeoutId = setTimeout(fetchData, 2000);
+                    }
+                } else {
+                    setDownloadingResults(false);
+                    isMounted = false;
+                    return;
+                }
+    
             } catch (error) {
                 console.error(error);
-            }
-
-            if (isMounted && downloadingResults) {
-                fetchData();
+                setDownloadingResults(false);  
+                isMounted = false;
+                return;
             }
         };
-
+    
         if (downloadingResults) {
-            fetchData(); 
+            fetchData();
         }
-
+    
         return () => {
-            isMounted = false; 
+            isMounted = false;
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
         };
     }, [downloadingResults, id]);
-
-
-
-
+    
     const check = async () => {
         console.log(searchBar,' ',sortSel,' ', filtrSex, ' ', filtrStatus)
     }
@@ -67,9 +77,6 @@ export default function FormScores(props){
         title:'Kategoria M16-99'
     },]
     const theader=['Msc Open', 'Msc Kat', 'Msc Płeć', 'Nr', 'Zawodnik', 'Płeć', 'Klasyfikacja', 'Kategoria', 'Klub','Miejscowość','Czas','Czas Start','Czas Meta','Dystans (KM)','Średnie tempo']
-    // funkcja pobierania danych z serwera
-    // funkcja ktora obsluguje zmiane klasyfikacji i kategorii
-    // wysrodkowac wybory klas i kat
     
     const tbody=[{
         placeOpen:1,

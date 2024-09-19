@@ -4,12 +4,12 @@ const Participant = require('../db/Models/Participant');
 const FileMeasurement = require('../db/Models/FileMeasurement');
 const { Readable } = require('stream');
 const multer = require('multer');
-
 const csv = require('csv-parser');
 const fs = require('fs');
 const iconv = require('iconv-lite');
 const path = require('path')
-
+const archiver = require('archiver');
+const {stringify} = require('csv-stringify');
 
 const storageMemery = multer.memoryStorage();
 const uploadMemory = multer({ 
@@ -39,7 +39,6 @@ const storageDisk = multer.diskStorage({
 
 const uploadDisk = multer({ storage: storageDisk });
 
-
 const getClassificationsNameFromEvent = async (req, res) => {
     try {
         const eventId = req.params.id;
@@ -63,20 +62,18 @@ const getClassificationsNameFromEvent = async (req, res) => {
 
 const getClassificationFromEvent = async (req, res) => {
     try {
-        const eventId = req.params.id;
-        const classificationIndex = parseInt(req.params.index);
-        const event = await Event.findOne({ eventId: eventId });
+        const {id, index} = req.params;
+        const event = await Event.findOne({ eventId: id });
 
         if (!event) {
             return res.status(404).json({ error: 'Event not found' });
         }
 
-        const classification = event.classifications[classificationIndex];
+        const classification = event.classifications[index];
 
         if (!classification) {
             return res.status(404).json({ error: 'Classification not found' });
         }
-
         res.status(200).json(classification);
 
     } catch (error) {
@@ -84,41 +81,40 @@ const getClassificationFromEvent = async (req, res) => {
     }
 };
 
-
 const updateClassificationFromEvent = async (req, res) => {
     try {
-        const eventId = req.params.id;
-        const classificationIndex = parseInt(req.params.index);
+        const {id, index} = req.params;
 
-        const { input_file_start, input_file_meta, ...updatedData } = req.body;
+        const updatedData = req.body;
 
-        const event = await Event.findOne({ eventId: eventId });
+        console.log(updatedData);
+
+        const event = await Event.findOne({ eventId: id });
 
         if (!event) {
             return res.status(404).json({ error: 'Event not found' });
         }
 
-        if (!event.classifications[classificationIndex]) {
+        if (!event.classifications[index]) {
             return res.status(404).json({ error: 'Classification not found' });
         }
-        const uploadsPath = path.join(__dirname, '..', '..', 'uploads');
 
-        if (input_file_start) {
-            if (!fs.existsSync(path.join(uploadsPath, input_file_start))) {
-                return res.status(400).json({ error: 'Start file does not exist' });
+        const targetPath = path.join(__dirname, '..', '..', 'uploads');
+        const files = fs.readdirSync(targetPath)
+
+        if(updatedData.input_file_start != "") {
+            if(!files.includes(updatedData.input_file_start)) {
+                return res.status(404).json({ error: 'File not found' });
             }
-            updatedData.input_file_start = path.join(uploadsPath, input_file_start);
         }
 
-        if (input_file_meta) {
-            if (!fs.existsSync(path.join(uploadsPath, input_file_meta))) {
-                return res.status(400).json({ error: 'Meta file does not exist' });
+        if(updatedData.input_file_meta != "") {
+            if(!files.includes(updatedData.input_file_meta)) {
+                return res.status(404).json({ error: 'File not found' });
             }
-            updatedData.input_file_meta = path.join(uploadsPath, input_file_meta);
         }
 
-
-        Object.assign(event.classifications[classificationIndex], updatedData);
+        Object.assign(event.classifications[index], updatedData);
 
         await event.save();
 
@@ -869,10 +865,12 @@ const getAvailableFiles = async (req, res) => {
 
 
 const processFile = async (filePath, eventId, classificationId, type) => {
+    
+    filePath = path.join(__dirname, '..', '..', 'uploads', filePath);
+    
     await fs.promises.access(filePath).catch(() => { 
         return;
     } );
-
 
     const existingFileMeasurement = await FileMeasurement.findOne({ eventId, classificationId, type });
 
@@ -924,81 +922,390 @@ const updateDataFromFiles = async (req, res) => {
         // Iteruj przez wszystkie klasyfikacje
         for (const classification of event.classifications) {
             const classificationId = classification._id;
-            // Sprawdź, czy pliki istnieją
-            if (classification.input_file_start) {
-                const fileMeasurements = await FileMeasurement.find({
-                    eventId: event._id,
-                    classificationId,
-                });
-                const fileMeasurementStart = fileMeasurements.find(measurement => measurement.type === 'Start');
-                
 
-                if (!fileMeasurementStart) {
-                    // Utwórz nowy FileMeasurement jeśli nie istnieje
-                    fileMeasurementStart = new FileMeasurement({
-                        eventId: event._id,
-                        classificationId,
-                        type: 'Start',
-                        data: [], // Początkowo pusta tablica danych
-                    });
-                    await fileMeasurementStart.save();
+            
+                // Sprawdzenie plików start i meta oraz aktualizacja danych
+                if (classification.input_file_start) {
+                    await FileMeasurement.findOneAndUpdate(
+                        { eventId: event._id, classificationId, type: 'Start' },
+                        {
+                          $setOnInsert: { eventId: event._id, classificationId, type: 'Start', data: [] }, // Ustaw dane tylko przy tworzeniu dokumentu
+                        },
+                        { upsert: true, new: true }
+                      );
                 }
 
-            }
-            // Sprawdzenie i utworzenie FileMeasurement dla Meta
-            if (classification.input_file_meta) {
-
-                const fileMeasurements = await FileMeasurement.find({
-                    eventId: event._id,
-                    classificationId,
-                });
-                const fileMeasurementMeta = fileMeasurements.find(measurement => measurement.type === 'Meta');
-                
-
-                if (!fileMeasurementMeta) {
-                    // Utwórz nowy FileMeasurement jeśli nie istnieje
-                    fileMeasurementMeta = new FileMeasurement({
-                        eventId: event._id,
-                        classificationId,
-                        type: 'Meta',
-                        data: [], // Początkowo pusta tablica danych
-                    });
-                    await fileMeasurementMeta.save();
+                if (classification.input_file_meta) {
+                    await FileMeasurement.findOneAndUpdate(
+                        { eventId: event._id, classificationId, type: 'Meta' },
+                        {
+                            $setOnInsert: {eventId: event._id, classificationId, type: 'Meta', data: [] }
+                        },
+                        { upsert: true, new: true } 
+                    );
                 }
 
-            }
-
-            const session = await mongoose.startSession();
-            session.startTransaction();
-            try {
-                if (classification.input_file_start && (classification.input_file_meta)){
+                // Przetwarzaj pliki
+                if (classification.input_file_start && classification.input_file_meta) {
                     await Promise.all([
                         processFile(classification.input_file_start, event._id, classificationId, 'Start'),
                         processFile(classification.input_file_meta, event._id, classificationId, 'Meta')
-                    ])
-                } else if(classification.input_file_start){
-                    processFile(classification.input_file_start, event._id, classificationId, 'Start')
-                } else if(classification.input_file_meta){
-                    processFile(classification.input_file_meta, event._id, classificationId, 'Meta')
+                    ]);
+                } else if (classification.input_file_start) {
+                    await processFile(classification.input_file_start, event._id, classificationId, 'Start');
+                } else if (classification.input_file_meta) {
+                    await processFile(classification.input_file_meta, event._id, classificationId, 'Meta');
                 }
 
-                await session.commitTransaction();
-            } catch (error) {
-                await session.abortTransaction();
-                throw error;
-            } finally {
-                session.endSession();
-            }
-
+                
         }
-
-
-        
-
-        res.status(200).json({ message: 'Data updated successfully for all classifications' });
+        res.status(200).json({ message: 'Data updated successfully for all classifications', isUpdatedFinished: true });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Error updating data' });
+    }
+};
+
+const updateTimesParticipant = async (req, res) => {
+    
+    const { id } = req.params;
+    try {
+        const participants = await Participant.find({
+            $or: [
+                { time_end: { $exists: false } },  
+                { time_end: "" }  
+            ]
+        });
+        
+        for (const participant of participants) {
+            const eventId = participant.event;
+            const classificationName = participant.classification;
+
+            const event = await Event.findById(eventId);
+
+            
+
+            const classification = event.classifications.find(c => c.name === classificationName);
+
+            if (!classification) continue;
+
+            const { impuls_number_start, impuls_number_finish, date_and_time } = classification;
+            const classificationId = classification._id;
+
+            const fileMeta = await FileMeasurement.findOne({
+                eventId: eventId,
+                classificationId: classificationId,
+                type: 'Meta'
+            });
+
+            if (!fileMeta) continue;
+
+            const metaInput = fileMeta.data.find(input =>
+                input.chip_number === participant.chip_number &&
+                input.impuls === impuls_number_finish
+            );
+
+            if (!metaInput) continue;
+
+            participant.time_end = metaInput.time;
+
+            const fileStart = await FileMeasurement.findOne({
+                eventId: eventId,
+                classificationId: classificationId,
+                type: 'Start'
+            });
+
+            if (fileStart) {
+                const startInput = fileStart.data.find(input =>
+                    input.chip_number === participant.chip_number &&
+                    input.impuls === impuls_number_start
+                );
+
+                if (startInput) {
+                    participant.time_start = startInput.time;
+                } else {
+                    participant.time_start = date_and_time;
+                }
+            } else {
+                participant.time_start = date_and_time;
+            }
+
+            await participant.save();
+        }
+
+        await calculateParticipantResults(id);
+
+        res.status(200).json({ message: 'Czasy zostały zaktualizowane.' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Wystąpił błąd podczas aktualizacji czasów.', error: error.message });
+    }
+};
+
+async function calculateParticipantResults(id) {
+    try {
+        const event = await Event.findOne({eventId: id});
+
+        if (!event) throw new Error('Nie znaleziono wydarzenia');
+
+        const participants = await Participant.find({ event: event._id });
+
+        const classificationSettings = {};
+
+        event.classifications.forEach(classification => {
+            classificationSettings[classification.name] = classification;
+        });
+
+        const participantsByClassification = {};
+
+        participants.forEach(participant => {
+            if (!participantsByClassification[participant.classification]) {
+                participantsByClassification[participant.classification] = [];
+            }
+            participantsByClassification[participant.classification].push(participant);
+        });
+
+
+        for (const classificationName in participantsByClassification) {
+            const participantsInClass = participantsByClassification[classificationName];
+
+            const classification = classificationSettings[classificationName];
+
+            if (!classification) continue;
+
+            const distance = classification.distance;
+            const date_and_time = classification.date_and_time;
+
+            for (const participant of participantsInClass) {
+                if (participant.time_end && participant.time_start) {
+                    participant.time_netto = timeDifference(participant.time_start, participant.time_end);
+                } else {
+                    participant.time_netto = null;
+                }
+
+                if (participant.time_end) {
+                    participant.time_brutto = timeDifference(date_and_time, participant.time_end);
+                } else {
+                    participant.time_brutto = null;
+                }
+
+                if (participant.time_brutto) {
+                    const timeBruttoSeconds = timeStringToSeconds(participant.time_brutto);
+
+                    if (timeBruttoSeconds > 0 && distance > 0) {
+                        const timeInHours = timeBruttoSeconds / 3600;
+                        const timeInMinutes = timeBruttoSeconds / 60;
+                        participant.avg_speed = (distance / timeInHours).toFixed(2);
+                        participant.avg_rate = minutesToTimeString((timeInMinutes / distance).toFixed(2), participant.number);
+                    } else {
+                        participant.avg_speed = null;
+                        participant.avg_rate = null;
+                    }
+                } else {
+                    participant.avg_speed = null;
+                    participant.avg_rate = null;
+                }
+            }
+
+            const finishers = participantsInClass.filter(p => p.time_brutto);
+
+            finishers.sort((a, b) => {
+                const timeA = timeStringToSeconds(a.time_brutto);
+                const timeB = timeStringToSeconds(b.time_brutto);
+                return timeA - timeB;
+            });
+
+            if (finishers.length > 0) {
+                const fastestTime = timeStringToSeconds(finishers[0].time_brutto);
+                let place = 1;
+                let placeGender = {};
+                let placeAge = {};
+
+                finishers.forEach(participant => {
+                    participant.place = place++;
+
+                    const participantTime = timeStringToSeconds(participant.time_brutto);
+                    const diffSeconds = participantTime - fastestTime;
+                    participant.diff_time = diffSeconds > 0 ? ("+" + secondsToTimeString(diffSeconds)) : "" ;
+
+                    const gender = participant.gender;
+                    if (!placeGender[gender]) {
+                        placeGender[gender] = 1;
+                    }
+                    participant.place_gender = placeGender[gender]++;
+
+                    const category = participant.category;
+                    if (!placeAge[category]) {
+                        placeAge[category] = 1;
+                    }
+                    participant.place_age = placeAge[category]++;
+                });
+            }
+
+            for (const participant of participantsInClass) {
+                await participant.save();
+            }
+        }
+
+        await updateStatistics(event.eventId);
+
+    } catch (error) {
+        console.error('Błąd w calculateParticipantResults:', error.message);
+        throw error;
+    }
+}
+
+
+function minutesToTimeString(minutesPerKm, id) {
+    console.log('minutesPerKm ', minutesPerKm, " dla ", id);
+    // Zamiana minut na sekundy
+    const totalSeconds = Math.floor(minutesPerKm * 60);
+    const milliseconds = Math.floor((minutesPerKm * 60 - totalSeconds) * 1000);
+
+    // Obliczenie godzin, minut i sekund
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    // Formatowanie wyniku jako "hh:mm:ss.mmm"
+    const formattedTime = [
+        String(hours).padStart(2, '0'),    // Godziny z wiodącym zerem
+        String(minutes).padStart(2, '0'),  // Minuty z wiodącym zerem
+        String(seconds).padStart(2, '0')   // Sekundy z wiodącym zerem
+    ].join(':') + '.' + String(milliseconds).padStart(3, '0'); // Milisekundy z wiodącymi zerami
+
+    return formattedTime;
+}
+
+// Funkcje pomocnicze
+function timeStringToSeconds(timeStr) {
+    const [hhmmss, mmm] = timeStr.split('.');
+    const [hours, minutes, seconds] = hhmmss.split(':').map(Number);
+    const milliseconds = mmm ? Number(mmm) : 0;
+    return hours * 3600 + minutes * 60 + seconds + milliseconds / 1000;
+}
+
+function timeDifference(startTimeStr, endTimeStr) {
+    const startSeconds = timeStringToSeconds(startTimeStr);
+    const endSeconds = timeStringToSeconds(endTimeStr);
+    const diffSeconds = endSeconds - startSeconds;
+    return secondsToTimeString(diffSeconds);
+}
+
+function secondsToTimeString(totalSeconds) {
+    const sign = totalSeconds < 0 ? '-' : '';
+    totalSeconds = Math.abs(totalSeconds);
+
+    const hours = Math.floor(totalSeconds / 3600);
+    totalSeconds -= hours * 3600;
+
+    const minutes = Math.floor(totalSeconds / 60);
+    totalSeconds -= minutes * 60;
+
+    const seconds = Math.floor(totalSeconds);
+    const milliseconds = Math.round((totalSeconds - seconds) * 1000);
+
+    return `${sign}${hours}:${padZero(minutes)}:${padZero(seconds)}.${padMilliseconds(milliseconds)}`;
+}
+
+function padZero(num) {
+    return num.toString().padStart(2, '0');
+}
+
+function padMilliseconds(num) {
+    return num.toString().padStart(3, '0');
+}
+
+
+const getScoresZIP = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const event = await Event.findOne({eventId: id});
+        if (!event) {
+            return res.status(404).json({ message: 'Nie znaleziono wydarzenia' });
+        }
+        console.log("Event", event);
+        console.log("Event", event._id);
+
+        const participants = await Participant.find({ event: event._id, time_brutto: { $exists: true, $ne: '' } });
+
+        console.log("Uczestnicy", participants);
+
+        const participantsByClassification = {};
+
+        participants.forEach(participant => {
+            if (!participantsByClassification[participant.classification]) {
+                participantsByClassification[participant.classification] = [];
+            }
+            participantsByClassification[participant.classification].push(participant);
+        });
+
+        const archive = archiver('zip', { zlib: { level: 9 } });
+
+        res.setHeader('Content-Type', 'application/zip');
+        res.setHeader('Content-Disposition', 'attachment; filename=wyniki.zip');
+
+        archive.pipe(res);
+
+        for (const classificationName in participantsByClassification) {
+            const participantsInClass = participantsByClassification[classificationName];
+                
+            participantsInClass.sort((a, b) => a.place - b.place);
+
+            console.log("Typ i wartosc: ", typeof participantsInClass[0].avg_speed, participantsInClass[0].avg_speed);
+
+            const records = participantsInClass.map(p => {
+                return {
+                    'Nr': p.number,
+                    'Miejsce OPEN': p.place,
+                    'Miejsce Plec': p.place_gender,
+                    'Miejsce Kat Wiek': p.place_age,
+                    'Zawodnik': p.competitor,
+                    'Klasyfikacja': p.classification,
+                    'Kategoria': p.category,
+                    'Czas Netto': String(p.time_netto), 
+                    'Czas brutto': String(p.time_brutto),
+                    'Srednia Predkosc': String(p.avg_speed),
+                    'Srednie Tempo': String(p.avg_rate),
+                    'Strata': String(p.diff_time),
+                    'Plec': p.gender,
+                    'Wiek': p.age,
+                    'Kraj': p.country,
+                    'Miasto': p.location,
+                    'Klub': p.club,
+                };
+            });
+
+            const headers = [
+                'Nr','Miejsce OPEN','Miejsce Plec','Miejsce Kat Wiek','Zawodnik','Klasyfikacja','Kategoria',
+                'Czas Netto','Czas brutto','Srednia Predkosc','Srednie Tempo','Strata',
+                'Plec','Wiek','Kraj','Miasto','Klub',
+            ];
+
+            const bom = '\uFEFF'; 
+
+            const csvContent = await new Promise((resolve, reject) => {
+                stringify(records, { header: true, columns: headers, delimiter: ';' }, (err, output) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve(bom + output);
+                });
+            });
+
+            archive.append(csvContent, { name: `${classificationName}.csv` });
+        }
+
+        archive.finalize();
+
+        archive.on('end', () => {
+            console.log('Archiwizacja zakończona.');
+        });
+
+    } catch (error) {
+        console.error('Błąd w downloadResults:', error.message, error);
+        res.status(500).json({ message: 'Wystąpił błąd podczas generowania wyników.', error: error.message });
     }
 };
 
@@ -1022,7 +1329,11 @@ module.exports = {
     getClassificationsNameFromEvent, 
     getClassificationFromEvent,
     updateClassificationFromEvent,
-
     getAvailableFiles,
     updateDataFromFiles,
+
+
+
+    updateTimesParticipant,
+    getScoresZIP,
 };

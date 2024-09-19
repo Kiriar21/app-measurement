@@ -30,7 +30,6 @@ export default function FormEvent(props) {
     const [classificationData, setClassificationData] = useState(null);
     const [availableFiles, setAvailableFiles] = useState([]);
 
-
     useEffect(() => {
         const fetchFiles = async () => {
             try {
@@ -59,12 +58,6 @@ export default function FormEvent(props) {
         }
     }, [id])
 
-    const getFileNameFromPath = (filePath) => {
-        const separator = filePath.includes('/') ? '/' : '\\';
-        const parts = filePath.split(separator);
-        return parts[parts.length - 1];
-    };
-
     useEffect(() => {
         getClassificationsNames()
     }, [getClassificationsNames])
@@ -92,23 +85,22 @@ export default function FormEvent(props) {
 
     const handleSave = async () => {
         try {
-            const payload = {
-                ...classificationData,
-            };
-    
+            const { _id, createdAt, updatedAt, ...payload } = classificationData;
+
+            payload.category_open.exist = payload.category_open.exist.toString();
+            payload.category_age.exist = payload.category_age.exist.toString();
+
+
             await axios.put(
                 `http://localhost:5001/api/event/${id}/classifications/${selectedClassificationIndex}`,
                 payload
             );
-            alert('Dane zapisane pomyślnie.');
         } catch (error) {
             console.log(error);
             alert('Błąd podczas zapisywania danych.');
         }
     };
     
-    
-
     const titleAlert = () => {
         return (`Czy na pewno chcesz zapisać zmiany w klasyfikacji ${classificationData.name}?`).toString();
     }
@@ -226,7 +218,7 @@ export default function FormEvent(props) {
                                                 controlId='startFileSelect'
                                                 labelText='Wybierz plik START'
                                                 onChange={(e) => setClassificationData({ ...classificationData, input_file_start: e.target.value })}
-                                                value={classificationData.input_file_start ? getFileNameFromPath(classificationData.input_file_start) : ''}
+                                                value={classificationData.input_file_start ? classificationData.input_file_start : ''}
                                                 opt={[{ name: '', title: 'Nie wybrano pliku' }, ...availableFiles.map(file => ({ name: file, title: file }))]}
                                                 lg={12}
                                             />
@@ -251,7 +243,7 @@ export default function FormEvent(props) {
                                                 controlId='metaFileSelect'
                                                 labelText='Wybierz plik META'
                                                 onChange={(e) => setClassificationData({ ...classificationData, input_file_meta: e.target.value })}
-                                                value={classificationData.input_file_meta ? getFileNameFromPath(classificationData.input_file_meta) : ''}
+                                                value={classificationData.input_file_meta ? classificationData.input_file_meta : ''}
                                                 opt={[{ name: '', title: 'Nie wybrano pliku' }, ...availableFiles.map(file => ({ name: file, title: file }))]}
                                                 lg={12}
                                             />

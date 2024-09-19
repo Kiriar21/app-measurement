@@ -152,16 +152,6 @@ export default function Login(props) {
             title:'Kobieta'
         }
     ]
-    const finishedCompetitor = [
-        {
-            name:'true',
-            title:'TAK'
-        },
-        {
-            name:'false',
-            title:'NIE'
-        }
-    ]
     const statusCompetitor = [
         {
             name:'START',
@@ -277,13 +267,6 @@ export default function Login(props) {
                     onChange={(e) => setSelectedCompetitor({ ...selectedCompetitor, time_end: e.target.value })}           
                     pattern="^([01]?[0-9]|2[0-3]):[0-5]?[0-9]:[0-5]?[0-9]\.[0-9]{3}$"
                 />    
-                <SelectMeasurement controlId='finishedCompetitor'
-                        labelText='Zawonik ukończył bieg'
-                        onChange={(e) => setSelectedCompetitor({ ...selectedCompetitor, finished: e.target.value })}
-                        opt={finishedCompetitor}
-                        lg={10}
-                        value={selectedCompetitor && selectedCompetitor.finished != null ? selectedCompetitor.finished : ''}
-                />
             </LineStep>
         </React.Fragment>
     );
