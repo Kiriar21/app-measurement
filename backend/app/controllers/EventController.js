@@ -12,6 +12,7 @@ const archiver = require('archiver');
 const {stringify} = require('csv-stringify');
 
 const storageMemery = multer.memoryStorage();
+
 const uploadMemory = multer({ 
     storageMemery,
     fileFilter: (req, file, cb) => {
@@ -86,8 +87,6 @@ const updateClassificationFromEvent = async (req, res) => {
         const {id, index} = req.params;
 
         const updatedData = req.body;
-
-        console.log(updatedData);
 
         const event = await Event.findOne({ eventId: id });
 
@@ -281,7 +280,6 @@ const uploadCSVEvent = async (req, res) => {
     }
 };
 
-
 const replaceCSVEvent = async (req, res) => {
     try {
         const eventId = req.params.id;
@@ -325,7 +323,6 @@ const replaceCSVEvent = async (req, res) => {
         res.status(500).send({ error: 'Wystąpił błąd podczas zastępowania danych wydarzenia.' });
     }
 }
-
 
 async function getEventWithDetails(eventId) {
     try {
@@ -539,7 +536,6 @@ const multerErrorHandler = (err, req, res, next) => {
     }
     next();
 };
-
 
 async function updateStatistics(eventId) {
     try {
@@ -760,7 +756,6 @@ const getUsers = async (req, res) => {
     }
 };
 
-
 const getUser = async (req, res) => {
     try {
         const eventId = req.params.id;
@@ -784,46 +779,71 @@ const getUser = async (req, res) => {
         }
   }; 
 
-  const calculateAge = (dateOfBirth) => {
+const calculateAge = (dateOfBirth) => {
     const today = new Date();
     const birthDate = new Date(dateOfBirth);
     return today.getFullYear() - birthDate.getFullYear();
   };
-  
 
-  const editUser = async (req, res) => {
+const editUser = async (req, res) => {
     try {
-      const eventId = req.params.id;
-      const number = req.params.number;
-      const updateData = req.body; 
-  
-      const event = await Event.findOne({ eventId: eventId });
+        const eventId = req.params.id;
+        const number = req.params.number;
+        const updateData = req.body; 
+    
+        const event = await Event.findOne({ eventId: eventId });
+            
+        if (!event) {
+            return res.status(404).json({ error: 'Event not found' });
+        } 
+
+        if (updateData.date_of_birth) {
+            updateData.age = calculateAge(updateData.date_of_birth); 
+        }
+        console.log("1")
+        if ((updateData.status && updateData.status !== 'START') || (updateData.time_end && updateData.time_end == "")) {
+            // Wyzerowanie pól
+            updateData.time_start = "";
+            updateData.time_end = "";
+            updateData.time_netto = "";
+            updateData.time_brutto = "";
+            updateData.avg_speed = "";
+            updateData.avg_rate = "";
+            updateData.diff_time = "";
+            updateData.place = "";
+            updateData.place_gender = "";
+            updateData.place_age = "";
+        } 
+        console.log("2")
+
+        if(updateData.time_start && updateData.time_start == "") {
+            updateData.time_start = "";
+            updateData.time_netto = "";
+        }
+        console.log("3")
+
+        const participant = await Participant.findOneAndUpdate(
+            { event: event._id, number },
+            updateData,
+            { new: true }
+        );
+        console.log("4")
         
-      if (!event) {
-          return res.status(404).json({ error: 'Event not found' });
-      } 
+        if (!participant) {
+            return res.status(404).json({ error: 'Participant not found' });
+        }
 
-      if (updateData.date_of_birth) {
-        updateData.age = calculateAge(updateData.date_of_birth); 
-      }
-
-      const participant = await Participant.findOneAndUpdate(
-        { event: event._id, number },
-        updateData,
-        { new: true }
-      );
-  
-      if (!participant) {
-        return res.status(404).json({ error: 'Participant not found' });
-      }
-  
-      res.status(200).json({ message: 'Participant updated', participant });
-    } catch (error) {
-      res.status(500).json({ error: 'Error updating participant' });
+        if (!participant) {
+            return res.status(404).json({ error: 'Participant not found' });
+        }
+    
+        res.status(200).json({ message: 'Participant updated', participant });
+        } catch (error) {
+        res.status(500).json({ error: 'Error updating participant' });
     }
-  };
+};
 
-  const deleteUser = async (req, res) => {
+const deleteUser = async (req, res) => {
     try {
         const eventId = req.params.id;
         const number = req.params.number;
@@ -851,7 +871,6 @@ const getUser = async (req, res) => {
     }
 };
 
-
 const getAvailableFiles = async (req, res) => {
     try {
         const targetPath = path.join(__dirname, '..', '..', 'uploads');
@@ -862,7 +881,6 @@ const getAvailableFiles = async (req, res) => {
         res.status(500).json({ error: 'Error fetching files' });
     }
 };
-
 
 const processFile = async (filePath, eventId, classificationId, type) => {
     
@@ -910,26 +928,21 @@ const processFile = async (filePath, eventId, classificationId, type) => {
     }
 };
 
-
 const updateDataFromFiles = async (req, res) => {
     try {
         const { id } = req.params;
 
-        // Pobierz wydarzenie
         const event = await Event.findOne({ eventId: id });
         if (!event) return res.status(404).json({ error: 'Event not found' });
 
-        // Iteruj przez wszystkie klasyfikacje
         for (const classification of event.classifications) {
             const classificationId = classification._id;
 
-            
-                // Sprawdzenie plików start i meta oraz aktualizacja danych
                 if (classification.input_file_start) {
                     await FileMeasurement.findOneAndUpdate(
                         { eventId: event._id, classificationId, type: 'Start' },
                         {
-                          $setOnInsert: { eventId: event._id, classificationId, type: 'Start', data: [] }, // Ustaw dane tylko przy tworzeniu dokumentu
+                          $setOnInsert: { eventId: event._id, classificationId, type: 'Start', data: [] },
                         },
                         { upsert: true, new: true }
                       );
@@ -945,7 +958,6 @@ const updateDataFromFiles = async (req, res) => {
                     );
                 }
 
-                // Przetwarzaj pliki
                 if (classification.input_file_start && classification.input_file_meta) {
                     await Promise.all([
                         processFile(classification.input_file_start, event._id, classificationId, 'Start'),
@@ -955,10 +967,11 @@ const updateDataFromFiles = async (req, res) => {
                     await processFile(classification.input_file_start, event._id, classificationId, 'Start');
                 } else if (classification.input_file_meta) {
                     await processFile(classification.input_file_meta, event._id, classificationId, 'Meta');
-                }
-
-                
+                }       
         }
+
+        updateTimesParticipant(id);
+
         res.status(200).json({ message: 'Data updated successfully for all classifications', isUpdatedFinished: true });
     } catch (error) {
         console.error(error);
@@ -966,24 +979,23 @@ const updateDataFromFiles = async (req, res) => {
     }
 };
 
-const updateTimesParticipant = async (req, res) => {
-    
-    const { id } = req.params;
+async function updateTimesParticipant(id) {
+
     try {
-        const participants = await Participant.find({
+        let participants = await Participant.find({
             $or: [
                 { time_end: { $exists: false } },  
                 { time_end: "" }  
             ]
         });
         
+        participants.filter( p => p.status === 'START');
+        
         for (const participant of participants) {
             const eventId = participant.event;
             const classificationName = participant.classification;
 
             const event = await Event.findById(eventId);
-
-            
 
             const classification = event.classifications.find(c => c.name === classificationName);
 
@@ -1035,10 +1047,10 @@ const updateTimesParticipant = async (req, res) => {
 
         await calculateParticipantResults(id);
 
-        res.status(200).json({ message: 'Czasy zostały zaktualizowane.' });
+        
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Wystąpił błąd podczas aktualizacji czasów.', error: error.message });
+        console.error('Błąd w updateTimesParticipant:', error.message);
+        throw error;
     }
 };
 
@@ -1048,7 +1060,7 @@ async function calculateParticipantResults(id) {
 
         if (!event) throw new Error('Nie znaleziono wydarzenia');
 
-        const participants = await Participant.find({ event: event._id });
+        const participants = (await Participant.find({ event: event._id })).filter(p => p.time_start && p.time_end && p.status === 'START');
 
         const classificationSettings = {};
 
@@ -1075,6 +1087,9 @@ async function calculateParticipantResults(id) {
 
             const distance = classification.distance;
             const date_and_time = classification.date_and_time;
+
+            const categoryOpenExist = classification.category_open.exist;
+            const numberOfOpenPositions = classification.category_open.number_of_position;
 
             for (const participant of participantsInClass) {
                 if (participant.time_end && participant.time_start) {
@@ -1119,7 +1134,7 @@ async function calculateParticipantResults(id) {
                 const fastestTime = timeStringToSeconds(finishers[0].time_brutto);
                 let place = 1;
                 let placeGender = {};
-                let placeAge = {};
+                let placeAge = { M: numberOfOpenPositions + 1, K: numberOfOpenPositions + 1 };
 
                 finishers.forEach(participant => {
                     participant.place = place++;
@@ -1133,12 +1148,21 @@ async function calculateParticipantResults(id) {
                         placeGender[gender] = 1;
                     }
                     participant.place_gender = placeGender[gender]++;
-
+                    
                     const category = participant.category;
                     if (!placeAge[category]) {
                         placeAge[category] = 1;
                     }
-                    participant.place_age = placeAge[category]++;
+
+                    if(classification.category_open.exist) {
+                        if (participant.place_gender > numberOfOpenPositions) {
+                            participant.place_age = placeAge[category]++;
+                        } else {
+                            participant.place_age = null; 
+                        }
+                    } else {
+                        participant.place_age = placeAge[category]++;
+                    }
                 });
             }
 
@@ -1157,17 +1181,13 @@ async function calculateParticipantResults(id) {
 
 
 function minutesToTimeString(minutesPerKm, id) {
-    console.log('minutesPerKm ', minutesPerKm, " dla ", id);
-    // Zamiana minut na sekundy
     const totalSeconds = Math.floor(minutesPerKm * 60);
     const milliseconds = Math.floor((minutesPerKm * 60 - totalSeconds) * 1000);
 
-    // Obliczenie godzin, minut i sekund
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
 
-    // Formatowanie wyniku jako "hh:mm:ss.mmm"
     const formattedTime = [
         String(hours).padStart(2, '0'),    // Godziny z wiodącym zerem
         String(minutes).padStart(2, '0'),  // Minuty z wiodącym zerem
@@ -1177,7 +1197,6 @@ function minutesToTimeString(minutesPerKm, id) {
     return formattedTime;
 }
 
-// Funkcje pomocnicze
 function timeStringToSeconds(timeStr) {
     const [hhmmss, mmm] = timeStr.split('.');
     const [hours, minutes, seconds] = hhmmss.split(':').map(Number);
@@ -1205,7 +1224,7 @@ function secondsToTimeString(totalSeconds) {
     const seconds = Math.floor(totalSeconds);
     const milliseconds = Math.round((totalSeconds - seconds) * 1000);
 
-    return `${sign}${hours}:${padZero(minutes)}:${padZero(seconds)}.${padMilliseconds(milliseconds)}`;
+    return `${sign}${hours >= 10 ? hours : '0'+hours}:${padZero(minutes >= 10 ? minutes : '0'+minutes)}:${padZero(seconds >= 10 ? seconds : '0'+seconds)}.${padMilliseconds(milliseconds > 0 ? milliseconds : '000')}`;
 }
 
 function padZero(num) {
@@ -1216,6 +1235,17 @@ function padMilliseconds(num) {
     return num.toString().padStart(3, '0');
 }
 
+const getCurrentFormattedDate = () => {
+    const now = new Date();
+    const pad = (num) => String(num).padStart(2, '0');
+    const day = pad(now.getDate());
+    const month = pad(now.getMonth() + 1); // Miesiące są indeksowane od 0
+    const year = now.getFullYear();
+    const hours = pad(now.getHours());
+    const minutes = pad(now.getMinutes());
+    const seconds = pad(now.getSeconds());
+    return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+  };
 
 const getScoresZIP = async (req, res) => {
     try {
@@ -1225,12 +1255,8 @@ const getScoresZIP = async (req, res) => {
         if (!event) {
             return res.status(404).json({ message: 'Nie znaleziono wydarzenia' });
         }
-        console.log("Event", event);
-        console.log("Event", event._id);
 
-        const participants = await Participant.find({ event: event._id, time_brutto: { $exists: true, $ne: '' } });
-
-        console.log("Uczestnicy", participants);
+        const participants = await Participant.find({ event: event._id, time_brutto: { $exists: true, $ne: '' }, status: { $eq: 'START'} });
 
         const participantsByClassification = {};
 
@@ -1244,16 +1270,16 @@ const getScoresZIP = async (req, res) => {
         const archive = archiver('zip', { zlib: { level: 9 } });
 
         res.setHeader('Content-Type', 'application/zip');
-        res.setHeader('Content-Disposition', 'attachment; filename=wyniki.zip');
+        res.setHeader('Content-Disposition', 'attachment; name="fieldName"; filename="filename.jpg"');
 
         archive.pipe(res);
+
+        console.log(archive)
 
         for (const classificationName in participantsByClassification) {
             const participantsInClass = participantsByClassification[classificationName];
                 
             participantsInClass.sort((a, b) => a.place - b.place);
-
-            console.log("Typ i wartosc: ", typeof participantsInClass[0].avg_speed, participantsInClass[0].avg_speed);
 
             const records = participantsInClass.map(p => {
                 return {
@@ -1299,15 +1325,285 @@ const getScoresZIP = async (req, res) => {
 
         archive.finalize();
 
-        archive.on('end', () => {
-            console.log('Archiwizacja zakończona.');
-        });
-
     } catch (error) {
         console.error('Błąd w downloadResults:', error.message, error);
         res.status(500).json({ message: 'Wystąpił błąd podczas generowania wyników.', error: error.message });
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const getCategoriesFromClassification = async (req, res) => {
+    try {
+        const { id, index } = req.params;
+        const event = await Event.findOne({ eventId: id });
+        if (!event) {
+            return res.status(404).json({ error: 'Nie znaleziono wydarzenia' });
+        }
+
+        const classification = event.classifications[index];
+        if (!classification) {
+            return res.status(404).json({ error: 'Nie znaleziono klasyfikacji' });
+        }
+
+        const categories = classification.categories.map(categoryName => ({
+            title: categoryName,
+            name: categoryName
+        }));
+
+        res.status(200).json(categories);
+    } catch (error) {
+        res.status(500).json({ error: 'Błąd podczas pobierania kategorii' });
+    }
+};
+
+
+
+
+
+const getParticipantsByCategory = async (req, res) => {
+    try {
+        const { search, genderFilter, statusFilter } = req.query;
+        const { id, index, category } = req.params;
+        const event = await Event.findOne({ eventId: id });
+
+        if (!event) {
+            return res.status(404).json({ error: 'Nie znaleziono wydarzenia' });
+        }
+
+        const classification = event.classifications[index];
+
+        if (!classification) {
+            return res.status(404).json({ error: 'Nie znaleziono klasyfikacji' });
+        }
+
+        const classificationName = classification.name;
+
+        let participants = await Participant.find({ event: event._id, classification: classificationName});
+
+        if (search) {
+            const searchRegex = new RegExp(search, 'i');
+            participants = participants.filter(p => searchRegex.test(p.competitor) || searchRegex.test(p.number.toString()));
+        }
+        
+
+        // Filtrowanie po płci
+        if (genderFilter) {
+            participants = participants.filter(p => p.gender === genderFilter);
+        }
+
+        // Filtrowanie po statusie
+        if (statusFilter) {
+            if(statusFilter === 'active') {
+                participants = participants.filter(p => p.status === 'START');
+            } else {
+                participants = participants.filter(p => p.status !== 'START');
+            }
+        }
+
+        if (category === 'open') {
+            const data = participants.sort((a, b) => {
+                if (a.place == null || a.place === 0) return 1;  
+                if (b.place == null || b.place === 0) return -1; 
+                return a.place - b.place; 
+            }).map(p => ({
+                'Nr': p.number,
+                'Miejsce OPEN': p.place,
+                'Miejsce Plec': p.place_gender,
+                'Miejsce Kat Wiek': p.place_age,
+                'Zawodnik': p.competitor,
+                'Klasyfikacja': p.classification,
+                'Kategoria': p.category,
+                'Czas Netto': String(p.time_netto),
+                'Czas brutto': String(p.time_brutto),
+                'Srednia Predkosc': String(p.avg_speed),
+                'Srednie Tempo': String(p.avg_rate),
+                'Strata': String(p.diff_time),
+                'Plec': p.gender,
+                'Wiek': p.age,
+                'Kraj': p.country,
+                'Miasto': p.location,
+                'Klub': p.club,
+                'Status': p.status,
+            }));
+            res.status(200).json(data);
+
+        } else if (category === 'decoration') {
+            const results = [];
+
+            // Obsługa category_open
+            if (classification.category_open.exist && classification.category_open.number_of_position > 0) {
+                const numPositions = classification.category_open.number_of_position;
+
+                const males = participants
+                    .filter(p => p.gender === 'M' && p.place && p.place >= 1)
+                    .sort((a, b) => {
+                        if (a.place_gender == null || a.place_gender === 0) return 1;
+                        if (b.place_gender == null || b.place_gender === 0) return -1;
+                        return a.place_gender - b.place_gender;
+                    })
+                    .slice(0, numPositions);
+                                        
+                const females = participants
+                    .filter(p => p.gender === 'K' && p.place && p.place >= 1)
+                    .sort((a, b) => {
+                        if (a.place_gender == null || a.place_gender === 0) return 1;
+                        if (b.place_gender == null || b.place_gender === 0) return -1;
+                        return a.place_gender - b.place_gender;
+                    })
+                    .slice(0, numPositions);
+
+                if (males.length > 0) {
+                    results.push({
+                        group: 'Mężczyźni OPEN',
+                        data: males.map(p => ({
+                            'Nr': p.number,
+                            'Miejsce OPEN': p.place,
+                            'Miejsce Plec': p.place_gender,
+                            'Miejsce Kat Wiek': p.place_age,
+                            'Zawodnik': p.competitor,
+                            'Klasyfikacja': p.classification,
+                            'Kategoria': p.category,
+                            'Czas Netto': p.time_netto,
+                            'Czas brutto': String(p.time_brutto),
+                            'Srednia Predkosc': String(p.avg_speed),
+                            'Srednie Tempo': String(p.avg_rate),
+                            'Strata': String(p.diff_time),
+                            'Plec': p.gender,
+                            'Wiek': p.age,
+                            'Kraj': p.country,
+                            'Miasto': p.location,
+                            'Klub': p.club,
+                            'Status': p.status,
+                        }))
+                    });
+                }
+
+                if (females.length > 0) {
+                    results.push({
+                        group: 'Kobiety OPEN',
+                        data: females.map(p => ({
+                            'Nr': p.number,
+                            'Miejsce OPEN': p.place,
+                            'Miejsce Plec': p.place_gender,
+                            'Miejsce Kat Wiek': p.place_age,
+                            'Zawodnik': p.competitor,
+                            'Klasyfikacja': p.classification,
+                            'Kategoria': p.category,
+                            'Czas Netto': String(p.time_netto),
+                            'Czas brutto': String(p.time_brutto),
+                            'Srednia Predkosc': String(p.avg_speed),
+                            'Srednie Tempo': String(p.avg_rate),
+                            'Strata': String(p.diff_time),
+                            'Plec': p.gender,
+                            'Wiek': p.age,
+                            'Kraj': p.country,
+                            'Miasto': p.location,
+                            'Klub': p.club,
+                            'Status': p.status,
+                        }))
+                    });
+                }
+            }
+
+            // Obsługa category_age
+            if (classification.category_age.exist && classification.category_age.number_of_position > 0) {
+                const numPositions = classification.category_age.number_of_position;
+                const categories = classification.categories;
+
+                for (const cat of categories) {
+                    const participantsInCategory = participants
+                        .filter(p => p.category === cat && p.place && p.place >= 1)
+                        .sort((a, b) => {
+                            if (a.place_age == null || a.place_age === 0) return 1;
+                            if (b.place_age == null || b.place_age === 0) return -1;
+                            return a.place_age - b.place_age;
+                        })
+                        .slice(0, numPositions);
+
+
+                    if (participantsInCategory.length > 0) {
+                        results.push({
+                            group: `Kategoria ${cat}`,
+                            data: participantsInCategory.map(p => ({
+                                'Nr': p.number,
+                                'Miejsce OPEN': p.place,
+                                'Miejsce Plec': p.place_gender,
+                                'Miejsce Kat Wiek': p.place_age,
+                                'Zawodnik': p.competitor,
+                                'Klasyfikacja': p.classification,
+                                'Kategoria': p.category,
+                                'Czas Netto': String(p.time_netto),
+                                'Czas brutto': String(p.time_brutto),
+                                'Srednia Predkosc': String(p.avg_speed),
+                                'Srednie Tempo': String(p.avg_rate),
+                                'Strata': String(p.diff_time),
+                                'Plec': p.gender,
+                                'Wiek': p.age,
+                                'Kraj': p.country,
+                                'Miasto': p.location,
+                                'Klub': p.club,
+                                'Status': p.status,
+                            }))
+                        });
+                    }
+                }
+            }
+
+            res.status(200).json(results);
+
+        } else {
+            const participantsInCategory = participants
+                .filter(p => p.category === category)
+                .sort((a, b) => {
+                    if (a.place == null || a.place === 0) return 1;
+                    if (b.place == null || b.place === 0) return -1;
+                    return a.place - b.place;
+                });
+
+
+            const data = participantsInCategory.map(p => ({
+                'Nr': p.number,
+                'Miejsce OPEN': p.place,
+                'Miejsce Plec': p.place_gender,
+                'Miejsce Kat Wiek': p.place_age,
+                'Zawodnik': p.competitor,
+                'Klasyfikacja': p.classification,
+                'Kategoria': p.category,
+                'Czas Netto': String(p.time_netto),
+                'Czas brutto': String(p.time_brutto),
+                'Srednia Predkosc': String(p.avg_speed),
+                'Srednie Tempo': String(p.avg_rate),
+                'Strata': String(p.diff_time),
+                'Plec': p.gender,
+                'Wiek': p.age,
+                'Kraj': p.country,
+                'Miasto': p.location,
+                'Klub': p.club,
+                'Status': p.status,
+            }));
+
+            res.status(200).json(data);
+        }
+
+    } catch (error) {
+        console.error('Błąd podczas pobierania uczestników:', error);
+        res.status(500).json({ error: 'Błąd podczas pobierania uczestników' });
+    }
+};
+
 
 
 module.exports = {
@@ -1331,9 +1627,11 @@ module.exports = {
     updateClassificationFromEvent,
     getAvailableFiles,
     updateDataFromFiles,
-
-
-
-    updateTimesParticipant,
     getScoresZIP,
+
+
+
+
+    getCategoriesFromClassification,
+    getParticipantsByCategory,
 };

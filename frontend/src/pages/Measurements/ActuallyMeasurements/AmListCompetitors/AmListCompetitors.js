@@ -240,13 +240,6 @@ export default function Login(props) {
                         lg={10}
                         value={selectedCompetitor && selectedCompetitor.status != null ? selectedCompetitor.status : ''}
                 />
-                <FormInput controlId='chipNumberCompetitor'
-                    labelText='Numer chipu'
-                    typeInput='number'
-                    value={selectedCompetitor && selectedCompetitor.chip_number}
-                    lg={10}
-                    onChange={(e) => setSelectedCompetitor({ ...selectedCompetitor, chip_number: e.target.value })}           
-                />
             </LineStep>
             <LineStep className='mt-3 mb-5 my-5' title='Wyniki czasowe'>
                 <FormInput controlId='timStartCompetitor'
@@ -341,7 +334,7 @@ export default function Login(props) {
             const response = await axios.get(`http://localhost:5001/api/event/${id}/getUser/${number}`);
             if (response.status === 200) {
                 response.data.date_of_birth = response.data.date_of_birth.split('T')[0];
-                setSelectedCompetitor(response.data);  
+                setSelectedCompetitor(response.data); 
             } else {
                 alert('Nie udało się pobrać danych zawodnika.');
             }

@@ -14,22 +14,43 @@ const {
     updateClassificationFromEvent,
     getAvailableFiles,
     updateDataFromFiles,
-    updateTimesParticipant,
     getScoresZIP,
+
+
+
+
+    getCategoriesFromClassification,
+    getParticipantsByCategory,
 } = require('../controllers/EventController');
 
 router.post('/createEvent', createEvent);
 router.post('/event/:id/updateDataCSV', uploadMemory.single('file'), uploadCSVEvent, multerErrorHandler);
 router.post('/event/:id/replaceDataCSV', uploadMemory.single('file'), replaceCSVEvent, multerErrorHandler);
-router.post('/event/:id/scores/updatingTimes', updateTimesParticipant);
 
+
+// W pliku routes.js lub innym odpowiedzialnym za trasy
 router.get('/event/:id/statistics', getEventStatistics);
 router.get('/event/:id/getScoresZIP', getScoresZIP);
 router.get('/getEvents', getEvents);
 
 router.get('/event/:id/edit', getEventByIdEdit);
 
-router.get('/event/:eventId/availableFiles', getAvailableFiles);
+router.get('/event/:id/availableFiles', getAvailableFiles);
+
+
+
+//------------------------NOWE 
+router.get('/event/:id/classifications/:index/categories', getCategoriesFromClassification);
+router.get('/event/:id/classifications/:index/participants/:category', getParticipantsByCategory);
+
+//------------------------NOWE 
+
+
+
+
+
+
+
 router.get('/event/:id/classifications/updateData', updateDataFromFiles);
 router.get('/event/:id/classifications/:index', getClassificationFromEvent);
 router.get('/event/:id/classifications', getClassificationsNameFromEvent);

@@ -1,0 +1,101 @@
+NrZawodnika;NrChip;Klasyfikacja;Kategoria;Imie;Nazwisko;Plec;Wiek;DataUrodzenia;Panstwo;Miasto;NazwaKlubu;Telefon
+1;1;5KM;M16-99;Ksawery;Szmagaj;M;38;1986-08-04;POL;Gorzów Wielkopolski;Sanok Running Team;887165413
+2;2;5KM;M16-99;Szymon;Kocaj;M;75;1949-04-12;POL;Piekary Œl¹skie;Piaseczno Running Team;486082149
+3;3;5KM;K16-99;Marianna;Trzop;K;17;2007-09-16;POL;Ostrów Mazowiecka;Toruñ Running Team;229639126
+4;4;5KM;K16-99;Kalina;Lepianka;K;39;1985-01-28;POL;Rzeszów;Gorzów Wielkopolski Running Team;579974020
+5;5;5KM;M16-99;Adam;Makles;M;43;1981-08-05;POL;M³awa;Pu³awy Running Team;483250260
+6;6;5KM;M16-99;Alan;Bortkiewicz;M;51;1973-04-19;POL;Ruda Œl¹ska;Zawiercie Running Team;321942713
+7;7;5KM;M16-99;Juliusz;Kazior;M;29;1994-10-05;POL;Gi¿ycko;Wo³omin Running Team;536107155
+8;8;5KM;M16-99;Jerzy;Durma;M;98;1926-07-01;POL;Cieszyn;Nowy Targ Running Team;486674928
+9;9;5KM;M16-99;Marek;Wydrych;M;39;1985-06-16;POL;Chojnice;Radom Running Team;788308339
+10;10;5KM;M16-99;Ignacy;Lipowicz;M;48;1975-10-24;POL;Zgorzelec;Rzeszów Running Team;889960891
+11;11;5KM;K16-99;Roksana;RzeŸniczak;K;85;1939-05-29;POL;Czerwionka-Leszczyny;Malbork Running Team;485156999
+12;12;5KM;M16-99;Szymon;Cyganik;M;82;1942-08-31;POL;Wejherowo;Olsztyn Running Team;485007748
+13;13;5KM;M16-99;Aleksander;Molka;M;28;1995-11-17;POL;Opole;Sochaczew Running Team;323678410
+14;14;5KM;M16-99;Bruno;Pyziak;M;79;1945-04-27;POL;£owicz;Jaros³aw Running Team;487396639
+15;15;5KM;K16-99;Urszula;Gonet;K;66;1957-10-01;POL;Zabrze;Kraków Running Team;486601602
+16;16;5KM;M16-99;Tymoteusz;Misztela;M;94;1930-02-19;POL;Gdynia;Stalowa Wola Running Team;486060416
+17;17;5KM;K16-99;Anna Maria;Ku³ach;K;66;1958-02-18;POL;Sieradz;£aziska Górne Running Team;789426140
+18;18;5KM;K16-99;Anna Maria;Cyrek;K;43;1981-07-06;POL;Ruda Œl¹ska;Pruszcz Gdañski Running Team;485060917
+19;19;5KM;M16-99;Micha³;Reæko;M;74;1950-04-07;POL;Bytom;£uków Running Team;483249128
+20;20;5KM;K16-99;Angelika;Gaudyn;K;73;1951-09-08;POL;O³awa;Gliwice Running Team;487330914
+21;21;5KM;K16-99;Melania;Tondera;K;88;1935-12-30;POL;Kêtrzyn;Krosno Running Team;486674805
+22;22;5KM;M16-99;Olgierd;Pietryga;M;65;1959-09-06;POL;Olsztyn;Be³chatów Running Team;574187778
+23;23;5KM;K16-99;Gaja;Jêdrak;K;16;2007-12-18;POL;P³ock;Pabianice Running Team;485026911
+24;24;5KM;K16-99;Bianka;Sot;K;95;1928-10-08;POL;¯ywiec;P³ock Running Team;486636302
+25;25;5KM;M16-99;Kazimierz;Ta³aj;M;25;1998-12-01;POL;Che³m;Swarzêdz Running Team;488845795
+26;26;5KM;K16-99;Nela;Waraksa;K;33;1991-03-23;POL;Szczecinek;D¹browa Górnicza Running Team;722400873
+27;27;5KM;M16-99;Krzysztof;Pal;M;43;1981-08-18;POL;Opole;Grudzi¹dz Running Team;664461106
+28;28;5KM;M16-99;Kacper;Hada³a;M;47;1977-09-10;POL;Chorzów;Siedlce Running Team;488821037
+29;29;5KM;K16-99;Klara;Dywan;K;83;1941-05-22;POL;Siemianowice Œl¹skie;£aziska Górne Running Team;485364497
+30;30;5KM;M16-99;Arkadiusz;Molga;M;64;1959-12-31;POL;Marki;Grudzi¹dz Running Team;732871247
+31;31;5KM;K16-99;Sylwia;Jarkiewicz;K;38;1986-07-17;POL;Brodnica;Wyszków Running Team;483219264
+32;32;5KM;K16-99;Roksana;Wawrzyczek;K;43;1980-09-21;POL;Ostrowiec Œwiêtokrzyski;Lêbork Running Team;512425941
+33;33;5KM;M16-99;Micha³;Nagórka;M;43;1981-05-21;POL;Otwock;Goleniów Running Team;486696586
+34;34;5KM;K16-99;Nicole;Wieja;K;85;1939-04-17;POL;Suwa³ki;Koszalin Running Team;485301873
+35;35;5KM;K16-99;El¿bieta;Sanetra;K;36;1988-03-24;POL;Szczytno;Suwa³ki Running Team;788038365
+36;36;5KM;M16-99;Albert;Gosek;M;95;1929-05-14;POL;Bêdzin;Nowy Targ Running Team;487287803
+37;37;5KM;M16-99;Alan;Joniak;M;64;1960-03-27;POL;Zduñska Wola;Gliwice Running Team;485009326
+38;38;5KM;M16-99;Oskar;Szmalec;M;94;1929-09-30;POL;Gliwice;Ostrów Wielkopolski Running Team;732690843
+39;39;5KM;K16-99;Liwia;Glaza;K;58;1966-04-08;POL;¯yrardów;Zamoœæ Running Team;606186042
+40;40;5KM;K16-99;Olga;Wiza;K;74;1949-12-21;POL;Dêbica;Rumia Running Team;531263743
+41;41;5KM;M16-99;Ksawery;Tomaszczyk;M;49;1975-06-12;POL;Szczecin;Gniezno Running Team;661558724
+42;42;5KM;M16-99;Grzegorz;Matus;M;74;1950-07-26;POL;£aziska Górne;Ruda Œl¹ska Running Team;696601641
+43;43;5KM;K16-99;Ewelina;Smal;K;43;1980-10-10;POL;Œroda Wielkopolska;Kraków Running Team;512820541
+44;44;5KM;K16-99;Kalina;£asica;K;38;1986-08-10;POL;Wa³brzych;Kwidzyn Running Team;487832092
+45;45;5KM;M16-99;Kamil;S¹dej;M;42;1982-09-07;POL;Olsztyn;Œwidnica Running Team;485054653
+46;46;5KM;M16-99;Cezary;Szlêk;M;58;1966-04-21;POL;Gliwice;Zduñska Wola Running Team;329176175
+47;47;5KM;M16-99;Dawid;Neubauer;M;61;1963-05-01;POL;Myszków;Tychy Running Team;533294208
+48;48;5KM;M16-99;Wiktor;Miœkowiec;M;75;1949-08-29;POL;Ruda Œl¹ska;Pu³awy Running Team;482219762
+49;49;5KM;M16-99;Miko³aj;Giezek;M;59;1965-05-27;POL;Lubliniec;Ostrów Mazowiecka Running Team;487914054
+50;50;5KM;K16-99;Ada;Bednarowicz;K;90;1934-05-09;POL;Œwidnica;Pruszków Running Team;602784798
+51;51;5KM;K16-99;Monika;Strama;K;21;2002-12-05;POL;Bia³ogard;Ostrów Mazowiecka Running Team;531804026
+52;52;5KM;K16-99;Ró¿a;Fiedler;K;23;2001-02-23;POL;Tarnów;Bêdzin Running Team;602864959
+53;53;5KM;K16-99;Aurelia;Kiliszek;K;78;1945-11-14;POL;Radomsko;Pruszków Running Team;666434924
+54;54;5KM;K16-99;Rozalia;Golus;K;84;1939-10-31;POL;Œrem;Jelenia Góra Running Team;605486703
+55;55;5KM;K16-99;Apolonia;Halik;K;82;1942-09-07;POL;Marki;Lubin Running Team;485761716
+56;56;5KM;K16-99;Dorota;Trzepizur;K;74;1950-07-18;POL;Ostrów Wielkopolski;Tarnobrzeg Running Team;795307738
+57;57;5KM;K16-99;Anastazja;Foremniak;K;19;2004-12-23;POL;Miñsk Mazowiecki;Radom Running Team;485193562
+58;58;5KM;K16-99;Malwina;Larysz;K;77;1947-09-06;POL;Oleœnica;Ko³obrzeg Running Team;793839218
+59;59;5KM;K16-99;Klara;Szatko;K;32;1992-05-03;POL;Nowy S¹cz;Nowy Targ Running Team;509961012
+60;60;5KM;M16-99;Iwo;Anders;M;45;1979-06-15;POL;Kêtrzyn;Tychy Running Team;486054509
+61;61;5KM;K16-99;Dorota;Stawinoga;K;46;1978-08-04;POL;Racibórz;Ruda Œl¹ska Running Team;486651431
+62;62;5KM;K16-99;Blanka;Paliga;K;48;1975-12-13;POL;Bochnia;Krotoszyn Running Team;485022846
+63;63;5KM;K16-99;Roksana;Janoszka;K;62;1962-05-05;POL;CzeladŸ;Jelenia Góra Running Team;576499987
+64;64;5KM;M16-99;Igor;Kurant;M;16;2007-11-28;POL;Szczecin;Ruda Œl¹ska Running Team;486928911
+65;65;5KM;K16-99;Inga;Ceg³a;K;39;1985-08-31;POL;Piotrków Trybunalski;Olsztyn Running Team;223020259
+66;66;5KM;K16-99;Kalina;Pacholczak;K;58;1965-10-06;POL;Zabrze;Luboñ Running Team;608342204
+67;67;5KM;K16-99;El¿bieta;¯yto;K;46;1977-09-22;POL;Otwock;Nowa Sól Running Team;485142514
+68;68;5KM;M16-99;Ernest;Gogol;M;85;1939-04-18;POL;P³oñsk;Bia³a Podlaska Running Team;485726138
+69;69;5KM;M16-99;B³a¿ej;Le¿oñ;M;93;1931-07-22;POL;Œrem;¯ory Running Team;605131183
+70;70;5KM;M16-99;Daniel;Maciejuk;M;55;1969-06-30;POL;Mys³owice;Police Running Team;531890308
+71;71;5KM;M16-99;Tymoteusz;Dyrek;M;24;1999-12-08;POL;Zakopane;Sochaczew Running Team;729497909
+72;72;5KM;M16-99;Mieszko;Ambrozik;M;99;1925-03-15;POL;Wa³brzych;Szczytno Running Team;519792079
+73;73;5KM;M16-99;Bartek;Zadka;M;91;1933-01-16;POL;Piekary Œl¹skie;P³ock Running Team;514970707
+74;74;5KM;K16-99;Gaja;Zbro¿ek;K;47;1977-06-30;POL;Czechowice-Dziedzice;Be³chatów Running Team;488866925
+75;75;5KM;K16-99;Sara;Hapka;K;91;1932-12-27;POL;Tomaszów Mazowiecki;Ciechanów Running Team;514626205
+76;76;5KM;K16-99;Bianka;¯ach;K;47;1977-08-04;POL;Kluczbork;Augustów Running Team;483200057
+77;77;5KM;K16-99;Kamila;Grupa;K;72;1952-08-01;POL;Olsztyn;Gorlice Running Team;482283608
+78;78;5KM;K16-99;Sara;Koterba;K;72;1952-04-13;POL;Bia³ogard;Knurów Running Team;485070399
+79;79;5KM;K16-99;Kornelia;Wiekiera;K;91;1932-11-30;POL;Pruszków;Starogard Gdañski Running Team;669724264
+80;80;5KM;M16-99;Kacper;Handzel;M;92;1932-02-16;POL;Suwa³ki;Starogard Gdañski Running Team;722045093
+81;81;5KM;K16-99;Roksana;Job;K;82;1942-03-03;POL;Siemianowice Œl¹skie;¯ory Running Team;487997275
+82;82;5KM;M16-99;Jeremi;Rozum;M;34;1990-02-05;POL;Szczecinek;Nowy S¹cz Running Team;486653562
+83;83;5KM;K16-99;Olga;Pilich;K;50;1974-05-22;POL;Zabrze;Olkusz Running Team;699594420
+84;84;5KM;K16-99;Justyna;Konieczek;K;95;1929-04-17;POL;Reda;Legnica Running Team;227037416
+85;85;5KM;K16-99;Ida;Krystkowiak;K;19;2005-07-19;POL;Radom;Lubliniec Running Team;537189821
+86;86;5KM;M16-99;Dominik;Tasarz;M;47;1976-12-09;POL;Piotrków Trybunalski;P³ock Running Team;485716670
+87;87;5KM;K16-99;Nicole;Szyca;K;93;1930-10-28;POL;Nowa Sól;Tychy Running Team;507488866
+88;88;5KM;M16-99;Marcin;Orwat;M;46;1977-11-29;POL;Pi³a;Wrzeœnia Running Team;483235764
+89;89;5KM;K16-99;Ewelina;Zaczyk;K;33;1991-02-23;POL;Gdañsk;W³oc³awek Running Team;320966742
+90;90;5KM;M16-99;Gabriel;Faltyn;M;44;1980-05-07;POL;Zgierz;Skawina Running Team;483233706
+91;91;5KM;M16-99;Witold;Urynowicz;M;57;1967-03-24;POL;Goleniów;Wroc³aw Running Team;486988400
+92;92;5KM;M16-99;Adrian;Starzak;M;29;1995-09-12;POL;Kraków;Gniezno Running Team;482264234
+93;93;5KM;M16-99;Antoni;Dolega;M;20;2004-06-30;POL;Skawina;Gorlice Running Team;507033784
+94;94;5KM;K16-99;Janina;Famu³a;K;22;2002-07-23;POL;¯ary;Wieluñ Running Team;884389769
+95;95;5KM;K16-99;Ida;Hartman;K;51;1973-08-22;POL;Rumia;Ostrowiec Œwiêtokrzyski Running Team;500896969
+96;96;5KM;M16-99;Stefan;Ulfik;M;46;1978-04-26;POL;Gliwice;W¹growiec Running Team;482200044
+97;97;5KM;M16-99;Maciej;Folga;M;66;1957-10-10;POL;Zabrze;Elbl¹g Running Team;532624251
+98;98;5KM;M16-99;Wojciech;Antoñczak;M;54;1970-05-20;POL;Piotrków Trybunalski;Bielsk Podlaski Running Team;531130522
+99;99;5KM;K16-99;Nela;Szpala;K;32;1992-04-06;POL;Zgorzelec;Nowy Targ Running Team;326564905
+100;100;5KM;K16-99;Liwia;Palus;K;76;1948-03-16;POL;Mys³owice;Reda Running Team;511322573
