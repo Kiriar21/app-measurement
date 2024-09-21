@@ -15,7 +15,7 @@ export default function FormInput(props){
                                 multiple={false}
                                 name={props.name ? props.name : ''}
                                 disabled={props.disabled}
-                                accept={props.acceptFile || '.001, .002, .003, .004, .005, .006, .007, .008, .009'}
+                                accept={props.acceptFile || '.001'}
                                 />
                     : <Form.Control type={props.typeInput} 
                                 onChange={props.onChange} 

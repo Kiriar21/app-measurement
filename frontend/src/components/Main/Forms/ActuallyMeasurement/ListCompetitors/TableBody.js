@@ -8,7 +8,7 @@ import React, {useRef} from 'react'
 
 export default function TableBody(props){
     const modalRefs = useRef([]);
-
+    
     const renderSortIcon = (field) => {
         if (props.sortField.field === field) {
             return props.sortField.order === 'asc' ? '🔼' : '🔽';

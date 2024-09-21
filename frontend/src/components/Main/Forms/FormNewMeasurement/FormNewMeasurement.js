@@ -6,6 +6,7 @@ import FormInput from '../FormInput/FormInput';
 import Alert from '../../../Alerts/Alert/Alert';
 import axios from 'axios';
 
+
 function timeToForm() {
     let dateToday = new Date();
     dateToday = new Date(dateToday.getTime() - (dateToday.getTimezoneOffset() * 60 * 1000));
@@ -33,7 +34,7 @@ export default function FormNewMeasurement(props) {
         };
 
         try {
-            const response = await axios.post('http://localhost:5001/api/createEvent', eventData)
+            const response = await axios.post('/createEvent', eventData)
 
             if (response.status >= 200 && response.status < 300) {                
                 setShowAlert(true);

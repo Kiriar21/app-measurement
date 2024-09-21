@@ -90,7 +90,7 @@ export default function Login(props) {
                 queryParams += `sortField=${encodeURIComponent(sortField.field)}&sortOrder=${encodeURIComponent(sortField.order)}&`;
             }
 
-            const response = await axios.get(`http://localhost:5001/api/event/${id}/getUsers${queryParams}`);
+            const response = await axios.get(`/event/${id}/getUsers${queryParams}`);
 
             if (response.data.length > 0) {
                 setTbody(response.data);
@@ -285,9 +285,9 @@ export default function Login(props) {
             let response = null;
 
             if (isAdded) {
-                response = await axios.post(`http://localhost:5001/api/event/${id}/replaceDataCSV`, formData) 
+                response = await axios.post(`/event/${id}/replaceDataCSV`, formData) 
             } else {
-                response = await axios.post(`http://localhost:5001/api/event/${id}/updateDataCSV`,formData)
+                response = await axios.post(`/event/${id}/updateDataCSV`,formData)
             }
 
             if (response.status >= 200 && response.status < 300) {
@@ -312,7 +312,7 @@ export default function Login(props) {
 
     const deleteParticipant = async (number) => {
         try {
-            const response = await axios.delete(`http://localhost:5001/api//event/${id}/deleteUser/${number}`);
+            const response = await axios.delete(`/event/${id}/deleteUser/${number}`);
     
             if (response.status === 200) {
                 fetchParticipants(); 
@@ -331,7 +331,7 @@ export default function Login(props) {
     const fetchCompetitorDetails = async (number) => {
         
         try {
-            const response = await axios.get(`http://localhost:5001/api/event/${id}/getUser/${number}`);
+            const response = await axios.get(`/event/${id}/getUser/${number}`);
             if (response.status === 200) {
                 response.data.date_of_birth = response.data.date_of_birth.split('T')[0];
                 setSelectedCompetitor(response.data); 
@@ -351,7 +351,7 @@ export default function Login(props) {
         }
     
         try {
-            const response = await axios.put(`http://localhost:5001/api/event/${id}/editUser/${number}`, selectedCompetitor);
+            const response = await axios.put(`/event/${id}/editUser/${number}`, selectedCompetitor);
             
             if (response.status === 200) {
                 fetchParticipants();

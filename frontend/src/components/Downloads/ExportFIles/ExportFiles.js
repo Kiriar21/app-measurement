@@ -10,7 +10,7 @@ export default function ExportFiles(props) {
 
     const checkValidate = async () => {
         try {
-            const response = await axios.get(`http://localhost:5001/api/event/${id}/getScoresZIP`, {
+            const response = await axios.get(`/event/${id}/getScoresZIP`, {
                 responseType: 'blob',
             });
 

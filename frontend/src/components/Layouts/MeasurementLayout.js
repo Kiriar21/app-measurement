@@ -3,6 +3,7 @@ import Header from "../Headers/Header/Header"
 import MainNavigation from "../Navigations/MainNavigation/MainNavigation"
 import Container from '../Container/Container'
 import Footer from "../Footers/Footer/Footer"
+import Message from "../Message/Message"
 
 export default function Layout(props) {
     return (
@@ -13,6 +14,7 @@ export default function Layout(props) {
                     <MainNavigation />
                 </Container>
             </header>
+            <Message />
             <main>
                 {props.main}
             </main>

@@ -16,6 +16,7 @@ import Scores from './pages/Measurements/ActuallyMeasurements/AmScores/AmScores'
 import SettingsEvent from './pages/Measurements/ActuallyMeasurements/AmSettingsEvent/AmSettingsEvent'
 import Statistic from './pages/Measurements/ActuallyMeasurements/AmStatistic/AmStatistic'
 import { AuthProvider} from './context/index'
+import { MessageProvider } from './context/MessageContext'
 import LoadingIcon from './components/UI/loadingIcon'
 
 function App() {
@@ -47,23 +48,25 @@ function App() {
     <Router> 
         <Suspense fallback={LoadingIcon}>
           <AuthProvider>
-            <Routes>
-              <Route path="/*" element={<MeasurementLayout main={main2} />} >
-                <Route path=':id/statistic' element={<Statistic />} />
-                <Route path=':id/edit' element={<Edit />} />
-                <Route path=':id/list-competitors' element={<ListCompetitors />} />
-                <Route path=':id/settings-event' element={<SettingsEvent />} />
-                <Route path=':id/scores' element={<Scores />} />
-                <Route path=':id/export-scores' element={<ExportScores />} />
-              </Route>
-              <Route path="/*" element={<MainLayout main={main} />}>
-                <Route path='new-measurement' element={<NewMeasurement/>}/>
-                <Route path='politics' element={<Politics />}/>
-                {/* <Route path='login' element={<Login />} /> */}
-                <Route path='' element={<Homepage />} />
-                <Route path='*' element={<NotFound />} />
-              </Route>
-            </Routes>
+            <MessageProvider>
+              <Routes>
+                <Route path="/*" element={<MeasurementLayout main={main2} />} >
+                  <Route path=':id/statistic' element={<Statistic />} />
+                  <Route path=':id/edit' element={<Edit />} />
+                  <Route path=':id/list-competitors' element={<ListCompetitors />} />
+                  <Route path=':id/settings-event' element={<SettingsEvent />} />
+                  <Route path=':id/scores' element={<Scores />} />
+                  <Route path=':id/export-scores' element={<ExportScores />} />
+                </Route>
+                <Route path="/*" element={<MainLayout main={main} />}>
+                  <Route path='new-measurement' element={<NewMeasurement/>}/>
+                  <Route path='politics' element={<Politics />}/>
+                  {/* <Route path='login' element={<Login />} /> */}
+                  <Route path='' element={<Homepage />} />
+                  <Route path='*' element={<NotFound />} />
+                </Route>
+              </Routes>
+            </MessageProvider>
           </AuthProvider>
         </Suspense>
     </Router>

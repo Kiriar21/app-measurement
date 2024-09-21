@@ -26,7 +26,7 @@ export default function Login(props) {
                 query += `&date=${searchDate}`; 
             }
     
-            const response = await axios.get(`http://localhost:5001/api/getEvents${query}`);
+            const response = await axios.get(`getEvents${query}`);
             setTbody(response.data.events);
             setOnLoading(false);
         } catch (error) {
@@ -51,7 +51,7 @@ export default function Login(props) {
         setSearchDate('');
         setOnLoading(true);
         try {
-            const response = await axios.get(`http://localhost:5001/api/getEvents?sortField=${sortField}&sortOrder=${sortOrder}`);
+            const response = await axios.get(`/getEvents?sortField=${sortField}&sortOrder=${sortOrder}`);
             setTbody(response.data.events);
             setOnLoading(false);
         } catch (error) {
@@ -68,7 +68,7 @@ export default function Login(props) {
 
     const deleteEvent = async (eventId, modalRef) => {
         try {
-            const response = await axios.delete(`http://localhost:5001/api/event/${eventId}`);
+            const response = await axios.delete(`event/${eventId}`);
 
             if (response.status >= 200 && response.status < 300) {
                 await fetchEvents();

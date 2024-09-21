@@ -22,7 +22,6 @@ export default function FormEvent(props) {
         name:'false',
         title:'Nie'
     }]
-
     const { id } = useParams()
     const [classificationsNames, setClassificationsNames] = useState([])
     const [status, setStatus] = useState('Ładowanie danych...')
@@ -33,7 +32,7 @@ export default function FormEvent(props) {
     useEffect(() => {
         const fetchFiles = async () => {
             try {
-                const res = await axios.get(`http://localhost:5001/api/event/${id}/availableFiles`);
+                const res = await axios.get(`/event/${id}/availableFiles`);
                 setAvailableFiles(res.data.files);
             } catch (error) {
                 console.error('Error fetching files:', error);
@@ -45,7 +44,7 @@ export default function FormEvent(props) {
 
     const getClassificationsNames = useCallback(async () => {
         try {
-            const res = await axios.get(`http://localhost:5001/api/event/${id}/classifications`)
+            const res = await axios.get(`/event/${id}/classifications`)
             
             if(res.status >= 200 && res.status < 300) {
                 setClassificationsNames(res.data)
@@ -65,7 +64,7 @@ export default function FormEvent(props) {
     useEffect(() => {
         const getClassificationData = async () => {
             try {
-                const res = await axios.get(`http://localhost:5001/api/event/${id}/classifications/${selectedClassificationIndex}`);
+                const res = await axios.get(`/event/${id}/classifications/${selectedClassificationIndex}`);
 
                 if (res.status >= 200 && res.status < 300) {
                     setClassificationData(res.data);
@@ -92,7 +91,7 @@ export default function FormEvent(props) {
 
 
             await axios.put(
-                `http://localhost:5001/api/event/${id}/classifications/${selectedClassificationIndex}`,
+                `/event/${id}/classifications/${selectedClassificationIndex}`,
                 payload
             );
         } catch (error) {

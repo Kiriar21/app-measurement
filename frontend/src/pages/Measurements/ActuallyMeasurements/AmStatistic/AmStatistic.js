@@ -44,14 +44,13 @@ export default function Statistic(props){
 
         try {
             if(isAdded){
-                await axios.post(`http://localhost:5001/api/event/${id}/replaceDataCSV`, formData)
+                await axios.post(`/event/${id}/replaceDataCSV`, formData)
             } else {
-                await axios.post(`http://localhost:5001/api/event/${id}/updateDataCSV`, formData) 
+                await axios.post(`/event/${id}/updateDataCSV`, formData) 
             }
 
             if(modalUploadCSVChild.current) modalUploadCSVChild.current.handleClose();
             setDataUpdated(prev => !prev);
-            // LOGIKA DO KOMUNIKATU po dodaniu lub aktualizacji?
 
         } catch (error) {
             console.error('Błąd przesyłania pliku:', error);
@@ -62,7 +61,7 @@ export default function Statistic(props){
 
     const fetchEventStatistics = async (id) => {
         try {
-            const response = await axios.get(`http://localhost:5001/api/event/${id}/statistics`);
+            const response = await axios.get(`/event/${id}/statistics`);
             return response.data.tbody;
         } catch (error) {
             console.error('Error fetching event statistics:', error);

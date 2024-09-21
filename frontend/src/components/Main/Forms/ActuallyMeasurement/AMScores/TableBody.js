@@ -9,7 +9,6 @@ export default function TableBody(props){
         return <h1>Brak danych do wyświetlenia.</h1>;
     }
     if (props.tbody[0].data) {
-        // Dane dla 'decoration'
         return (
             <>
                 {props.tbody.map((group, index) => (
@@ -38,7 +37,6 @@ export default function TableBody(props){
             </>
         );
     } else {
-        // Zwykłe dane uczestników
         return (
             <Table>
                 <Thead>

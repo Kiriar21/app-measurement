@@ -7,48 +7,28 @@ import SortsModule from "../../SortsModule/SortsModule"
 import SearchModule from "../../SearchModule/SearchModule"
 import TableBody from "./TableBody"
 import axios from 'axios'
-// import jsPDF from 'jspdf';
-// import 'jspdf-autotable';
-
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 
 export default function FormScores(props){
     
     const {id} = useParams();
-    //Pobieranie danych z bazy 
-    const [downloadingResults, setDownloadingResults] = useState(false);
-
-    //Status do wyswietlenia sie w przypadku problemów
-    const [status, setStatus] = useState('Ładowanie danych...')
-    
-    //Pobieranie klasyfikacji
+    const [downloadingResults, setDownloadingResults] = useState(false);    
+    const [status, setStatus] = useState('Ładowanie danych...')  
     const [classificationsNames, setClassificationsNames] = useState([])
-    //Pobieranie indexu klasyfikacji
     const [selectedClassificationIndex, setSelectedClassificationIndex] = useState(0);
-
-    //Pobieranie kategorii z danej klasyfikacji
     const [categories, setCategories] = useState([]);
-
-    //Pobieranie wybranego typu kategorii do wyswietlenia
     const [selectedCategory, setSelectedCategory] = useState('open');
-    
-
-
     const [searchBar,setSearchBar] = useState('');;
     const [filtrSex,setfiltrSex] = useState(''); 
     const [filtrStatus,setfiltrStatus] = useState('');
-
-    //Pobieranie uczestników z danej kategorii
     const [participantsData, setParticipantsData] = useState([]);
-
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
-    //Pobieranie uczestników z danej kategorii
+    
     useEffect(() => {
         const getParticipantsData = async () => {
             try {
-                const res = await axios.get(`http://localhost:5001/api/event/${id}/classifications/${selectedClassificationIndex}/participants/${selectedCategory}`, {
+                const res = await axios.get(`/event/${id}/classifications/${selectedClassificationIndex}/participants/${selectedCategory}`, {
                     params: {
                         search: searchBar,
                         genderFilter: filtrSex,
@@ -79,16 +59,14 @@ export default function FormScores(props){
         setStatus('Ładowanie danych...')
     }
 
-
-    //Pobieranie kategorie z danej klasyfikacji do selecta ludzi
     useEffect(() => {
         const getCategories = async () => {
             try {
-                const res = await axios.get(`http://localhost:5001/api/event/${id}/classifications/${selectedClassificationIndex}/categories`);
+                const res = await axios.get(`/event/${id}/classifications/${selectedClassificationIndex}/categories`);
     
                 if (res.status >= 200 && res.status < 300) {
                     const categoriesData = res.data;
-                    // Dodajemy opcje 'Open' i 'Dekoracja' na początku
+                    
                     const categoriesWithDefaults = [
                         { title: 'Open', name: 'open' },
                         { title: 'Dekoracja', name: 'decoration' },
@@ -119,7 +97,7 @@ export default function FormScores(props){
             const now = new Date();
             const pad = (num) => String(num).padStart(2, '0');
             const day = pad(now.getDate());
-            const month = pad(now.getMonth() + 1); // Miesiące są indeksowane od 0
+            const month = pad(now.getMonth() + 1); 
             const year = now.getFullYear();
             const hours = pad(now.getHours());
             const minutes = pad(now.getMinutes());
@@ -139,8 +117,8 @@ export default function FormScores(props){
         const docDefinition = {
             content: [],
             defaultStyle: {
-              font: 'Roboto', // Use the default Roboto font
-              alignment: 'center' // Wyśrodkowanie wszystkich elementów
+              font: 'Roboto', 
+              alignment: 'center' 
             },
             styles: {
               header: {
@@ -184,16 +162,15 @@ export default function FormScores(props){
                 style: 'footer'
               };
             },
-            pageMargins: [40, 100, 40, 60] // Zwiększenie górnych marginesów, aby nagłówek się nie nakładał
+            pageMargins: [40, 100, 40, 60] 
           };
           
       
         const tableLayout = {
           fillColor: function (rowIndex, node, columnIndex) {
             if (rowIndex === 0) {
-              return '#16A085'; // Nagłówek tabeli
+              return '#16A085'; 
             }
-            // Zmiana koloru co drugiego wiersza (począwszy od wiersza 1, bo wiersz 0 to nagłówek)
             return (rowIndex % 2 === 0) ? '#f2f2f2' : null;
           },
           hLineWidth: function () { return 0.5; },
@@ -210,7 +187,6 @@ export default function FormScores(props){
           participantsData.forEach((group, index) => {
             const tableBody = [];
       
-            // Nagłówek tabeli
             tableBody.push([
               { text: 'Nr', style: 'tableHeader' },
               { text: 'OPEN', style: 'tableHeader' },
@@ -254,7 +230,6 @@ export default function FormScores(props){
         } else {
           const tableBody = [];
       
-          // Nagłówek tabeli
           tableBody.push([
             { text: 'Nr', style: 'tableHeader' },
             { text: 'OPEN', style: 'tableHeader' },
@@ -293,7 +268,6 @@ export default function FormScores(props){
       
         let fileName = `wyniki-${selectedCategoryTitle}-${classificationName}-${getCurrentFormattedDate()}.pdf`;
       
-        // Zamiana spacji i polskich znaków w nazwie pliku
         fileName = fileName.replace(/\s+/g, '_').replace(/[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]/g, function (match) {
           const map = {
             'ą': 'a', 'ć': 'c', 'ę': 'e', 'ł': 'l', 'ń': 'n',
@@ -306,15 +280,10 @@ export default function FormScores(props){
       
         pdfMake.createPdf(docDefinition).download(fileName);
       };
-    
-    
 
-
-
-    //Pobieranie klasyfikacji z endpointu
     const getClassificationsNames = useCallback(async () => {
         try {
-            const res = await axios.get(`http://localhost:5001/api/event/${id}/classifications`)
+            const res = await axios.get(`/event/${id}/classifications`)
             
             if(res.status >= 200 && res.status < 300) {
                 setClassificationsNames(res.data)
@@ -327,13 +296,11 @@ export default function FormScores(props){
         }
     }, [id])
 
-    //Wywolywanie funkcji pobierania klasyfikacji
     useEffect(() => {
         getClassificationsNames()
     }, [getClassificationsNames])
 
 
-    //Funkcja od pobierania wyników
     useEffect(() => {
         let isMounted = true;
         let timeoutId;
@@ -342,7 +309,7 @@ export default function FormScores(props){
             if (!isMounted || !downloadingResults) return;
     
             try {
-                const result = await axios.get(`http://localhost:5001/api/event/${id}/classifications/updateData`);
+                const result = await axios.get(`/event/${id}/classifications/updateData`);
     
                 if (result.status === 200 && result.data.isUpdatedFinished === true) {
                     if (isMounted && downloadingResults) {
