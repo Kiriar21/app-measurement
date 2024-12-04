@@ -47,7 +47,7 @@ export default function TableBody(props){
                                         btnModalTitle='Usuń' 
                                         bgColor='red'
                                         modalTitle='Usuwanie Imprezy' 
-                                        modalBody='Czy na pewno chcesz usunąć wybraną impreze? Pamiętaj, że usunięcie imprezy w tej aplikacji usunie tylko dane z lokalnej bazy danych i stracisz kopie. Żeby usunąć całkowicie impreze, musisz wejść na aplikacje panelu administratora. '
+                                        modalBody='Czy na pewno chcesz usunąć wybraną impreze? Pamiętaj, że usunięcie imprezy spowoduje utrate wszystkich danych!'
                                         modalBtnGreen='Usuń' 
                                         modalBtnRed='Anuluj'
                                         onClick={() => props.deleteEvent(e.id, modalRefs.current[index])}
